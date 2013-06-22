@@ -10,6 +10,16 @@ module.exports = (grunt) ->
                     'dist/parsley.min.js': 'parsley.js'
                     'dist/parsley.extend.min.js': 'parsley.extend.js'
                     'dist/parsley-standalone.min.js': ['parsley.js', 'parsley.extend.js']
+        yuidoc:
+            compile:
+                name: '<%= pkg.name %>'
+                description: '<%= pkg.description %>'
+                version: '<%= pkg.version %>'
+                url: '<%= pkg.homepage %>'
+                syntaxtype: 'coffee'
+                options:
+                    paths: "."
+                    outdir: 'doc/api'
 
         coffee:
             compileBare:
@@ -31,7 +41,9 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
+    grunt.loadNpmTasks('grunt-contrib-yuidoc')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee'])
     grunt.registerTask('dist', ['coffee', 'uglify'])
+    grunt.registerTask('doc', ['yuidoc'])

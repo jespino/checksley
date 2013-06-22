@@ -6,21 +6,21 @@
 #
 
 (($) ->
-    #
+    ###*
     # Validator class stores all constraints functions and associated messages.
     # Provides public interface to add, remove or modify them
     #
     # @class Validator
     # @constructor
-    #
+    ###
     class Validator
         constructor: (options) ->
-            #
+            ###*
             # Error messages
             #
             # @property messages
             # @type {Object}
-            #
+            ###
             @messages =
                 defaultMessage: "This value seems to be invalid."
                 type:
@@ -51,12 +51,12 @@
             @init(options)
 
 
-        #
+        ###*
         # Validator list. Built-in validators functions
         #
         # @property validators
         # @type {Object}
-        #
+        ###
         validators:
             notnull: (val) ->
                 return val.length > 0
@@ -211,14 +211,14 @@
             for key of customMessages
                 @addMessage(key, customMessages[ key ])
 
-        #
+        ###*
         # Replace %s placeholders by values
         #
         # @method formatMesssage
         # @param {String} message Message key
         # @param {Mixed} args Args passed by validators functions. Could be string, number or object
         # @return {String} Formatted string
-        #
+        ###
         formatMesssage: ( message, args ) ->
             if ( 'object' == typeof args )
                 for i of args
@@ -231,23 +231,23 @@
 
             return ''
 
-        #
+        ###*
         # Add / override a validator in validators list
         #
         # @method addValidator
         # @param {String} name Validator name. Will automatically bindable through data-name=''
         # @param {Function} fn Validator function. Must return {Boolean}
-        #
+        ###
         addValidator: (name, fn) ->
             @validators[ name ] = fn
 
-        #
+        ###*
         # Add / override error message
         #
         # @method addMessage
         # @param {String} name Message name. Will automatically be binded to validator with same name
         # @param {String} message Message
-        #
+        ###
         addMessage: (key, message, type) ->
             if ( type? and true == type )
                 @messages.type[ key ] = message
@@ -262,14 +262,14 @@
 
             @messages[key] = message
 
-    #
+    ###*
     # ParsleyField class manage each form field inside a validated Parsley form.
     # Returns if field valid or not depending on its value and constraints
     # Manage field error display and behavior, event triggers and more
     #
     # @class ParsleyField
     # @constructor
-    #
+    ###
     class ParsleyField
         constructor: (element, options, type) ->
             @options = options
@@ -281,13 +281,13 @@
 
             @init(element, type or 'ParsleyField')
 
-        #
+        ###*
         # Set some properties, bind constraint validators and validation events
         #
         # @method init
         # @param {Object} element
         # @param {Object} options
-        #
+        ###
         init: (element, type) ->
             @type = type
             @valid = true
@@ -323,12 +323,12 @@
         getParent: () ->
             return @$parent
 
-        #
+        ###*
         # Bind some extra html5 types / validators
         #
         # @private
         # @method bindHtml5Constraints
-        #
+        ###
         bindHtml5Constraints: () ->
             # add html5 required support + class required support
             if ( @$element.hasClass( 'required' ) or @$element.prop( 'required' ) )
@@ -352,24 +352,24 @@
             if ( 'string' == typeof @$element.attr( 'pattern' ) and @$element.attr( 'pattern' ).length )
                 @options.regexp = @$element.attr( 'pattern' )
 
-        #
+        ###*
         # Attach field validators functions passed through data-api
         #
         # @private
         # @method addConstraints
-        #
+        ###
         addConstraints: () ->
             for constraint of @options
                 addConstraint = {}
                 addConstraint[ constraint ] = @options[ constraint ]
                 @addConstraint( addConstraint, true )
 
-        #
+        ###*
         # Dynamically add a new constraint to a field
         #
         # @method addConstraint
         # @param {Object} constraint { name: requirements }
-        #
+        ###
         addConstraint: ( constraint, doNotUpdateValidationEvents ) ->
             for name of constraint
                 name = name.toLowerCase()
@@ -389,25 +389,25 @@
             if ( 'undefined' == typeof doNotUpdateValidationEvents )
                 @bindValidationEvents()
 
-        #
+        ###*
         # Dynamically update an existing constraint to a field.
         # Simple API: { name: requirements }
         #
         # @method updtConstraint
         # @param {Object} constraint
-        #
+        ###
         updateConstraint: (constraint, message) ->
             for name of constraint
                 @updtConstraint( { name: name, requirements: constraint[ name ], valid: null }, message )
             return null
 
-        #
+        ###*
         # Dynamically update an existing constraint to a field.
         # Complex API: { name: name, requirements: requirements, valid: boolean }
         #
         # @method updtConstraint
         # @param {Object} constraint
-        #
+        ###
         updtConstraint: ( constraint, message ) ->
             @constraints[ constraint.name ] = $.extend( true, @constraints[ constraint.name ], constraint )
 
@@ -417,12 +417,12 @@
             # force field validation next check and reset validation events
             @bindValidationEvents()
 
-        #
+        ###*
         # Dynamically remove an existing constraint to a field.
         #
         # @method removeConstraint
         # @param {String} constraintName
-        #
+        ###
         removeConstraint: ( constraintName ) ->
             constraintName = constraintName.toLowerCase()
 
@@ -443,13 +443,13 @@
 
             @bindValidationEvents()
 
-        #
+        ###*
         # Add custom constraint message, passed through data-API
         #
         # @private
         # @method addCustomConstraintMessage
         # @param constraint
-        #
+        ###
         addCustomConstraintMessage: ( constraint ) ->
             # custom message type data-type-email-message -> typeEmailMessage | data-minlength-error => minlengthMessage
             customMessage = constraint + ( if 'type' == constraint and @options[ constraint ]? then @options[ constraint ].charAt( 0 ).toUpperCase() + @options[ constraint ].substr( 1 ) else '' ) + 'Message'
@@ -457,12 +457,12 @@
             if ( @options[ customMessage ]? )
                 @Validator.addMessage((if 'type' == constraint then @options[constraint] else constraint), @options[ customMessage ], 'type' == constraint )
 
-        #
+        ###*
         # Bind validation events on a field
         #
         # @private
         # @method bindValidationEvents
-        #
+        ###
         bindValidationEvents: () ->
             # this field has validation events, that means it has to be validated
             @valid = null
@@ -487,41 +487,41 @@
 
             @$element.on( ( triggers + ' ' ).split( ' ' ).join( '.' + @type + ' ' ), false, $.proxy( @eventValidation, this ) )
 
-        #
+        ###*
         # Hash management. Used for ul error
         #
         # @method generateHash
         # @returns {String} 5 letters unique hash
-        #
+        ###
         generateHash: () ->
             return 'parsley-' + ( Math.random() + '' ).substring( 2 )
 
-        #
+        ###*
         # Public getHash accessor
         #
         # @method getHash
         # @returns {String} hash
-        #
+        ###
         getHash: () ->
             return @hash
 
-        #
+        ###*
         # Returns field val needed for validation
         # Special treatment for radio & checkboxes
         #
         # @method getVal
         # @returns {String} val
-        #
+        ###
         getVal: () ->
             return @$element.data('value') or @$element.val()
 
-        #
+        ###*
         # Called when validation is triggered by an event
         # Do nothing if val.length < @options.validationMinlength
         #
         # @method eventValidation
         # @param {Object} event jQuery event
-        #
+        ###
         eventValidation: ( event ) ->
             val = @getVal()
 
@@ -539,34 +539,34 @@
 
             @validate()
 
-        #
+        ###*
         # Return if field verify its constraints
         #
         # @method isValid
         # @return {Boolean} Is field valid or not
-        #
+        ###
         isValid: () ->
             return @validate( false )
 
-        #
+        ###*
         # Return if field has constraints
         #
         # @method hasConstraints
         # @return {Boolean} Is field has constraints or not
-        #
+        ###
         hasConstraints: () ->
             for constraint of @constraints
                 return true
 
             return false
 
-        #
+        ###*
         # Validate a field & display errors
         #
         # @method validate
         # @param {Boolean} errorBubbling set to false if you just want valid boolean without error bubbling next to fields
         # @return {Boolean} Is field valid or not
-        #
+        ###
         validate: ( errorBubbling ) ->
             val = @getVal()
             valid = null
@@ -591,13 +591,13 @@
 
             return valid
 
-        #
+        ###*
         # Check if value has changed since previous validation
         #
         # @method needsValidation
         # @param value
         # @return {Boolean}
-        #
+        ###
         needsValidation: ( val ) ->
             if ( !@options.validateIfUnchanged and @valid != null and @val == val and @validatedOnce )
                 return false
@@ -605,13 +605,13 @@
             @val = val
             return @validatedOnce = true
 
-        #
+        ###*
         # Loop through every fields validators
         # Adds errors after unvalid fields
         #
         # @method applyValidators
         # @return {Mixed} {Boolean} If field valid or not, null if not validated
-        #
+        ###
         applyValidators: () ->
             valid = null
 
@@ -629,7 +629,7 @@
 
             return valid
 
-        #
+        ###*
         # Fired when all validators have be executed
         # Returns true or false if field is valid or not
         # Display errors messages below failed fields
@@ -637,7 +637,7 @@
         #
         # @method manageValidationResult
         # @return {Boolean} Is field valid or not
-        #
+        ###
         manageValidationResult: () ->
             valid = null
 
@@ -661,22 +661,22 @@
 
             return valid
 
-        #
+        ###*
         # Manage ul error Container
         #
         # @private
         # @method ulErrorManagement
-        #
+        ###
         ulErrorManagement: () ->
             @ulError = "##{@hash}"
             @ulTemplate = $( @options.errors.errorsWrapper ).attr( 'id', @hash ).addClass( 'parsley-error-list' )
 
-        #
+        ###*
         # Remove li / ul error
         #
         # @method removeError
         # @param {String} constraintName Method Name
-        #
+        ###
         removeError: ( constraintName ) ->
             liError = "#{@ulError} .#{constraintName}"
             that = this
@@ -692,31 +692,31 @@
             if ( @ulError and $( @ulError ).children().length == 0 )
                 @removeErrors()
 
-        #
+        ###*
         # Add li error
         #
         # @method addError
         # @param {Object} { minlength: "error message for minlength constraint" }
-        #
+        ###
         addError: ( error ) ->
             for constraint of error
                 liTemplate = $( @options.errors.errorElem ).addClass( constraint )
 
                 $( @ulError ).append( if @options.animate then $( liTemplate ).html( error[ constraint ] ).hide().fadeIn( @options.animateDuration ) else $( liTemplate ).html( error[ constraint ] ) )
 
-        #
+        ###*
         # Remove all ul / li errors
         #
         # @method removeErrors
-        #
+        ###
         removeErrors: () ->
             if @options.animate then $( @ulError ).fadeOut( @options.animateDuration, () -> $( this ).remove() ) else $( @ulError ).remove()
 
-        #
+        ###*
         # Remove ul errors and parsley error or success classes
         #
         # @method reset
-        #
+        ###
         reset: () ->
             @valid = null
             @removeErrors()
@@ -728,12 +728,12 @@
 
             return this
 
-        #
+        ###*
         # Add li / ul errors messages
         #
         # @method manageError
         # @param {Object} constraint
-        #
+        ###
         manageError: ( constraint ) ->
             # display ulError container if it has been removed previously (or never shown)
             if ( !$( @ulError ).length )
@@ -758,11 +758,11 @@
                 liError[ liClass ] = message
                 @addError( liError )
 
-        #
+        ###*
         # Create ul error container
         #
         # @method manageErrorContainer
-        #
+        ###
         manageErrorContainer: () ->
             errorContainer = @options.errorContainer or @options.errors.container( @element, @isRadioOrCheckbox )
             ulTemplate = if @options.animate then @ulTemplate.show() else @ulTemplate
@@ -773,32 +773,32 @@
 
             if !@isRadioOrCheckbox then @$element.after( ulTemplate ) else @$element.parent().after( ulTemplate )
 
-        #
+        ###*
         # Add custom listeners
         #
         # @param {Object} { listener: () {} }, eg { onFormSubmit: ( valid, event, focus ) { ... } }
-        #
+        ###
         addListener: ( object ) ->
             for listener of object
               @options.listeners[ listener ] = object[ listener ]
 
-        #
+        ###*
         # Destroy parsley field instance
         #
         # @private
         # @method destroy
-        #
+        ###
         destroy: () ->
             @$element.removeClass( 'parsley-validated' )
             @reset().$element.off(".#{@type}").removeData( @type )
 
-    #
+    ###*
     # ParsleyFieldMultiple override ParsleyField for checkbox and radio inputs
     # Pseudo-heritance to manage divergent behavior from ParsleyItem in dedicated methods
     #
     # @class ParsleyFieldMultiple
     # @constructor
-    #
+    ###
     class ParsleyFieldMultiple
         constructor: ( element, options, type ) ->
             @initMultiple( element, options )
@@ -808,13 +808,13 @@
             # call ParsleyField constructor
             @init( element, type or 'ParsleyFieldMultiple' )
 
-        #
+        ###*
         # Set some specific properties, call some extra methods to manage radio / checkbox
         #
         # @method init
         # @param {Object} element
         # @param {Object} options
-        #
+        ###
         initMultiple: ( element, options ) ->
             @element = element
             @$element = $( element )
@@ -826,14 +826,14 @@
             @isCheckbox = @$element.is( 'input[type=checkbox]' )
             @errorClassHandler = options.errors.classHandler( element, @isRadioOrCheckbox ) or @$element.parent()
 
-        #
+        ###*
         # Set specific constraints messages, do pseudo-heritance
         #
         # @private
         # @method inherit
         # @param {Object} element
         # @param {Object} options
-        #
+        ###
         inherit: ( element, options ) ->
             clone = new ParsleyField( element, options, 'ParsleyFieldMultiple' )
 
@@ -841,12 +841,12 @@
                 if ('undefined' == typeof @[property])
                     @[property] = clone[property]
 
-        #
+        ###*
         # Set specific constraints messages, do pseudo-heritance
         #
         # @method getName
         # @returns {String} radio / checkbox hash is cleaned 'name' or data-group property
-        #
+        ###
         getName: () ->
             if ( @group )
                 return "parsley-#{@group}"
@@ -856,13 +856,13 @@
 
             return "parsley-#{@$element.attr('name').replace(/(:|\.|\[|\])/g, '')}"
 
-        #
+        ###*
         # Special treatment for radio & checkboxes
         # Returns checked radio or checkboxes values
         #
         # @method getVal
         # @returns {String} val
-        #
+        ###
         getVal: () ->
             if ( @isRadio )
                 return $("#{@siblings}:checked").val() or ''
@@ -875,12 +875,12 @@
 
                 return values
 
-        #**
+        ###*
         # Bind validation events on a field
         #
         # @private
         # @method bindValidationEvents
-        #/
+        ###
         bindValidationEvents: () ->
             # this field has validation events, that means it has to be validated
             @valid = null
@@ -900,13 +900,13 @@
             $( @siblings ).each () ->
                 $( this ).on( triggers.split( ' ' ).join(".#{self.type} ") , false, $.proxy( self.eventValidation, self ) )
 
-    #
+    ###*
     # ParsleyForm class manage Parsley validated form.
     # Manage its fields and global validation
     #
     # @class ParsleyForm
     # @constructor
-    #
+    ###
     class ParsleyForm
         constructor: (element, options, type) ->
             @init( element, options, type or 'parsleyForm' )
@@ -924,11 +924,11 @@
 
             @$element.on("submit.#{@type}", false, $.proxy(@validate, this))
 
-        #
+        ###*
         # Add custom listeners
         #
         # @param {Object} { listener: () {} }, eg { onFormSubmit: ( valid, event, focus ) { ... } }
-        #
+        ###
         addListener: ( object ) ->
             for listener of object
                 if ( new RegExp( 'Field' ).test( listener ) )
@@ -937,12 +937,12 @@
                 else
                     @options.listeners[ listener ] = object[ listener ]
 
-        #
+        ###*
         # Adds a new parsleyItem child to ParsleyForm
         #
         # @method addItem
         # @param elem
-        #
+        ###
         addItem: ( elem ) ->
             if ($(elem).is(@options.excluded))
                 return false
@@ -952,13 +952,13 @@
 
             @items.push(parsleyField)
 
-        #
+        ###*
         # Removes a parsleyItem child from ParsleyForm
         #
         # @method removeItem
         # @param elem
         # @return {Boolean}
-        #
+        ###
         removeItem: ( elem ) ->
             parsleyItem = $( elem ).parsley()
 
@@ -971,14 +971,14 @@
 
             return false
 
-        #
+        ###*
         # Process each form field validation
         # Display errors, call custom onFormSubmit() function
         #
         # @method validate
         # @param {Object} event jQuery Event
         # @return {Boolean} Is form valid or not
-        #
+        ###
         validate: ( event ) ->
             valid = true
             @focusedField = false
@@ -1005,36 +1005,36 @@
 
             return true
 
-        #
+        ###*
         # Remove all errors ul under invalid fields
         #
         # @method removeErrors
-        #
+        ###
         removeErrors: () ->
             for item in [0..@items.length-1]
                 @items[ item ].parsley( 'reset' )
 
-        #
+        ###*
         # destroy Parsley binded on the form and its fields
         #
         # @method destroy
-        #
+        ###
         destroy: () ->
             for item in [0..@items.length-1]
                 @items[ item ].destroy()
 
             @$element.off(".#{@type}").removeData(@type)
 
-        #
+        ###*
         # reset Parsley binded on the form and its fields
         #
         # @method reset
-        #
+        ###
         reset: () ->
             for item in [0..@items.length-1]
                 @items[ item ].reset()
 
-    #
+    ###*
     # Parsley plugin definition
     # Provides an interface to access public Validator, ParsleyForm and ParsleyField functions
     #
@@ -1043,7 +1043,7 @@
     # @param {Mixed} Options. {Object} to configure Parsley or {String} method name to call a public class method
     # @param {Function} Callback function
     # @return {Mixed} public class method return
-    #
+    ###
     $.fn.parsley = ( option, fn ) ->
         options = $.extend( true, {}, $.fn.parsley.defaults, (if window.ParsleyConfig? then window.ParsleyConfig else {}), option, @data() )
         newInstance = null
@@ -1082,12 +1082,12 @@
 
     $.fn.parsley.Constructor = ParsleyForm.constructor
 
-    #
+    ###*
     # Parsley plugin configuration
     #
     # @property $.fn.parsley.defaults
     # @type {Object}
-    #
+    ###
     $.fn.parsley.defaults =
         # basic data-api overridable properties here..
         inputs: 'input, textarea, select'           # Default supported inputs.
