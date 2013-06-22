@@ -1,4 +1,4 @@
-#Parsley.js
+#Parsley.coffee
 
 [![Build Status](https://travis-ci.org/guillaumepotier/Parsley.js.png?branch=master)](https://travis-ci.org/guillaumepotier/Parsley.js)
 
@@ -42,7 +42,7 @@ They'll be created and dumped in the dist/ directory
 
 ##Validators
 
-Add new validators in `parsley.extend.js` and minify it. No validators will be allowed directly into parsley.js
+Add new validators in `parsley.extend.coffee` and minify it. No validators will be allowed directly into parsley.coffee
 (but great validators could move from extra to parsley ;))
 
 ##Localization
@@ -62,7 +62,7 @@ Some integrations are
 ## Global
 
 * fork repository
-* add your changes to parsley.js
+* add your changes to parsley.coffee
 * add / update tests to test suite (tests/index.html / tests/tests.js)
 * run tests (see above)
 * create new minified versions with minify script (see above) (use next tag-dev as version. Ie: if 1.1.1, use 1.1.2-dev)
