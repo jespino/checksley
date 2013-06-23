@@ -263,22 +263,26 @@
 
     <script type="text/javascript">
         var jquery = 'resources/jquery.min.js'
-          , zepto = 'resources/zepto-1.0rc1[zepto.event.data.ajax.fx.fx_modules].js';
+          , zepto = 'resources/zepto-1.0rc1[zepto.event.data.ajax.fx.fx_modules].js'
+          , lodash = 'resources/lodash.compat.js';
 
         switch ( location.hash ) {
             case '#zepto':
+                jsAppend( lodash , pause( 100 ) );
                 jsAppend( zepto , pause( 100 ) );
                 jsAppend( '../parsley.js' , pause( 50 ) );
                 jsAppend( '../parsley.extend.js' , pause( 50 ) );
                 document.getElementById( 'info' ).innerHTML = 'Parsley test suite for Zepto, unminified version';
                 break;
             case '#zepto-min':
+                jsAppend( lodash , pause( 100 ) );
                 jsAppend( zepto , pause( 100 ) );
                 jsAppend( '../dist/parsley.min.js' , pause( 50 ) );
                 jsAppend( '../dist/parsley.extend.min.js' , pause( 50 ) );
                 document.getElementById( 'info' ).innerHTML = 'Parsley test suite for Zepto, minified version';
                 break;
             case '#jquery-min':
+                jsAppend( lodash , pause( 100 ) );
                 jsAppend( jquery , pause( 100 ) );
                 jsAppend( '../dist/parsley.min.js' , pause( 50 ) );
                 jsAppend( '../dist/parsley.extend.min.js' , pause( 50 ) );
@@ -291,6 +295,7 @@
                 break;
             case '#jquery':
             default:
+                jsAppend( lodash , pause( 100 ) );
                 jsAppend( jquery , pause( 100 ) );
                 jsAppend( '../parsley.js' , pause( 50 ) );
                 jsAppend( '../parsley.extend.js' , pause( 50 ) );

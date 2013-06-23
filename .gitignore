@@ -3,6 +3,7 @@
 components/*
 doc/*
 dist/*
+l10n/*.js
 parsley.js
 parsley.extend.js
 node_modules

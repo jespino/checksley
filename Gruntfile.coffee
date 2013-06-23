@@ -16,6 +16,7 @@ module.exports = (grunt) ->
             dist:
                 src: [
                     'tests/resources/zepto-1.0rc1*.js'
+                    'tests/resources/lodash.compat.js'
                     'parsley.js'
                 ]
                 dest: 'dist/parsley-standalone.js'
