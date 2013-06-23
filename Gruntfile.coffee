@@ -60,6 +60,13 @@ module.exports = (grunt) ->
         mocha_phantomjs:
             all: ['tests/index.html']
 
+        clean: [
+            'parsley.js'
+            'parsley.extend.js'
+            'dist'
+        ]
+
+
 
     # Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify')
@@ -67,6 +74,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
     grunt.loadNpmTasks('grunt-contrib-concat')
+    grunt.loadNpmTasks('grunt-contrib-clean')
     grunt.loadNpmTasks('grunt-mocha-phantomjs')
     grunt.loadNpmTasks('grunt-coffeelint')
 
