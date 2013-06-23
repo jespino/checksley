@@ -9,6 +9,9 @@ defaults =
     excluded: 'input[type=hidden], input[type=file], :disabled'
     focus: 'first'
 
+    validationMinlength: 3
+    validateIfUnchanged: false
+
     errors:
         showErrors: true
         errorClass: "parsley-error"
@@ -19,6 +22,22 @@ defaults =
         containerClass: "parsley-error-list"
         containerGlobalSearch: false
         containerPreferenceSelector: ".errors-box"
+
+        containerWrapper: "<ul />"
+        elementWrapper: "<li />"
+
+        classHandler: (element, isRadioOrCheckbox) ->
+            return element
+
+        container: (element, isRadioOrCheckbox) ->
+            return element.parent()
+
+    # Default listeners
+    listeners:
+        onFieldValidate: (element, field) -> return false
+        onFormSubmit: (ok, event, form) ->
+        onFieldError: (element, constraints, field) ->
+        onFieldSuccess: (element, constraints, field) ->
 
 
 validators =
@@ -210,6 +229,10 @@ class Field
         if not @hasConstraints()
             return null
 
+        if @form.options.listeners.onFieldValidate(@element, this)
+            @reset()
+            return null
+
         if not @required and @getValue() == ""
             @reset()
             return null
@@ -236,14 +259,19 @@ class Field
                 valid = false
                 @manageError(name, data) if showErrors
 
-        if valid
-            @element.removeClass(@form.options.errors.errorClass)
-            @element.addClass(@form.options.errors.validClass)
-        else
-            @element.removeClass(@form.options.errors.validClass)
-            @element.addClass(@form.options.errors.errorClass)
+        @handleClases(valid)
 
         return valid
+
+    handleClases: (valid) ->
+        classHandlerElement = @form.options.errors.classHandler(@element, false)
+
+        if valid
+            classHandlerElement.removeClass(@form.options.errors.errorClass)
+            classHandlerElement.addClass(@form.options.errors.validClass)
+        else
+            classHandlerElement.removeClass(@form.options.errors.validClass)
+            classHandlerElement.addClass(@form.options.errors.errorClass)
 
     manageError: (name, constraint) ->
         if name == "type"
