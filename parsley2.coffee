@@ -254,12 +254,9 @@ class Field
         if showErrors
             @removeErrors()
 
-
-
         # Apply all declared validators
         for name, data of @constraints
             data.valid = data.fn(@getValue(), data.params)
-
 
             if data.valid is false
                 valid = false
@@ -269,18 +266,24 @@ class Field
                 listeners.onFieldSuccess(@element, data, @)
 
         @handleClases(valid)
-
         return valid
 
     handleClases: (valid) ->
         classHandlerElement = @form.options.errors.classHandler(@element, false)
 
-        if valid
-            classHandlerElement.removeClass(@form.options.errors.errorClass)
-            classHandlerElement.addClass(@form.options.errors.validClass)
-        else
-            classHandlerElement.removeClass(@form.options.errors.validClass)
-            classHandlerElement.addClass(@form.options.errors.errorClass)
+        errorClass = @form.options.errors.errorClass
+        validClass = @form.options.errors.validClass
+
+        switch valid
+            when null
+                classHandlerElement.removeClass(errorClass)
+                classHandlerElement.removeClass(validClass)
+            when false
+                classHandlerElement.removeClass(validClass)
+                classHandlerElement.addClass(errorClass)
+            when true
+                classHandlerElement.removeClass(errorClass)
+                classHandlerElement.addClass(validClass)
 
     manageError: (name, constraint) ->
         if name == "type"
@@ -304,9 +307,7 @@ class Field
         container.append(errorElement)
 
     reset: ->
-        @element.removeClass(@form.options.errors.errorClass)
-        @element.removeClass(@form.options.errors.validClass)
-
+        @handleClases(null)
         @resetConstraints()
         @removeErrors()
 
