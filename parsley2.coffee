@@ -110,6 +110,14 @@ messages =
     equalto:        "This value should be the same."
 
 
+formatMesssage = (message, args) ->
+    return message.replace /%s/g, (match) ->
+        return String(args.shift())
+
+toInt = (num) ->
+    return parseInt(num, 10)
+
+
 class Parsley
     constructor: ->
         @injectPlugin(window.jQuery || window.Zepto)
@@ -157,10 +165,31 @@ class Field
     errorClassTarget: ->
         return @element
 
+    resetHtml5Constraints: ->
+        # Html5 validators compatibility
+        if @element.prop("required")
+            @required = true
+
+        typeRx = new RegExp(@element.attr('type'), "i")
+        if typeRx.test("email url number range")
+            type = @element.attr('type')
+            switch type
+                when "range"
+                    min = @element.attr('min')
+                    max = @element.attr('max')
+
+                    if min and max
+                        @constraints[type] =
+                            valid: true
+                            params: [toInt(min), toInt(max)]
+                            fn: @form.validators[type]
+
     resetConstraints: ->
         @constraints = {}
         @valid = true
         @required = false
+
+        @resetHtml5Constraints()
 
         for constraint, fn of @form.validators
             if @element.data(constraint) is undefined
@@ -216,6 +245,27 @@ class Field
 
         return valid
 
+    manageError: (name, constraint) ->
+        if name == "type"
+            message = @form.messages["type"][constraint.params]
+        else
+            message = @form.messages[name]
+
+        if message is undefined
+            message = @form.messages["default"]
+
+        if constraint.params
+            message = formatMesssage(message, _.clone(constraint.params, true))
+
+        @addError(@makeErrorElement(name, message))
+
+    addError: (errorElement) ->
+        container = @getErrorContainer()
+        if @form.options.errors.onlyOneErrorElement
+            container.empty()
+
+        container.append(errorElement)
+
     reset: ->
         @element.removeClass(@form.options.errors.errorClass)
         @element.removeClass(@form.options.errors.validClass)
@@ -226,24 +276,6 @@ class Field
     removeErrors: ->
         # Remove errors container
         $("##{@errorContainerId()}").remove()
-
-    manageError: (name, constraint) ->
-        if name == "type"
-            message = @form.messages["type"][constraint.params]
-        else
-            message = @form.messages[name]
-
-        if message is undefined
-            message = @form.messages["default"]
-
-        @addError(@makeErrorElement(name, message))
-
-    addError: (errorElement) ->
-        container = @getErrorContainer()
-        if @form.options.errors.onlyOneErrorElement
-            container.empty()
-
-        container.append(errorElement)
 
     getValue: ->
         return @element.val()

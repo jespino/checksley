@@ -17,6 +17,14 @@ demo =
             event.preventDefault()
             form.validate()
 
+    rangeForm: ->
+        section = $(".type-range-section")
+        form  = section.find("form").parsley()
+        console.log form
+
+        section.on "click", ".validate", (event) ->
+            event.preventDefault()
+            form.validate()
 
 $ ->
     fn() for name, fn of demo
