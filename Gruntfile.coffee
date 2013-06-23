@@ -32,23 +32,19 @@ module.exports = (grunt) ->
                     outdir: 'doc/api'
 
         coffee:
-            compileBare:
-                options:
-                    bare: true
-                files:
-                    'parsley.js': 'parsley.coffee'
-                    'parsley.extend.js': 'parsley.extend.coffee'
-                    'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
-
             parsley:
                 files:
-                    'parsley2.js': 'parsley2.coffee'
+                    'parsley.js': 'parsley2.coffee'
                     'parsley.extend.js': 'parsley.extend.coffee'
                     'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
 
             demo:
                 files:
                     'demo/demo.js': 'demo/demo.coffee'
+
+            tests:
+                files:
+                    "tests.js": "tests.coffee"
 
         coffeelint:
             app:
@@ -63,12 +59,6 @@ module.exports = (grunt) ->
                         level: "error"
 
         watch:
-            scripts:
-                files: ['parsley.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
-                tasks: ['coffee:compileBare']
-                options:
-                    nospawn: true
-
             parsley:
                 files: ['parsley2.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
                 tasks: ['coffee:parsley']
@@ -78,6 +68,12 @@ module.exports = (grunt) ->
             demo:
                 files: ['demo/demo.coffee']
                 tasks: ['coffee:demo']
+                options:
+                    nospawn: false
+
+            tests:
+                files: ["tests.coffee"]
+                tasks: ["coffee:tests"]
                 options:
                     nospawn: false
 
@@ -91,9 +87,6 @@ module.exports = (grunt) ->
             'dist'
             'doc'
         ]
-
-
-
 
 
     # Load the plugin that provides the "uglify" task.

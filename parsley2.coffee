@@ -151,24 +151,28 @@ class Parsley
     updateMessages: (options) ->
         _.extend(messages, options)
 
+
     injectPlugin: (jq) ->
         jq.fn.parsley = (options) ->
             elm = this
             element = $(elm)
 
-            # Return null if a current element is not a
-            # form element
-
             if not element.is("form")
                 return null
 
-            instance = element.data("parsleyForm")
+            instance = element.data("parsley")
             if instance is undefined
-                instance = new Form(elm, options)
-                element.data("parsleyForm", instance)
+                if _.isPlainObject(options)
+                    instance = new Form(elm, options)
+                else
+                    instance = new Form(elm)
 
-            return instance
-
+            if _.isString(options)
+                switch options
+                    when "validate" then instance.validate()
+                    when "destroy" then instance.destroy()
+            else
+                return instance
 
 
 class Field
@@ -201,8 +205,11 @@ class Field
 
         @validate()
 
-    bindEvents: ->
+    unbindEvents: ->
         @element.off(".#{@id}")
+
+    bindEvents: ->
+        @unbindEvents()
         trigger = @element.data("trigger")
 
         if _.isString(trigger)
@@ -333,6 +340,12 @@ class Field
 
         @addError(@makeErrorElement(name, message))
 
+    makeErrorElement: (constraintName, message) ->
+        element = $("<li />", {"class": "parsley-#{constraintName}"})
+        element.html(message)
+        element.addClass(constraintName)
+        return element
+
     addError: (errorElement) ->
         container = @getErrorContainer()
         if @form.options.errors.onlyOneErrorElement
@@ -386,10 +399,10 @@ class Field
         container.append(errorContainerEl)
         return errorContainerEl
 
-    makeErrorElement: (constraintName, message) ->
-        element = $("<li />", {"class": "parsley-#{constraintName}"})
-        element.html(message)
-        return element
+
+    destroy: ->
+        @unbindEvents()
+        @removeErrors()
 
 
 class FieldMultiple extends Field
@@ -409,6 +422,13 @@ class Form
         # Initialize fields
         @initializeFields()
         @bindEvents()
+        @bindData()
+
+    bindData: ->
+        @element.data("parsley", @)
+
+    unbindData: ->
+        @element.data("parsley", null)
 
     initializeFields: ->
         @fields = []
@@ -441,7 +461,7 @@ class Form
 
     bindEvents: ->
         self = @
-
+        @unbindEvents()
         @element.on "submit.#{@id}", (event) ->
             ok = self.validate()
             self.options.listeners.onFormSubmit(ok, event, self)
@@ -449,16 +469,21 @@ class Form
             if self.options.interceptSubmit and not ok
                 event.preventDefault()
 
+    unbindEvents: ->
+        @element.off(".#{@id}")
+
     removeErrors: ->
         for field in @fields
             field.reset()
 
     destroy: ->
+        @unbindEvents()
+
         for field in @fields
             field.destroy()
 
-        # TODO: off all events assigned
-        # to the current element.
+        @field = []
+
 
     reset: ->
         for field in @fields
@@ -473,5 +498,7 @@ parsley.Form = Form
 parsley.Field = Field
 parsley.FieldMultiple = FieldMultiple
 
+
 # Expose global instance to the world
 @parsley = parsley
+@parsley.injectPlugin(window.jQuery || window.Zepto)
