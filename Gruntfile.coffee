@@ -11,12 +11,13 @@ module.exports = (grunt) ->
                     'dist/parsley.extend.min.js': 'parsley.extend.js'
                     'dist/parsley-standalone.min.js': ['parsley.js', 'parsley.extend.js']
         yuidoc:
+            options:
+                syntaxtype: 'coffee'
             compile:
                 name: '<%= pkg.name %>'
                 description: '<%= pkg.description %>'
                 version: '<%= pkg.version %>'
                 url: '<%= pkg.homepage %>'
-                syntaxtype: 'coffee'
                 options:
                     paths: "."
                     outdir: 'doc/api'
@@ -36,14 +37,19 @@ module.exports = (grunt) ->
                 options:
                     nospawn: true
 
+        mocha_phantomjs:
+            all: ['tests/index.html']
+
 
     # Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
+    grunt.loadNpmTasks('grunt-mocha-phantomjs')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee'])
     grunt.registerTask('dist', ['coffee', 'uglify'])
     grunt.registerTask('doc', ['yuidoc'])
+    grunt.registerTask('test', ['mocha_phantomjs'])
