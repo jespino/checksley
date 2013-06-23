@@ -95,7 +95,7 @@ window.ParsleyConfig = window.ParsleyConfig or {}
 
             es_postalcode: (val, elem, self) ->
                 if (!/^\d{5}$/.test(val))
-                  return false
+                    return false
 
                 provinceCode = parseInt(val.substring(0,2), 10)
 
