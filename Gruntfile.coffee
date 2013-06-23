@@ -9,7 +9,17 @@ module.exports = (grunt) ->
                 files:
                     'dist/parsley.min.js': 'parsley.js'
                     'dist/parsley.extend.min.js': 'parsley.extend.js'
-                    'dist/parsley-standalone.min.js': ['parsley.js', 'parsley.extend.js']
+                    'dist/parsley-standalone.min.js': 'dist/parsley-standalone.js'
+        concat:
+            options:
+                separator: ';'
+            dist:
+                src: [
+                    'tests/resources/zepto-1.0rc1*.js'
+                    'parsley.js'
+                ]
+                dest: 'dist/parsley-standalone.js'
+
         yuidoc:
             compile:
                 name: '<%= pkg.name %>'
@@ -56,12 +66,13 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
+    grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-mocha-phantomjs')
     grunt.loadNpmTasks('grunt-coffeelint')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee'])
-    grunt.registerTask('dist', ['coffee', 'uglify'])
+    grunt.registerTask('dist', ['coffee', 'concat', 'uglify'])
     grunt.registerTask('doc', ['coffee', 'yuidoc'])
     grunt.registerTask('test', ['mocha_phantomjs'])
     grunt.registerTask('lint', ['coffeelint'])
