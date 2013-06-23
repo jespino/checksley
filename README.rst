@@ -14,10 +14,10 @@ Curent Stable Version
 Browser compatibility
 =====================
 
-  - IE 7/8 (with jQuery < 2.x.x, parsley.min, not parsley.standalone)
-  - IE 9+ (latest jQuery and Zepto)
-  - FF 14+
-  - Chrome
+* IE 7/8 (with jQuery < 2.x.x, parsley.min, not parsley.standalone)
+* IE 9+ (latest jQuery and Zepto)
+* FF 14+
+* Chrome
 
 Requirements
 ============
