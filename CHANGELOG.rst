@@ -1,4 +1,5 @@
-#Changelog
+Changelog
+=========
 
 **1.1.16 (current stable)**
 
