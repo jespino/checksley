@@ -176,16 +176,18 @@ class Parsley
 
 
 class Field
-    constructor: (elm, form) ->
+    constructor: (elm, options={}) ->
         @id = _.uniqueId("field-")
         @element = $(elm)
-        @form = form
         @validatedOnce = false
+        @options = _.extend({}, defaults, options)
+
+        # Clone messages and validators
+        @messages = messages
+        @validators = validators
 
         @resetConstraints()
         @bindEvents()
-
-        _.bindAll(@)
 
     focus: ->
         @element.focus()
@@ -200,7 +202,7 @@ class Field
         if event.type is "change" and not /change/i.test(trigger) and not @validatedOnce
             return true
 
-        if value.length < @form.options.validationMinlength and not @validatedOnce
+        if value.length < @options.validationMinlength and not @validatedOnce
             return true
 
         @validate()
@@ -241,7 +243,7 @@ class Field
                         @constraints[type] =
                             valid: true
                             params: [toInt(min), toInt(max)]
-                            fn: @form.validators[type]
+                            fn: @validators[type]
 
     resetConstraints: ->
         @constraints = {}
@@ -251,7 +253,7 @@ class Field
         @resetHtml5Constraints()
         @element.addClass('parsley-validated')
 
-        for constraint, fn of @form.validators
+        for constraint, fn of @validators
             if @element.data(constraint) is undefined
                 continue
 
@@ -271,7 +273,7 @@ class Field
         if not @hasConstraints()
             return null
 
-        if @form.options.listeners.onFieldValidate(@element, this)
+        if @options.listeners.onFieldValidate(@element, this)
             @reset()
             return null
 
@@ -283,12 +285,12 @@ class Field
 
     applyValidators: (showErrors) ->
         if showErrors is undefined
-            showErrors = @form.options.errors.showErrors
+            showErrors = @options.errors.showErrors
 
         val = @getValue()
         valid = true
 
-        listeners = @form.options.listeners
+        listeners = @options.listeners
 
         # If showErrors is true, remove previous errors
         # before put new errors.
@@ -310,10 +312,10 @@ class Field
         return valid
 
     handleClases: (valid) ->
-        classHandlerElement = @form.options.errors.classHandler(@element, false)
+        classHandlerElement = @options.errors.classHandler(@element, false)
 
-        errorClass = @form.options.errors.errorClass
-        validClass = @form.options.errors.validClass
+        errorClass = @options.errors.errorClass
+        validClass = @options.errors.validClass
 
         switch valid
             when null
@@ -328,12 +330,12 @@ class Field
 
     manageError: (name, constraint) ->
         if name == "type"
-            message = @form.messages["type"][constraint.params]
+            message = @messages["type"][constraint.params]
         else
-            message = @form.messages[name]
+            message = @messages[name]
 
         if message is undefined
-            message = @form.messages["default"]
+            message = @messages["default"]
 
         if constraint.params
             message = formatMesssage(message, _.clone(constraint.params, true))
@@ -348,7 +350,7 @@ class Field
 
     addError: (errorElement) ->
         container = @getErrorContainer()
-        if @form.options.errors.onlyOneErrorElement
+        if @options.errors.onlyOneErrorElement
             container.empty()
 
         container.append(errorElement)
@@ -387,22 +389,24 @@ class Field
             errorContainerEl.insertAfter(@element)
             return errorContainerEl
 
-        if @form.options.errors.containerGlobalSearch
+        if @options.errors.containerGlobalSearch
             container = $(definedContainer)
         else
             container = @element.closest(definedContainer)
 
-        preferenceSelector = @form.options.errors.containerPreferenceSelector
+        preferenceSelector = @options.errors.containerPreferenceSelector
         if container.find(preferenceSelector).length == 1
             container = container.find(preferenceSelector)
 
         container.append(errorContainerEl)
         return errorContainerEl
 
-
     destroy: ->
         @unbindEvents()
         @removeErrors()
+
+    setForm: (form) ->
+        @form = form
 
 
 class FieldMultiple extends Field
@@ -414,10 +418,6 @@ class Form
         @id = _.uniqueId("parsleyform-")
         @element = $(elm)
         @options = _.extend({}, defaults, options)
-
-        # Clone messages and validators
-        @messages = _.clone(messages, true)
-        @validators = _.clone(validators, true)
 
         # Initialize fields
         @initializeFields()
@@ -439,9 +439,12 @@ class Form
                 continue
 
             if element.is("input[type=radio], input[type=checkbox]")
-                @fields.push(new FieldMultiple(fieldElm, @, @options))
+                field = new parsley.FieldMultiple(fieldElm, @options)
             else
-                @fields.push(new Field(fieldElm, @, @options))
+                field = new parsley.Field(fieldElm, @options)
+
+            field.setForm(@)
+            @fields.push(field)
 
     validate: ->
         valid = true

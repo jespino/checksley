@@ -14,3 +14,20 @@ describe "Parsley test suite", ->
         it "Check required field validation 02", ->
             $(".required-section input").val("kk")
             expect(form.validate()).to.be(true)
+
+        it "Check error visualization", ->
+            $(".required-section input").val("")
+            form.validate()
+            expect(form.element.find(".parsley-error").length).to.be(1)
+
+    describe "Individual form field validation", ->
+        it "required field", ->
+            element = $("<input />", {"type": "text", "data-required": "true"})
+            element.insertBefore($("body"))
+
+            field = new parsley.Field(element)
+            expect(field.validate()).to.be(false)
+
+            element.val("dd")
+            expect(field.validate()).to.be(true)
+            element.remove()
