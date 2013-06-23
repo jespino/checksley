@@ -3,7 +3,7 @@ createElement = (type="text", attrs={}) ->
     params = _.extend(params, attrs)
 
     element = $("<input />", params)
-    element.insertBefore($("body"))
+    $("#tests-data").append(element)
     return element
 
 describe "Parsley test suite", ->
@@ -27,6 +27,26 @@ describe "Parsley test suite", ->
             $(".required-section input").val("")
             form.validate()
             expect(form.element.find(".parsley-error").length).to.be(1)
+
+    describe "FieldMultiple tests", ->
+        field = null
+
+        afterEach ->
+            if field != null
+                field.destroy()
+
+        it "Check field multiple directly", ->
+            element1 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+            element2 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+            element3 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+
+            field = new parsley.FieldMultiple(element1)
+            expect(field.validate()).to.be(false)
+
+            element1.attr("checked", "true")
+            element2.attr("checked", "true")
+            expect(field.validate()).to.be(true)
+
 
     describe "Individual form field validation", ->
         element = null

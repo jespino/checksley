@@ -142,6 +142,8 @@ messages =
 
 
 formatMesssage = (message, args) ->
+    if not _.isArray(args)
+        args = [args]
     return message.replace /%s/g, (match) ->
         return String(args.shift())
 
@@ -192,6 +194,7 @@ class Field
         @element = $(elm)
         @validatedOnce = false
         @options = _.extend({}, defaults, options)
+        @isRadioOrCheckbox = false
 
         # Clone messages and validators
         @messages = messages
@@ -281,6 +284,7 @@ class Field
 
     validate: (showErrors) ->
         @validatedOnce = true
+
         if not @hasConstraints()
             return null
 
@@ -397,7 +401,10 @@ class Field
 
         definedContainer = @element.data('error-container')
         if definedContainer is undefined
-            errorContainerEl.insertAfter(@element)
+            if @isRadioOrCheckbox
+                errorContainerEl.insertAfter(@element.parent())
+            else
+                errorContainerEl.insertAfter(@element)
             return errorContainerEl
 
         if @options.errors.containerGlobalSearch
@@ -421,8 +428,48 @@ class Field
 
 
 class FieldMultiple extends Field
-    constructor: (elm, form, options) ->
+    constructor: (elm, options) ->
+        super(elm, options)
 
+        @isRadioOrCheckbox = true
+        @isRadio = @element.is("input[type=radio]")
+        @isCheckbox = @element.is("input[type=checkbox]")
+
+    getSibligns: ->
+        group = @element.data("group")
+        if group is undefined
+            return "input[name=#{@element.attr('name')}]"
+        else
+            return "[data-group=\"#{group}\"]"
+
+    getValue: ->
+        if @isRadio
+            return $("#{@getSibligns()}:checked").val() or ''
+
+        if @isCheckbox
+            values = []
+
+            for element in $("#{@getSibligns()}:checked")
+                values.push($(element).val())
+
+            return values
+
+    unbindEvents: ->
+        for element in $(@getSibligns())
+            $(element).off(".#{@id}")
+
+    bindEvents: ->
+        @unbindEvents()
+        trigger = @element.data("trigger")
+
+        for element in $(@getSibligns())
+            element = $(element)
+
+            if _.isString(trigger)
+                element.on("#{trigger}.#{@id}", _.bind(@eventValidate, @))
+
+            if trigger != "change"
+                element.on("change.#{@id}", _.bind(@eventValidate, @))
 
 class Form
     constructor: (elm, options={}) ->
@@ -508,6 +555,7 @@ class Form
 parsley = new Parsley()
 
 # Expose internal clases
+parsley.Parsley = Parsley
 parsley.Form = Form
 parsley.Field = Field
 parsley.FieldMultiple = FieldMultiple
