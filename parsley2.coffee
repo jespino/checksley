@@ -5,15 +5,20 @@
 # Author: Jesús Espino - @jespinog
 
 defaults =
-   inputs: 'input, textarea, select'
-   excluded: 'input[type=hidden], input[type=file], :disabled'
-   animate: true
-   animateDuration: 300
-   focus: 'first'
-   showErrors: true
-   errorClass: "parsley-error"
-   successClass: "parsley-ok"
-   validatedClass: "parsley-validated"
+    inputs: 'input, textarea, select'
+    excluded: 'input[type=hidden], input[type=file], :disabled'
+    focus: 'first'
+
+    errors:
+        showErrors: true
+        errorClass: "parsley-error"
+        validClass: "parsley-ok"
+        validatedClass: "parsley-validated"
+        onlyOneErrorElement: false
+
+        containerClass: "parsley-error-list"
+        containerGlobalSearch: false
+        containerPreferenceSelector: ".errors-box"
 
 
 validators =
@@ -25,25 +30,22 @@ validators =
 
     # Works on all inputs. val is object for checkboxes
     required: (val) ->
-        # for checkboxes and select multiples. Check there is at least one required value
-        #if ('object' == typeof val)
-        #    for i of val
-        #        if (@required(val[i]))
-        #            return true
-        #    return false
-
         return validators.notnull(val) and validators.notblank(val)
 
     type: (val, type) ->
+        if val.length == 0
+            return false
+
+        regExp = null
+
         switch type
             when 'number' then regExp = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/
             when 'digits' then regExp = /^\d+$/
             when 'alphanum' then regExp = /^\w+$/
 
         # test regExp if not null
-        if '' != val
+        if regExp
             return regExp.test(val)
-
         return false
 
     regexp: (val, regExp, self) ->
@@ -187,7 +189,7 @@ class Field
 
     applyValidators: (showErrors) ->
         if showErrors is undefined
-            showErrors = @form.options.showErrors
+            showErrors = @form.options.errors.showErrors
 
         val = @getValue()
         valid = true
@@ -206,8 +208,8 @@ class Field
                 @manageError(name, data) if showErrors
 
         if valid
-            @element.removeClass(@form.options.errorClass)
-            @element.addClass(@form.options.validClass)
+            @element.removeClass(@form.options.errors.errorClass)
+            @element.addClass(@form.options.errors.validClass)
         else
             @element.removeClass(@form.options.validClass)
             @element.addClass(@form.options.errorClass)
@@ -227,6 +229,9 @@ class Field
 
     addError: (errorElement) ->
         container = @getErrorContainer()
+        if @form.options.errors.onlyOneErrorElement
+            container.empty()
+
         container.append(errorElement)
 
     getValue: ->
@@ -239,17 +244,32 @@ class Field
         return "parsley-error-list"
 
     getErrorContainer: ->
-        container = $("##{@errorContainerId()}")
-        if container.length == 1
-            return container
+        errorContainerEl = $("##{@errorContainerId()}")
+        if errorContainerEl.length == 1
+            return errorContainerEl
 
         params =
             "class": @errorContainerClass()
             "id": @errorContainerId()
 
-        container = $("<ul />", params)
-        container.insertAfter(@element)
-        return container
+        errorContainerEl = $("<ul />", params)
+
+        definedContainer = @element.data('error-container')
+        if definedContainer is undefined
+            errorContainerEl.insertAfter(@element)
+            return errorContainerEl
+
+        if @form.options.errors.containerGlobalSearch
+            container = $(definedContainer)
+        else
+            container = @element.closest(definedContainer)
+
+        preferenceSelector = @form.options.errors.containerPreferenceSelector
+        if container.find(preferenceSelector).length == 1
+            container = container.find(preferenceSelector)
+
+        container.append(errorContainerEl)
+        return errorContainerEl
 
     makeErrorElement: (constraintName, message) ->
         # TODO: make more costumizable via settings
