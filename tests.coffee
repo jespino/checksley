@@ -226,7 +226,7 @@ describe "Parsley test suite", ->
             element.val("foo")
             expect(field.validate()).to.be(true)
 
-            element.val("foofoo")
+            element.val("foofoofoo")
             expect(field.validate()).to.be(false)
 
             element.remove()
@@ -257,10 +257,10 @@ describe "Parsley test suite", ->
             expect(field.validate()).to.be(false)
 
             element.val("1")
-            expect(field.validate()).to.be(true)
+            expect(field.validate()).to.be(false)
 
             element.val("5")
-            expect(field.validate()).to.be(false)
+            expect(field.validate()).to.be(true)
 
             element.remove()
 
@@ -269,13 +269,13 @@ describe "Parsley test suite", ->
             field = new parsley.Field(element)
 
             element.val(" ")
-            expect(field.validate()).to.be(false)
+            expect(field.validate()).to.be(true)
 
             element.val("1")
-            expect(field.validate()).to.be(false)
+            expect(field.validate()).to.be(true)
 
             element.val("5")
-            expect(field.validate()).to.be(true)
+            expect(field.validate()).to.be(false)
 
             element.remove()
 
