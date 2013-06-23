@@ -10,6 +10,10 @@ defaults =
    animate: true
    animateDuration: 300
    focus: 'first'
+   showErrors: true
+   errorClass: "parsley-error"
+   successClass: "parsley-ok"
+   validatedClass: "parsley-validated"
 
 
 validators =
@@ -22,13 +26,13 @@ validators =
     # Works on all inputs. val is object for checkboxes
     required: (val) ->
         # for checkboxes and select multiples. Check there is at least one required value
-        if ('object' == typeof val)
-            for i of val
-                if (@required(val[i]))
-                    return true
-            return false
+        #if ('object' == typeof val)
+        #    for i of val
+        #        if (@required(val[i]))
+        #            return true
+        #    return false
 
-        return @notnull(val) and @notblank(val)
+        return validators.notnull(val) and validators.notblank(val)
 
     type: (val, type) ->
         switch type
@@ -138,14 +142,14 @@ class Parsley
 
 
 class Field
-    constructor: (elm, form, options) ->
+    constructor: (elm, form) ->
         @id = _.uniqueId("field-")
         @element = $(elm)
         @form = form
 
         @valid = true
         @required = false
-        @constraint = {}
+        @constraints = {}
 
         @populateConstraints()
 
@@ -157,56 +161,102 @@ class Field
 
     populateConstraints: ->
         for constraint, fn of @form.validators
-            if @element.data(constrain) is undefined
+            if @element.data(constraint) is undefined
                 continue
 
             @constraints[constraint] =
-                name: constraint
-                valid: null
+                valid: true
+                params: @element.data(constraint)
                 fn: fn
 
             if constraint == "required"
                 @required = true
 
-    bindEvents: ->
-        # Unbind any associated events.
-        @element.off(".#{@id}")
+    hasConstraints: ->
+        return not _.isEmpty(@constraints)
 
     validate: (showErrors) ->
-        val = @getValue()
-
         if not @hasConstraints()
             return null
 
-        if not @required and val == ""
+        if not @required and @getValue() == ""
             @reset()
             return null
 
-        # TODO: do not validate field already validated and unchanged
-        valid = @applyValidators()
+        return @applyValidators(showErrors)
 
-        showErrors = if showErrors? then showErrors else @options.showErrors
+    applyValidators: (showErrors) ->
+        if showErrors is undefined
+            showErrors = @form.options.showErrors
+
+        val = @getValue()
+        valid = true
+
+        # If showErrors is true, remove previous errors
+        # before put new errors.
         if showErrors
-            @manageValidationResult()
+            @removeErrors()
+
+        # Apply all declared validators
+        for name, data of @constraints
+            data.valid = data.fn(@getValue(), data.params)
+
+            if data.valid is false
+                valid = false
+                @manageError(name, data) if showErrors
+
+        if valid
+            @element.removeClass(@form.options.errorClass)
+            @element.addClass(@form.options.validClass)
+        else
+            @element.removeClass(@form.options.validClass)
+            @element.addClass(@form.options.errorClass)
 
         return valid
 
-    manageValidationResult: ->
-        valid = null
+    removeErrors: ->
+        # Remove errors container
+        $("##{@errorContainerId()}").remove()
 
-        for constraint of @constraints
-            if @constraints[constraint].valid == false
-                @manageError(@constraints[constraint])
-                valid = false
+    manageError: (name, constraint) ->
+        message = @form.messages[name]
+        if message is undefined
+            message = @form.messages["default"]
 
-            else if  @constraints[constraint].valid == true
-                @removeError(@constraints[constraint])
-                valid = false != valid
+        @addError(@makeErrorElement(name, message))
 
-        @valid = valid
-        if @valid == true
-            @removeErrors()
-            # TODO: remove error class and add success class
+    addError: (errorElement) ->
+        container = @getErrorContainer()
+        container.append(errorElement)
+
+    getValue: ->
+        return @element.val()
+
+    errorContainerId: ->
+        return "parsley-error-#{@id}"
+
+    errorContainerClass: ->
+        return "parsley-error-list"
+
+    getErrorContainer: ->
+        container = $("##{@errorContainerId()}")
+        if container.length == 1
+            return container
+
+        params =
+            "class": @errorContainerClass()
+            "id": @errorContainerId()
+
+        container = $("<ul />", params)
+        container.insertAfter(@element)
+        return container
+
+    makeErrorElement: (constraintName, message) ->
+        # TODO: make more costumizable via settings
+        element = $("<li />", {"class": "parsley-#{constraintName}"})
+        element.html(message)
+        return element
+
 
 class FieldMultiple extends Field
     constructor: (elm, form, options) ->
