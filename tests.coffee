@@ -30,22 +30,27 @@ describe "Parsley test suite", ->
 
     describe "Individual form field validation", ->
         element = null
+        field = null
 
         afterEach ->
+            if field != null
+                field.destroy()
+
             if element != null
                 element.remove()
 
+
         it "required field", ->
             element = createElement("text", {"data-required": "true"})
-
             field = new parsley.Field(element)
+
             expect(field.validate()).to.be(false)
 
             element.val("dd")
             expect(field.validate()).to.be(true)
             element.remove()
 
-        it "type number", ->
+        it "type digits", ->
             element = createElement("text", {"data-type":"digits"})
             field = new parsley.Field(element)
             expect(field.validate()).to.be(null)
@@ -55,3 +60,15 @@ describe "Parsley test suite", ->
 
             element.val("22")
             expect(field.validate()).to.be(true)
+
+        it "type number", ->
+            element = createElement("text", {"data-type": "number"})
+            field = new parsley.Field(element)
+
+            element.val("2.2")
+            expect(field.validate()).to.be(true)
+
+            element.val("dd")
+            expect(field.validate()).to.be(false)
+
+
