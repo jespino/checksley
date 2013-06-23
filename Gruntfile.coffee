@@ -37,10 +37,13 @@ module.exports = (grunt) ->
                 files:
                     'parsley.js': 'parsley.coffee'
                     'parsley.extend.js': 'parsley.extend.coffee'
+                    'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
 
             parsley:
                 files:
                     'parsley2.js': 'parsley2.coffee'
+                    'parsley.extend.js': 'parsley.extend.coffee'
+                    'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
 
             demo:
                 files:
@@ -49,7 +52,7 @@ module.exports = (grunt) ->
         coffeelint:
             app:
                 files:
-                    src: ['parsley.coffee', 'parsley.extend.coffee']
+                    src: ['parsley.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
                 options:
                     max_line_length:
                         value: 120
@@ -60,13 +63,13 @@ module.exports = (grunt) ->
 
         watch:
             scripts:
-                files: ['parsley.coffee', 'parsley.extend.coffee']
+                files: ['parsley.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
                 tasks: ['coffee:compileBare']
                 options:
                     nospawn: true
 
             parsley:
-                files: ['parsley2.coffee']
+                files: ['parsley2.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
                 tasks: ['coffee:parsley']
                 options:
                     nospawn: true
@@ -83,6 +86,7 @@ module.exports = (grunt) ->
         clean: [
             'parsley.js'
             'parsley.extend.js'
+            'l10n/*.js'
             'dist'
             'doc'
         ]
