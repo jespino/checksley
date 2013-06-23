@@ -279,9 +279,37 @@ describe "Parsley test suite", ->
 
             element.remove()
 
-        #TODO
-        #    range:
-        #    equalto:
+        it "validation range", ->
+            element = createElement("text", {"data-range":"[3, 1000]"})
+            field = new parsley.Field(element)
+
+            element.val("1")
+            expect(field.validate()).to.be(false)
+
+            element.val("666")
+            expect(field.validate()).to.be(true)
+
+            element.val("1666")
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+        it "validation equalto", ->
+            element = createElement("text", {"data-equalto":"#elementEqualId"})
+            elementEqual = createElement("text", {"value":"foo", "id":"elementEqualId"})
+
+            field = new parsley.Field(element)
+
+            element.val("notfoo")
+            expect(field.validate()).to.be(false)
+
+            element.val("foo")
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+            elementEqual.remove()
+
+        #TODO: checkboxes options
         #    mincheck:
         #    maxcheck:
         #    rangecheck:
