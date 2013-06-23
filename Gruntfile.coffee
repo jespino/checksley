@@ -82,5 +82,5 @@ module.exports = (grunt) ->
     grunt.registerTask('default', ['coffee'])
     grunt.registerTask('dist', ['coffee', 'concat', 'uglify'])
     grunt.registerTask('doc', ['coffee', 'yuidoc'])
-    grunt.registerTask('test', ['mocha_phantomjs'])
+    grunt.registerTask('test', ['coffee', 'mocha_phantomjs'])
     grunt.registerTask('lint', ['coffeelint'])
