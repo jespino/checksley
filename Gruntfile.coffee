@@ -11,8 +11,6 @@ module.exports = (grunt) ->
                     'dist/parsley.extend.min.js': 'parsley.extend.js'
                     'dist/parsley-standalone.min.js': ['parsley.js', 'parsley.extend.js']
         yuidoc:
-            options:
-                syntaxtype: 'coffee'
             compile:
                 name: '<%= pkg.name %>'
                 description: '<%= pkg.description %>'
@@ -29,6 +27,18 @@ module.exports = (grunt) ->
                 files:
                     'parsley.js': 'parsley.coffee'
                     'parsley.extend.js': 'parsley.extend.coffee'
+
+        coffeelint:
+            app:
+                files:
+                    src: ['parsley.coffee', 'parsley.extend.coffee']
+                options:
+                    max_line_length:
+                        value: 120
+                        level: "error"
+                    indentation:
+                        value: 4
+                        level: "error"
 
         watch:
             scripts:
@@ -47,9 +57,11 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
     grunt.loadNpmTasks('grunt-mocha-phantomjs')
+    grunt.loadNpmTasks('grunt-coffeelint')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee'])
     grunt.registerTask('dist', ['coffee', 'uglify'])
-    grunt.registerTask('doc', ['yuidoc'])
+    grunt.registerTask('doc', ['coffee', 'yuidoc'])
     grunt.registerTask('test', ['mocha_phantomjs'])
+    grunt.registerTask('lint', ['coffeelint'])

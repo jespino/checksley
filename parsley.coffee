@@ -150,7 +150,7 @@
 
                     try
                         response = $.parseJSON(response)
-                    catch err
+                    catch err then
 
                     return response
 
@@ -780,7 +780,7 @@
         ###
         addListener: ( object ) ->
             for listener of object
-              @options.listeners[ listener ] = object[ listener ]
+                @options.listeners[ listener ] = object[ listener ]
 
         ###*
         # Destroy parsley field instance
@@ -852,7 +852,9 @@
                 return "parsley-#{@group}"
 
             if ('undefined' == typeof @$element.attr('name'))
-                throw "A radio / checkbox input must have a data-group attribute or a name to be Parsley validated !"
+                throw
+                    name: "no data-group or name error"
+                    message: "A radio / checkbox input must have a data-group attribute or a name to be Parsley validated !"
 
             return "parsley-#{@$element.attr('name').replace(/(:|\.|\[|\])/g, '')}"
 
@@ -871,7 +873,7 @@
                 values = []
 
                 $("#{@siblings}:checked").each () ->
-                  values.push( $( this ).val() )
+                    values.push( $( this ).val() )
 
                 return values
 
