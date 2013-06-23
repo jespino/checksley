@@ -1,3 +1,11 @@
+createElement = (type="text", attrs={}) ->
+    params = {type: type}
+    params = _.extend(params, attrs)
+
+    element = $("<input />", params)
+    element.insertBefore($("body"))
+    return element
+
 describe "Parsley test suite", ->
     describe "Form basic validation", ->
         form = null
@@ -21,9 +29,9 @@ describe "Parsley test suite", ->
             expect(form.element.find(".parsley-error").length).to.be(1)
 
     describe "Individual form field validation", ->
+
         it "required field", ->
-            element = $("<input />", {"type": "text", "data-required": "true"})
-            element.insertBefore($("body"))
+            element = createElement("text", {"data-required": "true"})
 
             field = new parsley.Field(element)
             expect(field.validate()).to.be(false)
@@ -31,3 +39,14 @@ describe "Parsley test suite", ->
             element.val("dd")
             expect(field.validate()).to.be(true)
             element.remove()
+
+        it "type number", ->
+            element = createElement("text", {"data-type":"digits"})
+            field = new parsley.Field(element)
+            expect(field.validate()).to.be(null)
+
+            element.val("dd")
+            expect(field.validate()).to.be(false)
+
+            element.val("22")
+            expect(field.validate()).to.be(true)
