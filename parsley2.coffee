@@ -176,11 +176,43 @@ class Field
         @id = _.uniqueId("field-")
         @element = $(elm)
         @form = form
+        @validatedOnce = false
 
         @resetConstraints()
+        @bindEvents()
+
+        _.bindAll(@)
 
     focus: ->
         @element.focus()
+
+    eventValidate: (event) ->
+        trigger = @element.data("trigger")
+        value = @getValue()
+
+        if event.type is "keyup" and not /keyup/i.test(trigger) and not @validatedOnce
+            return true
+
+        if event.type is "change" and not /change/i.test(trigger) and not @validatedOnce
+            return true
+
+        if value.length < @form.options.validationMinlength and not @validatedOnce
+            return true
+
+        @validate()
+
+    bindEvents: ->
+        @element.off(".#{@id}")
+        trigger = @element.data("trigger")
+
+        if _.isString(trigger)
+            @element.on("#{trigger}.#{@id}", _.bind(@eventValidate, @))
+
+        if @element.is("select") and trigger != "change"
+            @element.on("change.#{@id}", _.bind(@eventValidate, @))
+
+        if trigger != "keyup"
+            @element.on("keyup.#{@id}", _.bind(@eventValidate, @))
 
     errorClassTarget: ->
         return @element
@@ -210,6 +242,7 @@ class Field
         @required = false
 
         @resetHtml5Constraints()
+        @element.addClass('parsley-validated')
 
         for constraint, fn of @form.validators
             if @element.data(constraint) is undefined
@@ -227,6 +260,7 @@ class Field
         return not _.isEmpty(@constraints)
 
     validate: (showErrors) ->
+        @validatedOnce = true
         if not @hasConstraints()
             return null
 
