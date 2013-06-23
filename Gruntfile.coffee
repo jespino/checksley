@@ -64,6 +64,7 @@ module.exports = (grunt) ->
             'parsley.js'
             'parsley.extend.js'
             'dist'
+            'doc'
         ]
 
 
