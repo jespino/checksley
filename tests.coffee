@@ -29,6 +29,11 @@ describe "Parsley test suite", ->
             expect(form.element.find(".parsley-error").length).to.be(1)
 
     describe "Individual form field validation", ->
+        element = null
+
+        afterEach ->
+            if element != null
+                element.remove()
 
         it "required field", ->
             element = createElement("text", {"data-required": "true"})
