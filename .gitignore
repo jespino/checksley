@@ -7,3 +7,4 @@ l10n/*.js
 parsley.js
 parsley.extend.js
 node_modules
+*.js
