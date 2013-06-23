@@ -1,5 +1,4 @@
-validators:
-
+validators =
     es_dni: ( val, elem, self ) ->
         letters = 'TRWAGMYFPDXBNJZSQVHLCKET'
         val = val.replace("-", "")
@@ -75,7 +74,7 @@ validators:
         return true
 
 
-messages:
+messages =
     es_dni:         "This value should be a valid DNI (Example: 00000000T)."
     es_cif:         "This value should be a valid CIF (Example: B00000000)."
     es_postalcode:  "This value should be a valid spanish postal code (Example: 28080)."

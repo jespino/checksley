@@ -1,5 +1,4 @@
-validators:
-
+validators =
     minwords: (val, nbWords) ->
         val = val.replace(/(^\s*)|(\s*$)/gi, "")
         val = val.replace(/[ ]{2,}/gi, " ")
@@ -75,7 +74,7 @@ validators:
         return day > 0 and day <= monthLength[month - 1]
 
 
-messages:
+messages =
     minwords:       "This value should have %s words at least."
     maxwords:       "This value should have %s words maximum."
     rangewords:     "This value should have between %s and %s words."
