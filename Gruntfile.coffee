@@ -29,21 +29,43 @@ module.exports = (grunt) ->
                     'parsley.js': 'parsley.coffee'
                     'parsley.extend.js': 'parsley.extend.coffee'
 
+            parsley:
+                files:
+                    'parsley2.js': 'parsley2.coffee'
+
+            demo:
+                files:
+                    'demo/demo.js': 'demo/demo.coffee'
+
         watch:
             scripts:
                 files: ['parsley.coffee', 'parsley.extend.coffee']
-                tasks: ['default']
+                tasks: ['coffee:compileBare']
                 options:
                     nospawn: true
+
+            parsley:
+                files: ['parsley2.coffee']
+                tasks: ['coffee:parsley']
+                options:
+                    nospawn: true
+
+            demo:
+                files: ['demo/demo.coffee']
+                tasks: ['coffee:demo']
+                options:
+                    nospawn: true
+
+
 
 
     # Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-uglify')
     grunt.loadNpmTasks('grunt-contrib-coffee')
     grunt.loadNpmTasks('grunt-contrib-watch')
-    grunt.loadNpmTasks('grunt-contrib-yuidoc')
+    #grunt.loadNpmTasks('grunt-contrib-yuidoc')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee'])
     grunt.registerTask('dist', ['coffee', 'uglify'])
-    grunt.registerTask('doc', ['yuidoc'])
+    #grunt.registerTask('doc', ['yuidoc'])

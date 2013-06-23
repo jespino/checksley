@@ -6,7 +6,7 @@
 
 defaults =
    inputs: 'input, textarea, select'
-   excluded: 'input[type=hidden], input[type=file], :disabled'.
+   excluded: 'input[type=hidden], input[type=file], :disabled'
    animate: true
    animateDuration: 300
    focus: 'first'
@@ -207,8 +207,6 @@ class Field
         if @valid == true
             @removeErrors()
             # TODO: remove error class and add success class
-        else if @valid == false
-            # TODO ....
 
 class FieldMultiple extends Field
     constructor: (elm, form, options) ->
@@ -278,7 +276,6 @@ parsley = new Parsley()
 parsley.Form = Form
 parsley.Field = Field
 parsley.FieldMultiple = FieldMultiple
-parsley.Validator = Validator
 
 # Expose global instance to the world
 @parsley = parsley
