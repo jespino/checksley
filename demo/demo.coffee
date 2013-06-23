@@ -1,11 +1,22 @@
 # Required fields
 
-requiredForm = ->
-    form = $("form.required-form").parsley()
-    $("form.required-form").on "click", ".validate", (event) ->
-        event.preventDefault()
-        form.validate()
+demo =
+    requiredForm: ->
+        section = $(".required-section")
+        form = section.find("form").parsley()
+
+        section.on "click", ".validate", (event) ->
+            event.preventDefault()
+            form.validate()
+
+    digitsForm: ->
+        section = $(".type-digits-section")
+        form = section.find("form").parsley()
+
+        section.on "click", ".validate", (event) ->
+            event.preventDefault()
+            form.validate()
 
 
 $ ->
-    requiredForm()
+    fn() for name, fn of demo

@@ -73,13 +73,13 @@ module.exports = (grunt) ->
                 files: ['parsley2.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
                 tasks: ['coffee:parsley']
                 options:
-                    nospawn: true
+                    nospawn: false
 
             demo:
                 files: ['demo/demo.coffee']
                 tasks: ['coffee:demo']
                 options:
-                    nospawn: true
+                    nospawn: false
 
         mocha_phantomjs:
             all: ['tests/index.html']

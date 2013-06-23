@@ -149,11 +149,7 @@ class Field
         @element = $(elm)
         @form = form
 
-        @valid = true
-        @required = false
-        @constraints = {}
-
-        @populateConstraints()
+        @resetConstraints()
 
     focus: ->
         @element.focus()
@@ -161,7 +157,11 @@ class Field
     errorClassTarget: ->
         return @element
 
-    populateConstraints: ->
+    resetConstraints: ->
+        @constraints = {}
+        @valid = true
+        @required = false
+
         for constraint, fn of @form.validators
             if @element.data(constraint) is undefined
                 continue
@@ -211,17 +211,28 @@ class Field
             @element.removeClass(@form.options.errors.errorClass)
             @element.addClass(@form.options.errors.validClass)
         else
-            @element.removeClass(@form.options.validClass)
-            @element.addClass(@form.options.errorClass)
+            @element.removeClass(@form.options.errors.validClass)
+            @element.addClass(@form.options.errors.errorClass)
 
         return valid
+
+    reset: ->
+        @element.removeClass(@form.options.errors.errorClass)
+        @element.removeClass(@form.options.errors.validClass)
+
+        @resetConstraints()
+        @removeErrors()
 
     removeErrors: ->
         # Remove errors container
         $("##{@errorContainerId()}").remove()
 
     manageError: (name, constraint) ->
-        message = @form.messages[name]
+        if name == "type"
+            message = @form.messages["type"][constraint.params]
+        else
+            message = @form.messages[name]
+
         if message is undefined
             message = @form.messages["default"]
 
@@ -272,7 +283,6 @@ class Field
         return errorContainerEl
 
     makeErrorElement: (constraintName, message) ->
-        # TODO: make more costumizable via settings
         element = $("<li />", {"class": "parsley-#{constraintName}"})
         element.html(message)
         return element
