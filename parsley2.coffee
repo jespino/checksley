@@ -36,10 +36,9 @@ defaults =
     # Default listeners
     listeners:
         onFieldValidate: (element, field) -> return false
-
-        onFormSubmit: (ok, event, form) ->
-        onFieldError: (element, constraints, field) ->
-        onFieldSuccess: (element, constraints, field) ->
+        onFormSubmit: (ok, event, form) -> return
+        onFieldError: (element, constraints, field) -> return
+        onFieldSuccess: (element, constraints, field) -> return
 
 
 validators =
@@ -248,18 +247,26 @@ class Field
         val = @getValue()
         valid = true
 
+        listeners = @form.options.listeners
+
         # If showErrors is true, remove previous errors
         # before put new errors.
         if showErrors
             @removeErrors()
 
+
+
         # Apply all declared validators
         for name, data of @constraints
             data.valid = data.fn(@getValue(), data.params)
 
+
             if data.valid is false
                 valid = false
                 @manageError(name, data) if showErrors
+                listeners.onFieldError(@element, data, @)
+            else
+                listeners.onFieldSuccess(@element, data, @)
 
         @handleClases(valid)
 
