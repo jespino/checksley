@@ -152,9 +152,6 @@ toInt = (num) ->
 
 
 class Parsley
-    constructor: ->
-        @injectPlugin(window.jQuery || window.Zepto)
-
     updateDefaults: (options) ->
         _.extend(defaults, options)
 
