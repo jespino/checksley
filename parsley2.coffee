@@ -11,6 +11,7 @@ defaults =
 
     validationMinlength: 3
     validateIfUnchanged: false
+    interceptSubmit: true
 
     errors:
         showErrors: true
@@ -35,6 +36,7 @@ defaults =
     # Default listeners
     listeners:
         onFieldValidate: (element, field) -> return false
+
         onFormSubmit: (ok, event, form) ->
         onFieldError: (element, constraints, field) ->
         onFieldSuccess: (element, constraints, field) ->
@@ -354,6 +356,7 @@ class FieldMultiple extends Field
 
 class Form
     constructor: (elm, options={}) ->
+        @id = _.uniqueId("parsleyform-")
         @element = $(elm)
         @options = _.extend({}, defaults, options)
 
@@ -363,6 +366,7 @@ class Form
 
         # Initialize fields
         @initializeFields()
+        @bindEvents()
 
     initializeFields: ->
         @fields = []
@@ -392,6 +396,16 @@ class Form
                 when "last" then invalidFields[invalidFields.length].focus()
 
         return valid
+
+    bindEvents: ->
+        self = @
+
+        @element.on "submit.#{@id}", (event) ->
+            ok = self.validate()
+            self.options.listeners.onFormSubmit(ok, event, self)
+
+            if self.options.interceptSubmit and not ok
+                event.preventDefault()
 
     removeErrors: ->
         for field in @fields
