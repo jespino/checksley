@@ -2,3 +2,7 @@
 
 components/*
 doc/*
+dist/*
+parsley.js
+parsley.extend.js
+node_modules
