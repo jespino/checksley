@@ -30,7 +30,63 @@ validators =
         if (!/^\d{12}$/.test(val))
             return false
 
+        a = val.substring(0, 2)
+        b = val.substring(2, 10)
+        code = val.substring(10, 12)
+
+        if (parseInt(b, 10) < 10000000)
+            d = parseInt(b, 10) + (parseInt(a, 10) * 10000000)
+        else
+            d = a + b.replace(/0*$/, "")
+
+        c = parseInt(d) % 97
+        return c == parseInt(code)
+
+    es_ccc: (val, elem, self) ->
+        val = val.replace(/[ -]/g, "")
+        if (!/\d{20}$/.test(val))
+            return false
+
+        weight = [1, 2, 4, 8, 5, 10, 9, 7, 3, 6]
+        entity = val.substring(0, 4)
+        office = val.substring(4, 8)
+        controlCode = val.substring(8, 10)
+        account = val.substr(10, 20)
+        firstCode = "00" + entity + office
+        secondCode = account
+        firstCodeResult = 0
+
+        for x in [0..9]
+            firstCodeResult += parseInt(firstCode[x], 10) * weight[x]
+
+        firstCodeMod = firstCodeResult % 11
+        firstCodeResult = 11 - firstCodeMod
+
+        if (firstCodeResult == 10)
+            firstCodeResult = 1
+
+        if (firstCodeResult == 11)
+            firstCodeResult = 0
+
+        secondCodeResult = 0
+        for x in [0..9]
+            secondCodeResult += parseInt(secondCode[x], 10) * weight[x]
+
+        secondCodeMod = secondCodeResult % 11
+        secondCodeResult = 11 - secondCodeMod
+        if (secondCodeResult == 10)
+            secondCodeResult = 1
+
+        if (secondCodeResult == 11)
+            secondCodeResult = 0
+
+        if (firstCodeResult == parseInt(controlCode[0]) and secondCodeResult == parseInt(controlCode[1]))
+            return true
+
+        return false
+
     es_cif: (val, elem, self) ->
+
         val = val.replace(/-/g, "").toUpperCase()
 
         if (!/^[ABCDEFGHJKLMNPRQSUVW]\d{7}[\d[ABCDEFGHIJ]$/.test(val))

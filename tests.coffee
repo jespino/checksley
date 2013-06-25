@@ -313,3 +313,257 @@ describe "Parsley test suite", ->
         #    mincheck:
         #    maxcheck:
         #    rangecheck:
+
+    describe "Spanish form field validation", ->
+        it "es_ssn field", ->
+            element = createElement("text", {"data-es_ssn":"true"})
+            field = new parsley.Field(element)
+
+            element.val '281234567840'
+            expect(field.validate()).to.be(true)
+
+            element.val '351234567825'
+            expect(field.validate()).to.be(true)
+
+            element.val '35/12345678/25'
+            expect(field.validate()).to.be(true)
+
+            element.val '720111361735'
+            expect(field.validate()).to.be(false)
+
+            element.val '35X1234567825'
+            expect(field.validate()).to.be(false)
+
+            element.val '031322136383'
+            expect(field.validate()).to.be(false)
+
+            element.val '72011a361732'
+            expect(field.validate()).to.be(false)
+
+            element.val '73011a361731'
+            expect(field.validate()).to.be(false)
+
+            element.val '03092a136383'
+            expect(field.validate()).to.be(false)
+
+            element.val '03132a136385'
+            expect(field.validate()).to.be(false)
+
+            element.val '201113617312'
+            expect(field.validate()).to.be(false)
+
+            element.val '301113617334'
+            expect(field.validate()).to.be(false)
+
+            element.val '309221363823'
+            expect(field.validate()).to.be(false)
+
+            element.val '313221363822'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+        it "es_ccc field", ->
+            element = createElement("text", {"data-es_ccc":"true"})
+            field = new parsley.Field(element)
+
+            element.val '2077 0024 00 3102575766'
+            expect(field.validate()).to.be(true)
+
+            element.val '0000 0000 00 0000000000'
+            expect(field.validate()).to.be(true)
+
+            element.val '0001 0001 65 0000000001'
+            expect(field.validate()).to.be(true)
+
+            element.val '0'
+            expect(field.validate()).to.be(false)
+
+            element.val '2034 4505 73 1000034682'
+            expect(field.validate()).to.be(false)
+
+            element.val '1111 1111 11 1111111111'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+         it 'es_postalcode', ->
+            element = createElement("text", {"data-es_postalcode":"true"})
+            field = new parsley.Field(element)
+
+            element.val '28080'
+            expect(field.validate()).to.be(true)
+
+            element.val '35500'
+            expect(field.validate()).to.be(true)
+
+            element.val '12012'
+            expect(field.validate()).to.be(true)
+
+            element.val '25120'
+            expect(field.validate()).to.be(true)
+
+            element.val '59000'
+            expect(field.validate()).to.be(false)
+
+            element.val '10'
+            expect(field.validate()).to.be(false)
+
+            element.val 'X123'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+         it 'es_cif', ->
+            element = createElement("text", {"data-es_cif":"true"})
+            field = new parsley.Field(element)
+
+            element.val 'A58818501'
+            expect(field.validate()).to.be(true)
+
+            element.val 'B00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'C0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'D00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'E00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'F00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'G00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'H00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'J00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'K0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'L0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'M0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'N0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'P0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'Q0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'R0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'S0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'U00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'V00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'W0000000J'
+            expect(field.validate()).to.be(true)
+
+            element.val 'B-00000000'
+            expect(field.validate()).to.be(true)
+
+            element.val 'K-0000000-J'
+            expect(field.validate()).to.be(true)
+
+
+            element.val 'X00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'X0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'Y00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'Y0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'Z00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'Z0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'B0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'BC0000000'
+            expect(field.validate()).to.be(false)
+
+            element.val '123456678'
+            expect(field.validate()).to.be(false)
+
+            element.val 'I00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'I0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'O00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'O0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.val 'T00000000'
+            expect(field.validate()).to.be(false)
+
+            element.val 'T0000000J'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+         it 'es_dni', ->
+            element = createElement("text", {"data-es_dni":"true"})
+            field = new parsley.Field(element)
+
+            element.val '12345678Z'
+            expect(field.validate()).to.be(true)
+
+            element.val '00000000T'
+            expect(field.validate()).to.be(true)
+
+            element.val '0T'
+            expect(field.validate()).to.be(true)
+
+            element.val '00000000-T'
+            expect(field.validate()).to.be(true)
+
+            element.val '12345678Z'
+            expect(field.validate()).to.be(true)
+
+            element.val '87654321J'
+            expect(field.validate()).to.be(false)
+
+            element.val '123456781'
+            expect(field.validate()).to.be(false)
+
+            element.val 'X12345678'
+            expect(field.validate()).to.be(false)
+
+            element.val '123K'
+            expect(field.validate()).to.be(false)
+
+            element.val '43215678X'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
