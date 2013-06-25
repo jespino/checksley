@@ -532,7 +532,7 @@ describe "Parsley test suite", ->
 
             element.remove()
 
-         it 'es_dni', ->
+        it 'es_dni', ->
             element = createElement("text", {"data-es_dni":"true"})
             field = new parsley.Field(element)
 
@@ -567,3 +567,76 @@ describe "Parsley test suite", ->
             expect(field.validate()).to.be(false)
 
             element.remove()
+
+    describe "United States form field validation", ->
+        it 'us_postalcode', ->
+            element = createElement("text", {"data-us_postalcode":"true"})
+            field = new parsley.Field(element)
+
+            element.val '48103'
+            expect(field.validate()).to.be(true)
+            element.val '48103-6565'
+            expect(field.validate()).to.be(true)
+            element.val '48103 6565'
+            expect(field.validate()).to.be(true)
+            element.val '00125'
+            expect(field.validate()).to.be(true)
+            element.val '12368'
+            expect(field.validate()).to.be(true)
+            element.val '22587'
+            expect(field.validate()).to.be(true)
+            element.val '36914'
+            expect(field.validate()).to.be(true)
+            element.val '56412'
+            expect(field.validate()).to.be(true)
+            element.val '68795'
+            expect(field.validate()).to.be(true)
+            element.val '71142'
+            expect(field.validate()).to.be(true)
+            element.val '85941'
+            expect(field.validate()).to.be(true)
+            element.val '90125'
+            expect(field.validate()).to.be(true)
+
+            element.val '1234'
+            expect(field.validate()).to.be(false)
+            element.val '3454545'
+            expect(field.validate()).to.be(false)
+            element.val '481036565'
+            expect(field.validate()).to.be(false)
+            element.val '9065'
+            expect(field.validate()).to.be(false)
+            element.val '54268-1'
+            expect(field.validate()).to.be(false)
+            element.val '54-2681'
+            expect(field.validate()).to.be(false)
+            element.val '6154166'
+            expect(field.validate()).to.be(false)
+            element.val '10275776'
+            expect(field.validate()).to.be(false)
+            element.val '10275-776'
+            expect(field.validate()).to.be(false)
+            element.val '1235a'
+            expect(field.validate()).to.be(false)
+            element.val 'foo'
+            expect(field.validate()).to.be(false)
+            element.val 'QN55 1PT'
+            expect(field.validate()).to.be(false)
+
+        it 'us_region', ->
+            element = createElement("text", {"data-us_region":"true"})
+            field = new parsley.Field(element)
+
+            element.val 'MT'
+            expect(field.validate()).to.be(true)
+            element.val 'DC'
+            expect(field.validate()).to.be(true)
+            element.val 'il'
+            expect(field.validate()).to.be(true)
+
+            element.val 'ILL'
+            expect(field.validate()).to.be(false)
+            element.val 'FLA'
+            expect(field.validate()).to.be(false)
+            element.val 'NL'
+            expect(field.validate()).to.be(false)

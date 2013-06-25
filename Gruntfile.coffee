@@ -37,6 +37,7 @@ module.exports = (grunt) ->
                     'parsley.js': 'parsley2.coffee'
                     'parsley.extend.js': 'parsley.extend.coffee'
                     'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
+                    'l10n/parsley.us.js': 'l10n/parsley.us.coffee'
 
             demo:
                 files:
