@@ -88,5 +88,5 @@ messages =
     americandate:   "This value should be a valid date (MM/DD/YYYY)."
 
 
-@parsley.updateValidators(validators)
-@parsley.updateMessages(messages)
+@checksley.updateValidators(validators)
+@checksley.updateMessages(messages)

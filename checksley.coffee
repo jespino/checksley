@@ -1,5 +1,5 @@
 #
-# Copar.js allows you to verify your form inputs frontend side, without writing a line of javascript. Or so..
+# Checksley allows you to verify your form inputs frontend side, without writing a line of javascript. Or so..
 #
 # Based on Parsley.js of Guillaume Potier - @guillaumepotier
 # Author: Jesús Espino - @jespinog
@@ -15,12 +15,12 @@ defaults =
 
     errors:
         showErrors: true
-        errorClass: "parsley-error"
-        validClass: "parsley-ok"
-        validatedClass: "parsley-validated"
+        errorClass: "checksley-error"
+        validClass: "checksley-ok"
+        validatedClass: "checksley-validated"
         onlyOneErrorElement: false
 
-        containerClass: "parsley-error-list"
+        containerClass: "checksley-error-list"
         containerGlobalSearch: false
         containerPreferenceSelector: ".errors-box"
 
@@ -150,7 +150,7 @@ toInt = (num) ->
     return parseInt(num, 10)
 
 
-class Parsley
+class Checksley
     updateDefaults: (options) ->
         _.extend(defaults, options)
 
@@ -162,14 +162,14 @@ class Parsley
 
 
     injectPlugin: (jq) ->
-        jq.fn.parsley = (options) ->
+        jq.fn.checksley = (options) ->
             elm = this
             element = $(elm)
 
             if not element.is("form")
                 return null
 
-            instance = element.data("parsley")
+            instance = element.data("checksley")
             if instance is undefined
                 if _.isPlainObject(options)
                     instance = new Form(elm, options)
@@ -261,7 +261,7 @@ class Field
         @required = false
 
         @resetHtml5Constraints()
-        @element.addClass('parsley-validated')
+        @element.addClass('checksley-validated')
 
         for constraint, fn of @validators
             if @element.data(constraint) is undefined
@@ -354,7 +354,7 @@ class Field
         @addError(@makeErrorElement(name, message))
 
     makeErrorElement: (constraintName, message) ->
-        element = $("<li />", {"class": "parsley-#{constraintName}"})
+        element = $("<li />", {"class": "checksley-#{constraintName}"})
         element.html(message)
         element.addClass(constraintName)
         return element
@@ -379,10 +379,10 @@ class Field
         return @element.val()
 
     errorContainerId: ->
-        return "parsley-error-#{@id}"
+        return "checksley-error-#{@id}"
 
     errorContainerClass: ->
-        return "parsley-error-list"
+        return "checksley-error-list"
 
     getErrorContainer: ->
         errorContainerEl = $("##{@errorContainerId()}")
@@ -469,7 +469,7 @@ class FieldMultiple extends Field
 
 class Form
     constructor: (elm, options={}) ->
-        @id = _.uniqueId("parsleyform-")
+        @id = _.uniqueId("checksleyform-")
         @element = $(elm)
         @options = _.extend({}, defaults, options)
 
@@ -479,10 +479,10 @@ class Form
         @bindData()
 
     bindData: ->
-        @element.data("parsley", @)
+        @element.data("checksley", @)
 
     unbindData: ->
-        @element.data("parsley", null)
+        @element.data("checksley", null)
 
     initializeFields: ->
         @fields = []
@@ -493,9 +493,9 @@ class Form
                 continue
 
             if element.is("input[type=radio], input[type=checkbox]")
-                field = new parsley.FieldMultiple(fieldElm, @options)
+                field = new checksley.FieldMultiple(fieldElm, @options)
             else
-                field = new parsley.Field(fieldElm, @options)
+                field = new checksley.Field(fieldElm, @options)
 
             field.setForm(@)
             @fields.push(field)
@@ -547,16 +547,16 @@ class Form
             field.reset()
 
 
-# Main parsley global instance
-parsley = new Parsley()
+# Main checksley global instance
+checksley = new Checksley()
 
 # Expose internal clases
-parsley.Parsley = Parsley
-parsley.Form = Form
-parsley.Field = Field
-parsley.FieldMultiple = FieldMultiple
+checksley.Checksley = Checksley
+checksley.Form = Form
+checksley.Field = Field
+checksley.FieldMultiple = FieldMultiple
 
 
 # Expose global instance to the world
-@parsley = parsley
-@parsley.injectPlugin(window.jQuery || window.Zepto)
+@checksley = checksley
+@checksley.injectPlugin(window.jQuery || window.Zepto)

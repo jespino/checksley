@@ -7,9 +7,9 @@ module.exports = (grunt) ->
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             build:
                 files:
-                    'dist/parsley.min.js': 'parsley.js'
-                    'dist/parsley.extend.min.js': 'parsley.extend.js'
-                    'dist/parsley-standalone.min.js': 'dist/parsley-standalone.js'
+                    'dist/checksley.min.js': 'checksley.js'
+                    'dist/checksley.extend.min.js': 'checksley.extend.js'
+                    'dist/checksley-standalone.min.js': 'dist/checksley-standalone.js'
         concat:
             options:
                 separator: ';'
@@ -17,9 +17,9 @@ module.exports = (grunt) ->
                 src: [
                     'tests/resources/zepto-1.0rc1*.js'
                     'tests/resources/lodash.compat.js'
-                    'parsley.js'
+                    'checksley.js'
                 ]
-                dest: 'dist/parsley-standalone.js'
+                dest: 'dist/checksley-standalone.js'
 
         yuidoc:
             compile:
@@ -32,12 +32,12 @@ module.exports = (grunt) ->
                     outdir: 'doc/api'
 
         coffee:
-            parsley:
+            checksley:
                 files:
-                    'parsley.js': 'parsley2.coffee'
-                    'parsley.extend.js': 'parsley.extend.coffee'
-                    'l10n/parsley.es.js': 'l10n/parsley.es.coffee'
-                    'l10n/parsley.us.js': 'l10n/parsley.us.coffee'
+                    'checksley.js': 'checksley.coffee'
+                    'checksley.extend.js': 'checksley.extend.coffee'
+                    'l10n/checksley.es.js': 'l10n/checksley.es.coffee'
+                    'l10n/checksley.us.js': 'l10n/checksley.us.coffee'
 
             demo:
                 files:
@@ -50,7 +50,7 @@ module.exports = (grunt) ->
         coffeelint:
             app:
                 files:
-                    src: ['parsley.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
+                    src: ['checksley.coffee', 'checksley.extend.coffee', 'l10n/*.coffee']
                 options:
                     max_line_length:
                         value: 120
@@ -60,9 +60,9 @@ module.exports = (grunt) ->
                         level: "error"
 
         watch:
-            parsley:
-                files: ['parsley2.coffee', 'parsley.extend.coffee', 'l10n/*.coffee']
-                tasks: ['coffee:parsley']
+            checksley:
+                files: ['checksley.coffee', 'checksley.extend.coffee', 'l10n/*.coffee']
+                tasks: ['coffee:checksley']
                 options:
                     nospawn: false
 
@@ -82,8 +82,8 @@ module.exports = (grunt) ->
             all: ['tests/index.html']
 
         clean: [
-            'parsley.js'
-            'parsley.extend.js'
+            'checksley.js'
+            'checksley.extend.js'
             'l10n/*.js'
             'dist'
             'doc'

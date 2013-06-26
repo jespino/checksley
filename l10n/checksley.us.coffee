@@ -100,5 +100,5 @@ messages =
     us_region:      "This value should be a valid US region."
     us_postalcode:  "This value should be a valid US postal code."
 
-@parsley.updateValidators(validators)
-@parsley.updateMessages(messages)
+@checksley.updateValidators(validators)
+@checksley.updateMessages(messages)

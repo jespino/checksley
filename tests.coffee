@@ -20,14 +20,14 @@ urls = [
     { url: "foo://bar", expected: false, strict: false }
 ]
 
-describe "Parsley test suite", ->
+describe "Checksley test suite", ->
     describe "Form basic validation", ->
         form = null
 
         beforeEach ->
             if form != null
                 form.destroy()
-            form = $(".required-section form").parsley()
+            form = $(".required-section form").checksley()
 
         it "Check required field validation 01", ->
             $(".required-section input").val("")
@@ -40,7 +40,7 @@ describe "Parsley test suite", ->
         it "Check error visualization", ->
             $(".required-section input").val("")
             form.validate()
-            expect(form.element.find(".parsley-error").length).to.be(1)
+            expect(form.element.find(".checksley-error").length).to.be(1)
 
     describe "FieldMultiple tests", ->
         field = null
@@ -54,7 +54,7 @@ describe "Parsley test suite", ->
             element2 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
             element3 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
 
-            field = new parsley.FieldMultiple(element1)
+            field = new checksley.FieldMultiple(element1)
             expect(field.validate()).to.be(false)
 
             element1.attr("checked", "true")
@@ -75,7 +75,7 @@ describe "Parsley test suite", ->
 
         it "not null field", ->
             element = createElement("text", {"data-notnull": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
             expect(field.validate()).to.be(null)
 
             element.val("  ")
@@ -88,7 +88,7 @@ describe "Parsley test suite", ->
 
         it "not blank field", ->
             element = createElement("text", {"data-notblank": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
             expect(field.validate()).to.be(null)
 
             element.val("  ")
@@ -101,7 +101,7 @@ describe "Parsley test suite", ->
 
         it "required field", ->
             element = createElement("text", {"data-required": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
             expect(field.validate()).to.be(false)
 
             element.val("dd")
@@ -111,7 +111,7 @@ describe "Parsley test suite", ->
 
         it "type number", ->
             element = createElement("text", {"data-type": "number"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("2.2")
             expect(field.validate()).to.be(true)
@@ -123,7 +123,7 @@ describe "Parsley test suite", ->
 
         it "type digits", ->
             element = createElement("text", {"data-type":"digits"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("dd")
             expect(field.validate()).to.be(false)
@@ -135,7 +135,7 @@ describe "Parsley test suite", ->
 
         it "type alphanum", ->
             element = createElement("text", {"data-type":"alphanum"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("@&")
             expect(field.validate()).to.be(false)
@@ -147,7 +147,7 @@ describe "Parsley test suite", ->
 
         it "type email", ->
             element = createElement("text", {"data-type":"email"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("foo")
             expect(field.validate()).to.be(false)
@@ -165,7 +165,7 @@ describe "Parsley test suite", ->
 
         it "type url", ->
             element = createElement("text", {"data-type":"url"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             for urlData in urls
                 element.val(urlData.url)
@@ -175,7 +175,7 @@ describe "Parsley test suite", ->
 
         it "type urlstrict", ->
             element = createElement("text", {"data-type":"urlstrict"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             for urlData in urls
                 element.val(urlData.url)
@@ -185,7 +185,7 @@ describe "Parsley test suite", ->
 
         it "type dateIso", ->
             element = createElement("text", {"data-type":"dateIso"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("foo")
             expect(field.validate()).to.be(false)
@@ -197,7 +197,7 @@ describe "Parsley test suite", ->
 
         it "type phone", ->
             element = createElement("text", {"data-type":"phone"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("foo")
             expect(field.validate()).to.be(false)
@@ -209,7 +209,7 @@ describe "Parsley test suite", ->
 
         it "validation minlength", ->
             element = createElement("text", {"data-minlength":"6"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("foo")
             expect(field.validate()).to.be(false)
@@ -221,7 +221,7 @@ describe "Parsley test suite", ->
 
         it "validation maxlength", ->
             element = createElement("text", {"data-maxlength":"6"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("foo")
             expect(field.validate()).to.be(true)
@@ -233,7 +233,7 @@ describe "Parsley test suite", ->
 
         it "validation rangelength", ->
             element = createElement("text", {"data-rangelength":"[3,6]"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("fo")
             expect(field.validate()).to.be(false)
@@ -251,7 +251,7 @@ describe "Parsley test suite", ->
 
         it "validation min", ->
             element = createElement("text", {"data-min":"3"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val(" ")
             expect(field.validate()).to.be(false)
@@ -266,7 +266,7 @@ describe "Parsley test suite", ->
 
         it "validation max", ->
             element = createElement("text", {"data-max":"3"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val(" ")
             expect(field.validate()).to.be(true)
@@ -281,7 +281,7 @@ describe "Parsley test suite", ->
 
         it "validation range", ->
             element = createElement("text", {"data-range":"[3, 1000]"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("1")
             expect(field.validate()).to.be(false)
@@ -298,7 +298,7 @@ describe "Parsley test suite", ->
             element = createElement("text", {"data-equalto":"#elementEqualId"})
             elementEqual = createElement("text", {"value":"foo", "id":"elementEqualId"})
 
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val("notfoo")
             expect(field.validate()).to.be(false)
@@ -314,10 +314,10 @@ describe "Parsley test suite", ->
         #    maxcheck:
         #    rangecheck:
 
-    describe 'Test Parsley extend', ->
+    describe 'Test Checksley extend', ->
         it 'minwords', ->
             element = createElement("text", {"data-minwords":"6"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val "foo bar"
             expect(field.validate()).to.be(false)
@@ -329,7 +329,7 @@ describe "Parsley test suite", ->
 
         it 'maxwords', ->
             element = createElement("text", {"data-maxwords":"6"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val "foo bar baz foo bar baz foo bar baz foo"
             expect(field.validate()).to.be(false)
@@ -341,7 +341,7 @@ describe "Parsley test suite", ->
 
         it 'rangewords', ->
             element = createElement("text", {"data-rangewords":"[6,10]"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val "foo bar baz foo bar baz foo bar baz foo foo bar"
             expect(field.validate()).to.be(false)
@@ -353,7 +353,7 @@ describe "Parsley test suite", ->
 
         it 'inlist', ->
             element = createElement("text", {"data-inlist": "true, 1, valid, value with spaces, yes, one"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'invalid'
             expect(field.validate()).to.be(false)
@@ -369,7 +369,7 @@ describe "Parsley test suite", ->
             element.remove()
 
             element = createElement("text", {"data-inlist": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'true'
             expect(field.validate()).to.be(true)
@@ -377,7 +377,7 @@ describe "Parsley test suite", ->
             element.remove()
 
             element = createElement("text", {"data-inlist": ""})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'foo'
             expect(field.validate()).to.be(false)
@@ -385,7 +385,7 @@ describe "Parsley test suite", ->
             element.remove()
 
             element = createElement("text", {"data-inlist": ","})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'value'
             expect(field.validate()).to.be(false)
@@ -393,7 +393,7 @@ describe "Parsley test suite", ->
             element.remove()
 
             element = createElement("text", {"data-inlist": "foo | bar | foo bar", "data-inlist-delimiter": "|"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'foo bar'
             expect(field.validate()).to.be(true)
@@ -402,7 +402,7 @@ describe "Parsley test suite", ->
         it 'greaterThan', ->
             elementModel = createElement("text", {id: "greaterThan-model", value: "1"})
             element = createElement("text", {"data-greaterthan": "#greaterThan-model"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '1'
             expect(field.validate()).to.be(false)
@@ -414,7 +414,7 @@ describe "Parsley test suite", ->
         it 'lessThan', ->
             elementModel = createElement("text", {id: "lessThan-model", value: "5"})
             element = createElement("text", {"data-lessthan": "#lessThan-model"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '6'
             expect(field.validate()).to.be(false)
@@ -429,7 +429,7 @@ describe "Parsley test suite", ->
         it 'beforeDate', ->
             elementModel = createElement("text", {id: "beforeDate-model", value: "1/1/2014"})
             element = createElement("text", {"data-beforedate": "#beforeDate-model"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '04/15/2015'
             expect(field.validate()).to.be(false)
@@ -442,7 +442,7 @@ describe "Parsley test suite", ->
         it  'afterDate', ->
             elementModel = createElement("text", {id: "afterDate-model", value: "1/1/2014"})
             element = createElement("text", {"data-afterdate": "#afterDate-model"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '4/15/1990'
             expect(field.validate()).to.be(false)
@@ -454,7 +454,7 @@ describe "Parsley test suite", ->
 
         it  'luhn', ->
             element = createElement("text", {"data-luhn": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '4000000000000000'
             expect(field.validate()).to.be(false)
@@ -465,7 +465,7 @@ describe "Parsley test suite", ->
 
         it 'americanDate', ->
             element = createElement("text", {"data-americandate": "true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '28/02/2012'
             expect(field.validate()).to.be(false)
@@ -489,7 +489,7 @@ describe "Parsley test suite", ->
     describe "Spanish form field validation", ->
         it "es_ssn field", ->
             element = createElement("text", {"data-es_ssn":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '281234567840'
             expect(field.validate()).to.be(true)
@@ -537,7 +537,7 @@ describe "Parsley test suite", ->
 
         it "es_ccc field", ->
             element = createElement("text", {"data-es_ccc":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '2077 0024 00 3102575766'
             expect(field.validate()).to.be(true)
@@ -561,7 +561,7 @@ describe "Parsley test suite", ->
 
          it 'es_postalcode', ->
             element = createElement("text", {"data-es_postalcode":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '28080'
             expect(field.validate()).to.be(true)
@@ -588,7 +588,7 @@ describe "Parsley test suite", ->
 
          it 'es_cif', ->
             element = createElement("text", {"data-es_cif":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'A58818501'
             expect(field.validate()).to.be(true)
@@ -706,7 +706,7 @@ describe "Parsley test suite", ->
 
         it 'es_dni', ->
             element = createElement("text", {"data-es_dni":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '12345678Z'
             expect(field.validate()).to.be(true)
@@ -743,7 +743,7 @@ describe "Parsley test suite", ->
     describe "United States form field validation", ->
         it 'us_postalcode', ->
             element = createElement("text", {"data-us_postalcode":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val '48103'
             expect(field.validate()).to.be(true)
@@ -797,7 +797,7 @@ describe "Parsley test suite", ->
 
         it 'us_region', ->
             element = createElement("text", {"data-us_region":"true"})
-            field = new parsley.Field(element)
+            field = new checksley.Field(element)
 
             element.val 'MT'
             expect(field.validate()).to.be(true)

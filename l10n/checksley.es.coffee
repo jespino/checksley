@@ -138,5 +138,5 @@ messages =
     es_ccc:         "This value should be a valid spanish bank client account code."
 
 
-@parsley.updateValidators(validators)
-@parsley.updateMessages(messages)
+@checksley.updateValidators(validators)
+@checksley.updateMessages(messages)
