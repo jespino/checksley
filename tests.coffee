@@ -8,16 +8,16 @@ createElement = (type="text", attrs={}) ->
 
 
 urls = [
-      { url: "http://foo.com/bar_(baz)#bam-1", expected: true, strict: true }
-    , { url: "http://www.foobar.com/baz/?p=364", expected: true, strict: true }
-    , { url: "mailto:name@example.com", expected: true, strict: false }
-    , { url: "foo.bar", expected: true, strict: false }
-    , { url: "www.foobar.baz", expected: true, strict: false }
-    , { url: "https://foobar.baz", expected: true, strict: true }
-    , { url: "git://foobar.baz", expected: true, strict: true }
-    , { url: "foo", expected: false, strict: false }
-    , { url: "foo:bar", expected: false, strict: false }
-    , { url: "foo://bar", expected: false, strict: false }
+    { url: "http://foo.com/bar_(baz)#bam-1", expected: true, strict: true }
+    { url: "http://www.foobar.com/baz/?p=364", expected: true, strict: true }
+    { url: "mailto:name@example.com", expected: true, strict: false }
+    { url: "foo.bar", expected: true, strict: false }
+    { url: "www.foobar.baz", expected: true, strict: false }
+    { url: "https://foobar.baz", expected: true, strict: true }
+    { url: "git://foobar.baz", expected: true, strict: true }
+    { url: "foo", expected: false, strict: false }
+    { url: "foo:bar", expected: false, strict: false }
+    { url: "foo://bar", expected: false, strict: false }
 ]
 
 describe "Parsley test suite", ->
@@ -165,19 +165,19 @@ describe "Parsley test suite", ->
 
         it "type url", ->
             element = createElement("text", {"data-type":"url"})
+            field = new parsley.Field(element)
 
             for urlData in urls
-                console.log urlData
                 element.val(urlData.url)
                 expect(field.validate()).to.be(urlData.expected)
 
             element.remove()
 
         it "type urlstrict", ->
-            element = createElement("text", {"data-type":"url"})
+            element = createElement("text", {"data-type":"urlstrict"})
+            field = new parsley.Field(element)
 
             for urlData in urls
-                console.log urlData
                 element.val(urlData.url)
                 expect(field.validate()).to.be(urlData.strict)
 
