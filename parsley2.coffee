@@ -311,7 +311,7 @@ class Field
 
         # Apply all declared validators
         for name, data of @constraints
-            data.valid = data.fn(@getValue(), data.params)
+            data.valid = data.fn(@getValue(), data.params, @)
 
             if data.valid is false
                 valid = false

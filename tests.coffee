@@ -314,6 +314,178 @@ describe "Parsley test suite", ->
         #    maxcheck:
         #    rangecheck:
 
+    describe 'Test Parsley extend', ->
+        it 'minwords', ->
+            element = createElement("text", {"data-minwords":"6"})
+            field = new parsley.Field(element)
+
+            element.val "foo bar"
+            expect(field.validate()).to.be(false)
+
+            element.val "foo bar baz foo bar baz"
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it 'maxwords', ->
+            element = createElement("text", {"data-maxwords":"6"})
+            field = new parsley.Field(element)
+
+            element.val "foo bar baz foo bar baz foo bar baz foo"
+            expect(field.validate()).to.be(false)
+
+            element.val "foo bar"
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it 'rangewords', ->
+            element = createElement("text", {"data-rangewords":"[6,10]"})
+            field = new parsley.Field(element)
+
+            element.val "foo bar baz foo bar baz foo bar baz foo foo bar"
+            expect(field.validate()).to.be(false)
+
+            element.val "foo bar baz foo bar baz foo"
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it 'inlist', ->
+            element = createElement("text", {"data-inlist": "true, 1, valid, value with spaces, yes, one"})
+            field = new parsley.Field(element)
+
+            element.val 'invalid'
+            expect(field.validate()).to.be(false)
+            element.val 'false'
+            expect(field.validate()).to.be(false)
+            element.val 'true'
+            expect(field.validate()).to.be(true)
+            element.val 'one'
+            expect(field.validate()).to.be(true)
+            element.val 'value with spaces'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+            element = createElement("text", {"data-inlist": "true"})
+            field = new parsley.Field(element)
+
+            element.val 'true'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+            element = createElement("text", {"data-inlist": ""})
+            field = new parsley.Field(element)
+
+            element.val 'foo'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+            element = createElement("text", {"data-inlist": ","})
+            field = new parsley.Field(element)
+
+            element.val 'value'
+            expect(field.validate()).to.be(false)
+
+            element.remove()
+
+            element = createElement("text", {"data-inlist": "foo | bar | foo bar", "data-inlist-delimiter": "|"})
+            field = new parsley.Field(element)
+
+            element.val 'foo bar'
+            expect(field.validate()).to.be(true)
+            element.remove()
+
+        it 'greaterThan', ->
+            elementModel = createElement("text", {id: "greaterThan-model", value: "1"})
+            element = createElement("text", {"data-greaterthan": "#greaterThan-model"})
+            field = new parsley.Field(element)
+
+            element.val '1'
+            expect(field.validate()).to.be(false)
+            element.val '2'
+            expect(field.validate()).to.be(true)
+            elementModel.val '5'
+            expect(field.validate()).to.be(false)
+
+        it 'lessThan', ->
+            elementModel = createElement("text", {id: "lessThan-model", value: "5"})
+            element = createElement("text", {"data-lessthan": "#lessThan-model"})
+            field = new parsley.Field(element)
+
+            element.val '6'
+            expect(field.validate()).to.be(false)
+            element.val '2'
+            expect(field.validate()).to.be(true)
+            elementModel.val '1'
+            expect(field.validate()).to.be(false)
+
+            elementModel.remove()
+            element.remove()
+
+        it 'beforeDate', ->
+            elementModel = createElement("text", {id: "beforeDate-model", value: "1/1/2014"})
+            element = createElement("text", {"data-beforedate": "#beforeDate-model"})
+            field = new parsley.Field(element)
+
+            element.val '04/15/2015'
+            expect(field.validate()).to.be(false)
+            element.val '4/15/1990'
+            expect(field.validate()).to.be(true)
+
+            elementModel.remove()
+            element.remove()
+
+        it  'afterDate', ->
+            elementModel = createElement("text", {id: "afterDate-model", value: "1/1/2014"})
+            element = createElement("text", {"data-afterdate": "#afterDate-model"})
+            field = new parsley.Field(element)
+
+            element.val '4/15/1990'
+            expect(field.validate()).to.be(false)
+            element.val '04/15/2015'
+            expect(field.validate()).to.be(true)
+
+            elementModel.remove()
+            element.remove()
+
+        it  'luhn', ->
+            element = createElement("text", {"data-luhn": "true"})
+            field = new parsley.Field(element)
+
+            element.val '4000000000000000'
+            expect(field.validate()).to.be(false)
+            element.val '4000000000000002'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it 'americanDate', ->
+            element = createElement("text", {"data-americandate": "true"})
+            field = new parsley.Field(element)
+
+            element.val '28/02/2012'
+            expect(field.validate()).to.be(false)
+            element.val '02/08/2012'
+            expect(field.validate()).to.be(true)
+            element.val '10/08/2012'
+            expect(field.validate()).to.be(true)
+            element.val '2/8/12'
+            expect(field.validate()).to.be(true)
+            element.val '02-08-2012'
+            expect(field.validate()).to.be(true)
+            element.val '2-8-12'
+            expect(field.validate()).to.be(true)
+            element.val '02.08.2012'
+            expect(field.validate()).to.be(true)
+            element.val '2.8.12'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
     describe "Spanish form field validation", ->
         it "es_ssn field", ->
             element = createElement("text", {"data-es_ssn":"true"})

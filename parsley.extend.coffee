@@ -39,7 +39,8 @@ validators =
         return Date.parse($(elem).val()) < Date.parse(val)
 
     inlist: (val, list, self) ->
-        delimiter = self.options.inlistDelimiter or ','
+        delimiter = self.element.data('inlistDelimiter') or ','
+
         listItems = (list + "").split(new RegExp("\\s*\\#{delimiter}\\s*"))
 
         return (listItems.indexOf(val.trim()) != -1)
@@ -82,6 +83,7 @@ messages =
     lessthan:       "This value should be less than %s."
     beforedate:     "This date should be before %s."
     afterdate:      "This date should be after %s."
+    inlist:         "This value should be in the list %s."
     luhn:           "This value should pass the luhn test."
     americandate:   "This value should be a valid date (MM/DD/YYYY)."
 
