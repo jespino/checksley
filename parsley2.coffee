@@ -81,14 +81,14 @@ validators =
     regexp: (val, regExp, self) ->
         return new RegExp( regExp, self.options.regexpFlag or '' ).test( val )
 
-    minlength: ( val, min ) ->
+    minlength: (val, min) ->
         return val.length >= min
 
-    maxlength: ( val, max ) ->
+    maxlength: (val, max) ->
         return val.length <= max
 
-    rangelength: ( val, arrayRange ) ->
-        return @minlength( val, arrayRange[ 0 ] ) and @maxlength( val, arrayRange[ 1 ] )
+    rangelength: (val, arrayRange) ->
+        return val.length >= arrayRange[0] and val.length <= arrayRange[1]
 
     min: (val, min) ->
         return Number(val) >= min
