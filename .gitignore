@@ -1,7 +1,6 @@
 .DS_Store
 
 components/*
-doc/*
 dist/*
 l10n/*.js
 parsley.js
