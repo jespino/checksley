@@ -1,0 +1,48 @@
+{
+    "name": "checksley",
+    "title": "Javascript forms validation. Powerful, UX aware & Dead simple.",
+    "description": "Never write a single javascript line anymore to validate your forms FrontEnd. Checksley will do that for you,and do it right, thanks to its powerful DOM-API !",
+    "keywords": [
+        "checksley",
+        "forms",
+        "form",
+        "validation",
+        "validate"
+    ],
+    "version": "1.1.15",
+    "author": {
+        "name": "Jesús Espino",
+        "email": "jespinog@gmail.com",
+        "url": "http://github.com/jespino"
+    },
+    "maintainers": [
+        {
+            "name": "Jesús Espino",
+            "email": "jespinog@gmail.com",
+            "url": "http://github.com/jespino"
+        },
+        {
+            "name": "Andrei Antoukh",
+            "email": "niwi@niwi.be",
+            "url": "http://github.com/niwibe"
+        },
+        {
+            "name": "Alejandro Alonso",
+            "email": "alejandroalonsofernandez@gmail.com",
+            "url": "http://github.com/superalex"
+        }
+    ]
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://www.opensource.org/licenses/MIT"
+        }
+    ],
+    "bugs": "https://github.com/jespino/checksley/issues",
+    "homepage": "http://checksley.org",
+    "docs": "http://checksley.org/documentation.html",
+    "download": "https://github.com/jespino/checksley/",
+    "dependencies": {
+        "jquery": ">=1.7"
+    }
+}
