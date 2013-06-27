@@ -13,25 +13,29 @@ defaults =
     validateIfUnchanged: false
     interceptSubmit: true
 
+    messages: {}
+    validators: {}
+
+    showErrors: true
+    errorClass: "checksley-error"
+    successClass: "checksley-ok"
+
+    validatedClass: "checksley-validated"
+    onlyOneErrorElement: false
+
+    containerClass: "checksley-error-list"
+    containerGlobalSearch: false
+    containerPreferenceSelector: ".errors-box"
+
     errors:
-        showErrors: true
-        errorClass: "checksley-error"
-        validClass: "checksley-ok"
-        validatedClass: "checksley-validated"
-        onlyOneErrorElement: false
-
-        containerClass: "checksley-error-list"
-        containerGlobalSearch: false
-        containerPreferenceSelector: ".errors-box"
-
-        containerWrapper: "<ul />"
-        elementWrapper: "<li />"
-
         classHandler: (element, isRadioOrCheckbox) ->
             return element
 
         container: (element, isRadioOrCheckbox) ->
             return element.parent()
+
+        errorsWrapper: "<ul />"
+        errorElem: "<li />"
 
     # Default listeners
     listeners:
@@ -113,6 +117,7 @@ validators =
     rangecheck: (obj, arrayRange) ->
         return validators.rangelength(obj, arrayRange)
 
+
 messages =
     defaultMessage: "This value seems to be invalid."
     type:
@@ -150,6 +155,35 @@ toInt = (num) ->
     return parseInt(num, 10)
 
 
+_checksley = (options) ->
+    elm = this
+    element = $(elm)
+
+    if not element.is("form, input, select, textarea")
+        throw "element is not a valid element for checksley"
+
+    instance = element.data("checksley")
+    if instance is undefined or instance is null
+        _options = {}
+        if _.isPlainObject(options)
+            _options = options
+
+        if element.is("input[type=radio], input[type=checkbox]")
+            instance = new checksley.FieldMultiple(element, options)
+        else if element.is("input, select, textarea")
+            instance = new checksley.Field(element, options)
+        else
+            instance = new Form(elm, options)
+
+    # Parsley.js compatibility (incomplete)
+    if _.isString(options)
+        switch options
+            when "validate" then instance.validate()
+            when "destroy" then instance.destroy()
+    else
+        return instance
+
+
 class Checksley
     updateDefaults: (options) ->
         _.extend(defaults, options)
@@ -160,28 +194,8 @@ class Checksley
     updateMessages: (options) ->
         _.extend(messages, options)
 
-
     injectPlugin: (jq) ->
-        jq.fn.checksley = (options) ->
-            elm = this
-            element = $(elm)
-
-            if not element.is("form")
-                return null
-
-            instance = element.data("checksley")
-            if instance is undefined
-                if _.isPlainObject(options)
-                    instance = new Form(elm, options)
-                else
-                    instance = new Form(elm)
-
-            if _.isString(options)
-                switch options
-                    when "validate" then instance.validate()
-                    when "destroy" then instance.destroy()
-            else
-                return instance
+        jq.fn.checksley = _checksley
 
 
 class Field
@@ -198,6 +212,13 @@ class Field
 
         @resetConstraints()
         @bindEvents()
+        @bindData()
+
+    bindData: ->
+        @element.data("checksley-field", @)
+
+    unbindData: ->
+        @element.data("checksley-field", null)
 
     focus: ->
         @element.focus()
@@ -325,19 +346,19 @@ class Field
     handleClases: (valid) ->
         classHandlerElement = @options.errors.classHandler(@element, false)
 
-        errorClass = @options.errors.errorClass
-        validClass = @options.errors.validClass
+        errorClass = @options.errorClass
+        successClass = @options.successClass
 
         switch valid
             when null
                 classHandlerElement.removeClass(errorClass)
-                classHandlerElement.removeClass(validClass)
+                classHandlerElement.removeClass(successClass)
             when false
-                classHandlerElement.removeClass(validClass)
+                classHandlerElement.removeClass(successClass)
                 classHandlerElement.addClass(errorClass)
             when true
                 classHandlerElement.removeClass(errorClass)
-                classHandlerElement.addClass(validClass)
+                classHandlerElement.addClass(successClass)
 
     manageError: (name, constraint) ->
         if name == "type"
@@ -418,6 +439,7 @@ class Field
     destroy: ->
         @unbindEvents()
         @removeErrors()
+        @unbindData()
 
     setForm: (form) ->
         @form = form
@@ -535,6 +557,7 @@ class Form
 
     destroy: ->
         @unbindEvents()
+        @unbindData()
 
         for field in @fields
             field.destroy()

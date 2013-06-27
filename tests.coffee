@@ -49,18 +49,37 @@ describe "Checksley test suite", ->
             if field != null
                 field.destroy()
 
-        it "Check field multiple directly", ->
-            element1 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
-            element2 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
-            element3 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+    describe "JQuery plugin main interface", ->
+        it "check with not form element", ->
+            expect($("<div />").checksley).to.throwError()
 
-            field = new checksley.FieldMultiple(element1)
-            expect(field.validate()).to.be(false)
+    describe "Basic parsley compatibility", ->
+        element = null
+        field = null
 
-            element1.attr("checked", "true")
-            element2.attr("checked", "true")
-            expect(field.validate()).to.be(true)
+        afterEach ->
+            if field != null
+                field.destroy()
 
+            if element != null
+                element.remove()
+
+        it "inline validate", ->
+            element = createElement("text", {"data-notblank": "true"})
+            element.val("  ")
+
+            expect(element.checksley("validate")).to.be(false)
+
+            element.val("foo")
+            expect(element.checksley("validate")).to.be(true)
+
+        it "inline-destroy", ->
+            element = createElement("text", {"data-notblank": "true"})
+
+            element.checksley()
+            expect(element.data("checksley-field")).not.to.equal(undefined)
+            element.checksley("destroy")
+            expect(element.data("checksley-field")).to.equal(null)
 
     describe "Individual form field validation", ->
         element = null
@@ -72,6 +91,18 @@ describe "Checksley test suite", ->
 
             if element != null
                 element.remove()
+
+        it "checkbox minicheck", ->
+            element1 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+            element2 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+            element3 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
+
+            field = new checksley.FieldMultiple(element1)
+            expect(field.validate()).to.be(false)
+
+            element1.attr("checked", "true")
+            element2.attr("checked", "true")
+            expect(field.validate()).to.be(true)
 
         it "not null field", ->
             element = createElement("text", {"data-notnull": "true"})

@@ -101,7 +101,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-coffeelint')
 
     # Default task(s).
-    grunt.registerTask('default', ['coffee'])
+    grunt.registerTask('default', ['coffee', 'watch'])
     grunt.registerTask('dist', ['coffee', 'concat', 'uglify'])
     grunt.registerTask('doc', ['coffee', 'yuidoc'])
     grunt.registerTask('test', ['coffee', 'mocha_phantomjs'])
