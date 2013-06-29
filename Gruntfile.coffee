@@ -5,36 +5,15 @@ module.exports = (grunt) ->
         uglify:
             options:
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+
             build:
                 files:
                     'dist/checksley.min.js': 'checksley.js'
                     'dist/checksley.extend.min.js': 'checksley.extend.js'
-                    'dist/checksley-standalone.min.js': 'dist/checksley-standalone.js'
-        concat:
-            options:
-                separator: ';'
-            dist:
-                src: [
-                    'tests/resources/zepto-1.0rc1*.js'
-                    'tests/resources/lodash.compat.js'
-                    'checksley.js'
-                ]
-                dest: 'dist/checksley-standalone.js'
-
-        yuidoc:
-            compile:
-                name: '<%= pkg.name %>'
-                description: '<%= pkg.description %>'
-                version: '<%= pkg.version %>'
-                url: '<%= pkg.homepage %>'
-                options:
-                    paths: "."
-                    outdir: 'doc/api'
-
         coffee:
             checksley:
                 files:
-                    'checksley.js': 'checksley.coffee'
+                    'checksley.js': 'checksley.coffee',
                     'checksley.extend.js': 'checksley.extend.coffee'
                     'l10n/checksley.es.js': 'l10n/checksley.es.coffee'
                     'l10n/checksley.us.js': 'l10n/checksley.us.coffee'
@@ -50,7 +29,7 @@ module.exports = (grunt) ->
         coffeelint:
             app:
                 files:
-                    src: ['checksley.coffee', 'checksley.extend.coffee', 'l10n/*.coffee']
+                    src: ['checksley.coffee', 'checksley.extend.coffee', 'l10n/*.coffee', 'i18n/*.coffee']
                 options:
                     max_line_length:
                         value: 120
@@ -61,22 +40,21 @@ module.exports = (grunt) ->
 
         watch:
             checksley:
-                files: ['checksley.coffee', 'checksley.extend.coffee', 'l10n/*.coffee']
                 tasks: ['coffee:checksley']
-                options:
-                    nospawn: false
+                files: [
+                    'checksley.coffee',
+                    'checksley.extend.coffee',
+                    'l10n/*.coffee',
+                    'i18n/*.coffee'
+                ]
 
             demo:
-                files: ['demo/demo.coffee']
                 tasks: ['coffee:demo']
-                options:
-                    nospawn: false
+                files: ['demo/demo.coffee']
 
             tests:
-                files: ["tests.coffee"]
                 tasks: ["coffee:tests"]
-                options:
-                    nospawn: false
+                files: ["tests.coffee"]
 
         mocha_phantomjs:
             all: ['tests/index.html']
@@ -102,7 +80,6 @@ module.exports = (grunt) ->
 
     # Default task(s).
     grunt.registerTask('default', ['coffee', 'watch'])
-    grunt.registerTask('dist', ['coffee', 'concat', 'uglify'])
-    grunt.registerTask('doc', ['coffee', 'yuidoc'])
+    grunt.registerTask('dist', ['coffee', 'uglify'])
     grunt.registerTask('test', ['coffee', 'mocha_phantomjs'])
     grunt.registerTask('lint', ['coffeelint'])

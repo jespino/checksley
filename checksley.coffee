@@ -185,17 +185,47 @@ _checksley = (options) ->
 
 
 class Checksley
+    consturctor: (jq) ->
+        @messages = {}
+        @jq = jq
+        @lang = @detectLang()
+
     updateDefaults: (options) ->
         _.extend(defaults, options)
 
     updateValidators: (options) ->
         _.extend(validators, options)
 
-    updateMessages: (options) ->
+    updateMessages: (lang, options) ->
         _.extend(messages, options)
 
-    injectPlugin: (jq) ->
-        jq.fn.checksley = _checksley
+    injectPlugin: ->
+        @jq.fn.checksley = _checksley
+
+    setLang: (lang) ->
+        @lang = lang
+
+    detectLang: ->
+        # Very simple lang detection
+        # TODO: must be improved
+        return @jq("html").attr("lang") or "default"
+
+    getMessage: (key, lang) ->
+        if lang is undefined
+            lang = @lang
+
+        messages = @messages[lang]
+        if messages == undefined
+            messages = {}
+
+        message = messages[key]
+        if message is undefined
+            if lang == "default"
+                return "Unexpected key: #{key}"
+
+            return @getMessage(key, "default")
+
+        return message
 
 
 class Field
@@ -207,7 +237,6 @@ class Field
         @isRadioOrCheckbox = false
 
         # Clone messages and validators
-        @messages = messages
         @validators = validators
 
         @resetConstraints()
@@ -362,12 +391,12 @@ class Field
 
     manageError: (name, constraint) ->
         if name == "type"
-            message = @messages["type"][constraint.params]
+            message = checksley.getMessage("type")[constraint.params]
         else
-            message = @messages[name]
+            message = checksley.getMessage(name)
 
         if message is undefined
-            message = @messages["default"]
+            message = checksley.getMessage("default")
 
         if constraint.params
             message = formatMesssage(message, _.clone(constraint.params, true))
@@ -571,7 +600,9 @@ class Form
 
 
 # Main checksley global instance
-checksley = new Checksley()
+checksley = new Checksley(window.jQuery || window.Zepto)
+checksley.updateMessages("default", messages)
+checksley.injectPlugin()
 
 # Expose internal clases
 checksley.Checksley = Checksley
@@ -579,7 +610,5 @@ checksley.Form = Form
 checksley.Field = Field
 checksley.FieldMultiple = FieldMultiple
 
-
 # Expose global instance to the world
 @checksley = checksley
-@checksley.injectPlugin(window.jQuery || window.Zepto)

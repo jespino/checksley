@@ -89,4 +89,4 @@ messages =
 
 
 @checksley.updateValidators(validators)
-@checksley.updateMessages(messages)
+@checksley.updateMessages("default", messages)

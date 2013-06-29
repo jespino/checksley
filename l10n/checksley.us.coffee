@@ -101,4 +101,4 @@ messages =
     us_postalcode:  "This value should be a valid US postal code."
 
 @checksley.updateValidators(validators)
-@checksley.updateMessages(messages)
+@checksley.updateMessages("default", messages)
