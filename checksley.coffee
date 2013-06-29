@@ -185,19 +185,31 @@ _checksley = (options) ->
 
 
 class Checksley
-    consturctor: (jq) ->
-        @messages = {}
-        @jq = jq
+    constructor: (jq) ->
+        if jq is undefined
+            @jq = window.jQuery || window.Zepto
+        else
+            @jq = jq
+
+        @messages = {
+            default: {
+                defaultMessage: "Invalid"
+            }
+        }
+
         @lang = @detectLang()
 
     updateDefaults: (options) ->
-        _.extend(defaults, options)
+        _.merge(defaults, options)
 
     updateValidators: (options) ->
         _.extend(validators, options)
 
-    updateMessages: (lang, options) ->
-        _.extend(messages, options)
+    updateMessages: (lang, messages) ->
+        if @messages[lang] is undefined
+            @messages[lang] = {}
+
+        _.merge(@messages[lang], messages)
 
     injectPlugin: ->
         @jq.fn.checksley = _checksley
@@ -221,9 +233,9 @@ class Checksley
         message = messages[key]
         if message is undefined
             if lang == "default"
-                return "Unexpected key: #{key}"
-
-            return @getMessage(key, "default")
+                return @getMessage("defaultMessage", lang)
+            else
+                return @getMessage(key, "default")
 
         return message
 
@@ -600,7 +612,7 @@ class Form
 
 
 # Main checksley global instance
-checksley = new Checksley(window.jQuery || window.Zepto)
+checksley = new Checksley()
 checksley.updateMessages("default", messages)
 checksley.injectPlugin()
 

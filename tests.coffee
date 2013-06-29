@@ -6,6 +6,7 @@ createElement = (type="text", attrs={}) ->
     $("#tests-data").append(element)
     return element
 
+checksley = @checksley
 
 urls = [
     { url: "http://foo.com/bar_(baz)#bam-1", expected: true, strict: true }
@@ -19,6 +20,7 @@ urls = [
     { url: "foo:bar", expected: false, strict: false }
     { url: "foo://bar", expected: false, strict: false }
 ]
+
 
 describe "Checksley test suite", ->
     describe "Form basic validation", ->
@@ -80,6 +82,35 @@ describe "Checksley test suite", ->
             expect(element.data("checksley-field")).not.to.equal(undefined)
             element.checksley("destroy")
             expect(element.data("checksley-field")).to.equal(null)
+
+    describe "I18N test", ->
+        it "test basic lang detection", ->
+            $("html").attr("lang", "")
+            c = new checksley.Checksley()
+            expect(c.detectLang()).to.equal("default")
+            expect(c.lang).to.equal("default")
+
+            $("html").attr("lang", "es")
+            c = new checksley.Checksley()
+            expect(c.detectLang()).to.equal("es")
+            expect(c.lang).to.equal("es")
+
+            $("html").attr("lang", "")
+
+        it "test obtain messages", ->
+            c = new checksley.Checksley()
+            c.updateMessages("default", {"foo": "bar", "bar": "foo"})
+            c.updateMessages("en", {"foo": "BAR"})
+
+            expect(c.getMessage("foo")).to.equal("bar")
+            expect(c.getMessage("bar")).to.equal("foo")
+
+            c.setLang("en")
+
+            expect(c.getMessage("foo")).to.equal("BAR")
+            expect(c.getMessage("bar")).to.equal("foo")
+            expect(c.getMessage("unexistent")).to.equal("Invalid")
+
 
     describe "Individual form field validation", ->
         element = null
