@@ -4,17 +4,21 @@ module.exports = (grunt) ->
         pkg: grunt.file.readJSON('package.json')
         uglify:
             options:
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: "/*! <%= pkg.name %> <%= grunt.template.today('yyyy-mm-dd') %>*/\n" +
+                        "/*! Version: <%= pkg.version %> */\n" +
+                        "/*! License: BSD */\n"
+                mangle: false
+                report: "min"
 
             build:
                 files:
-                    'dist/checksley.min.js': 'checksley.js'
-                    'dist/checksley.extend.min.js': 'checksley.extend.js'
+                    'dist/checksley.min.js': 'dist/checksley.js'
+                    'dist/checksley.extend.min.js': 'dist/checksley.extend.js'
         coffee:
             checksley:
                 files:
-                    'checksley.js': 'checksley.coffee',
-                    'checksley.extend.js': 'checksley.extend.coffee'
+                    'dist/checksley.js': 'checksley.coffee',
+                    'dist/checksley.extend.js': 'checksley.extend.coffee'
                     'l10n/checksley.es.js': 'l10n/checksley.es.coffee'
                     'l10n/checksley.us.js': 'l10n/checksley.us.coffee'
 
@@ -42,8 +46,8 @@ module.exports = (grunt) ->
             checksley:
                 tasks: ['coffee:checksley']
                 files: [
-                    'checksley.coffee',
-                    'checksley.extend.coffee',
+                    'dist/checksley.coffee',
+                    'dist/checksley.extend.coffee',
                     'l10n/*.coffee',
                     'i18n/*.coffee'
                 ]
@@ -60,11 +64,11 @@ module.exports = (grunt) ->
             all: ['tests/index.html']
 
         clean: [
-            'checksley.js'
-            'checksley.extend.js'
+            'dist/*.js'
             'l10n/*.js'
             'dist'
             'doc'
+            '*.js'
         ]
 
 
