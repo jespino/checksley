@@ -44,6 +44,7 @@ defaults =
         onFieldError: (element, constraints, field) -> return
         onFieldSuccess: (element, constraints, field) -> return
 
+
 validators =
     notnull: (val) ->
         return val.length > 0
@@ -151,6 +152,7 @@ formatMesssage = (message, args) ->
     return message.replace /%s/g, (match) ->
         return String(args.shift())
 
+
 toInt = (num) ->
     return parseInt(num, 10)
 
@@ -180,6 +182,7 @@ _checksley = (options) ->
         switch options
             when "validate" then instance.validate()
             when "destroy" then instance.destroy()
+            when "reset" then instance.reset()
     else
         return instance
 
@@ -381,10 +384,10 @@ class Field
             else
                 listeners.onFieldSuccess(@element, data, @)
 
-        @handleClases(valid)
+        @handleClasses(valid)
         return valid
 
-    handleClases: (valid) ->
+    handleClasses: (valid) ->
         classHandlerElement = @options.errors.classHandler(@element, false)
 
         errorClass = @options.errorClass
@@ -429,7 +432,7 @@ class Field
         container.append(errorElement)
 
     reset: ->
-        @handleClases(null)
+        @handleClasses(null)
         @resetConstraints()
         @removeErrors()
 
