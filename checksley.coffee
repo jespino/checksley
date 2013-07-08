@@ -1,8 +1,8 @@
-#
-# Checksley allows you to verify your form inputs frontend side, without writing a line of javascript. Or so..
-#
+# Checksley
 # Based on Parsley.js of Guillaume Potier - @guillaumepotier
-# Author: Jesús Espino - @jespinog
+#
+# Author: Jesús Espino / @jespinog
+# Author: Andrey Antukh / @niwibe
 
 defaults =
     inputs: 'input, textarea, select'
