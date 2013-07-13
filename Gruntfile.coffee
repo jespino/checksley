@@ -19,8 +19,8 @@ module.exports = (grunt) ->
                 files:
                     'dist/checksley.js': 'checksley.coffee',
                     'dist/checksley.extend.js': 'checksley.extend.coffee'
-                    'l10n/checksley.es.js': 'l10n/checksley.es.coffee'
-                    'l10n/checksley.us.js': 'l10n/checksley.us.coffee'
+                    'dist/l10n/checksley.es.js': 'l10n/checksley.es.coffee'
+                    'dist/l10n/checksley.us.js': 'l10n/checksley.us.coffee'
 
             demo:
                 files:
@@ -28,7 +28,7 @@ module.exports = (grunt) ->
 
             tests:
                 files:
-                    "tests.js": "tests.coffee"
+                    "tests/tests.js": "tests/tests.coffee"
 
         coffeelint:
             app:
@@ -46,8 +46,8 @@ module.exports = (grunt) ->
             checksley:
                 tasks: ['coffee:checksley']
                 files: [
-                    'dist/checksley.coffee',
-                    'dist/checksley.extend.coffee',
+                    'checksley.coffee',
+                    'checksley.extend.coffee',
                     'l10n/*.coffee',
                     'i18n/*.coffee'
                 ]
@@ -60,8 +60,16 @@ module.exports = (grunt) ->
                 tasks: ["coffee:tests"]
                 files: ["tests.coffee"]
 
-        mocha_phantomjs:
-            all: ['tests/index.html']
+        mocha:
+            all:
+                src: [ 'tests/index.html' ]
+                options:
+                    bail: true
+                    log: true
+                    mocha:
+                        ignoreLeaks: false
+                    reporter: 'Spec'
+                    run: true
 
         clean: [
             'dist/*.js'
@@ -79,11 +87,11 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-contrib-clean')
-    grunt.loadNpmTasks('grunt-mocha-phantomjs')
+    grunt.loadNpmTasks('grunt-mocha')
     grunt.loadNpmTasks('grunt-coffeelint')
 
     # Default task(s).
     grunt.registerTask('default', ['coffee', 'watch'])
     grunt.registerTask('dist', ['coffee', 'uglify'])
-    grunt.registerTask('test', ['coffee', 'mocha_phantomjs'])
+    grunt.registerTask('test', ['coffee', 'mocha'])
     grunt.registerTask('lint', ['coffeelint'])
