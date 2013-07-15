@@ -7,20 +7,33 @@ module.exports = (grunt) ->
                 banner: "/*! <%= pkg.name %> <%= grunt.template.today('yyyy-mm-dd') %>*/\n" +
                         "/*! Version: <%= pkg.version %> */\n" +
                         "/*! License: BSD */\n"
+
                 mangle: false
                 report: "min"
 
             build:
                 files:
-                    'dist/checksley.min.js': 'dist/checksley.js'
-                    'dist/checksley.extend.min.js': 'dist/checksley.extend.js'
-        coffee:
-            checksley:
+                    'dist/checksley.min.js': 'dist/_checksley.js'
+                    'dist/checksley.extend.min.js': 'dist/_checksley.extend.js'
+
+        concat:
+            options:
+                stripBanners: false,
+                banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                        '<%= grunt.template.today("yyyy-mm-dd") %> */\n'
+
+            dist:
                 files:
-                    'dist/checksley.js': 'checksley.coffee',
-                    'dist/checksley.extend.js': 'checksley.extend.coffee'
-                    'dist/l10n/checksley.es.js': 'l10n/checksley.es.coffee'
-                    'dist/l10n/checksley.us.js': 'l10n/checksley.us.coffee'
+                    "dist/checksley.js": ['dist/_checksley.js']
+                    "dist/checksley.extend.js": ["dist/_checksley.extend.js"]
+
+        coffee:
+            dev:
+                files:
+                    'dist/_checksley.js': 'checksley.coffee',
+                    'dist/_checksley.extend.js': 'checksley.extend.coffee'
+                    #'dist/l10n/checksley.es.js': 'l10n/checksley.es.coffee'
+                    #'dist/l10n/checksley.us.js': 'l10n/checksley.us.coffee'
 
             demo:
                 files:
@@ -44,7 +57,7 @@ module.exports = (grunt) ->
 
         watch:
             checksley:
-                tasks: ['coffee:checksley']
+                tasks: ['coffee', 'concat']
                 files: [
                     'checksley.coffee',
                     'checksley.extend.coffee',
@@ -59,6 +72,7 @@ module.exports = (grunt) ->
             tests:
                 tasks: ["coffee:tests"]
                 files: ["tests.coffee"]
+
 
         mocha:
             all:
@@ -91,7 +105,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-coffeelint')
 
     # Default task(s).
-    grunt.registerTask('default', ['coffee', 'watch'])
-    grunt.registerTask('dist', ['coffee', 'uglify'])
-    grunt.registerTask('test', ['coffee', 'mocha'])
+    grunt.registerTask('default', ['coffee', 'concat', 'watch'])
+    grunt.registerTask('dist', ['coffee', 'concat', 'uglify'])
+    grunt.registerTask('test', ['coffee', 'concat', 'mocha'])
     grunt.registerTask('lint', ['coffeelint'])

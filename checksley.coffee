@@ -248,7 +248,7 @@ class Field
         @id = _.uniqueId("field-")
         @element = $(elm)
         @validatedOnce = false
-        @options = _.extend({}, defaults, options)
+        @options = _.merge({}, defaults, options)
         @isRadioOrCheckbox = false
 
         # Clone messages and validators
@@ -361,7 +361,7 @@ class Field
 
     applyValidators: (showErrors) ->
         if showErrors is undefined
-            showErrors = @options.errors.showErrors
+            showErrors = @options.showErrors
 
         val = @getValue()
         valid = true
