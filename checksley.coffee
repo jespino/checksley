@@ -405,7 +405,11 @@ class Field
                 classHandlerElement.addClass(successClass)
 
     manageError: (name, constraint) ->
-        if name == "type"
+        data = @.element.data()
+
+        if data["errorMessage"] != undefined
+            message = data["errorMessage"]
+        else if name == "type"
             message = checksley.getMessage("type")[constraint.params]
         else
             message = checksley.getMessage(name)

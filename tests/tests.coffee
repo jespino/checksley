@@ -123,6 +123,15 @@ describe "Checksley test suite", ->
             if element != null
                 element.remove()
 
+        it "check error message override", ->
+            element = createElement("text", {"data-notblank": "true", "data-error-message": "FOOO"})
+            field = new checksley.Field(element)
+            element.val("  ")
+
+            expect(field.validate()).to.be(false)
+            expect(field.getErrorContainer().find("li").html()).to.be("FOOO")
+
+
         it "checkbox minicheck", ->
             element1 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
             element2 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})

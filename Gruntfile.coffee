@@ -15,6 +15,8 @@ module.exports = (grunt) ->
                 files:
                     'dist/checksley.min.js': 'dist/_checksley.js'
                     'dist/checksley.extend.min.js': 'dist/_checksley.extend.js'
+                    'dist/l10n/checksley.es.min.js': 'dist/l10n/_checksley.es.js'
+                    'dist/l10n/checksley.us.min.js': 'dist/l10n/_checksley.us.js'
 
         concat:
             options:
@@ -26,14 +28,16 @@ module.exports = (grunt) ->
                 files:
                     "dist/checksley.js": ['dist/_checksley.js']
                     "dist/checksley.extend.js": ["dist/_checksley.extend.js"]
+                    "dist/l10n/checksley.es.js": ["dist/l10n/_checksley.es.js"]
+                    "dist/l10n/checksley.us.js": ["dist/l10n/_checksley.us.js"]
 
         coffee:
             dev:
                 files:
                     'dist/_checksley.js': 'checksley.coffee',
                     'dist/_checksley.extend.js': 'checksley.extend.coffee'
-                    #'dist/l10n/checksley.es.js': 'l10n/checksley.es.coffee'
-                    #'dist/l10n/checksley.us.js': 'l10n/checksley.us.coffee'
+                    'dist/l10n/_checksley.es.js': 'l10n/checksley.es.coffee'
+                    'dist/l10n/_checksley.us.js': 'l10n/checksley.us.coffee'
 
             demo:
                 files:
@@ -71,7 +75,7 @@ module.exports = (grunt) ->
 
             tests:
                 tasks: ["coffee:tests"]
-                files: ["tests.coffee"]
+                files: ["tests/tests.coffee"]
 
 
         mocha:
