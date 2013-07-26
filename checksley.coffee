@@ -360,7 +360,7 @@ class Field
         return @applyValidators(showErrors)
 
     applyValidators: (showErrors) ->
-        if showErrors is undefined
+        if showErrors is undefined or showErrors is null
             showErrors = @.options.showErrors
 
         val = @.getValue()
