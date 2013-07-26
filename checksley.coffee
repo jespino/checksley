@@ -190,17 +190,17 @@ _checksley = (options) ->
 class Checksley
     constructor: (jq) ->
         if jq is undefined
-            @jq = window.jQuery || window.Zepto
+            @.jq = window.jQuery || window.Zepto
         else
-            @jq = jq
+            @.jq = jq
 
-        @messages = {
+        @.messages = {
             default: {
                 defaultMessage: "Invalid"
             }
         }
 
-        @lang = @detectLang()
+        @.lang = @detectLang()
 
     updateDefaults: (options) ->
         _.merge(defaults, options)
@@ -209,21 +209,21 @@ class Checksley
         _.extend(validators, options)
 
     updateMessages: (lang, messages) ->
-        if @messages[lang] is undefined
-            @messages[lang] = {}
+        if @.messages[lang] is undefined
+            @.messages[lang] = {}
 
-        _.merge(@messages[lang], messages)
+        _.merge(@.messages[lang], messages)
 
     injectPlugin: ->
-        @jq.fn.checksley = _checksley
+        @.jq.fn.checksley = _checksley
 
     setLang: (lang) ->
-        @lang = lang
+        @.lang = lang
 
     detectLang: ->
         # Very simple lang detection
         # TODO: must be improved
-        return @jq("html").attr("lang") or "default"
+        return @.jq("html").attr("lang") or "default"
 
     getMessage: (key, lang) ->
         if lang is undefined
@@ -236,162 +236,162 @@ class Checksley
         message = messages[key]
         if message is undefined
             if lang == "default"
-                return @getMessage("defaultMessage", lang)
+                return @.getMessage("defaultMessage", lang)
             else
-                return @getMessage(key, "default")
+                return @.getMessage(key, "default")
 
         return message
 
 
 class Field
     constructor: (elm, options={}) ->
-        @id = _.uniqueId("field-")
-        @element = $(elm)
-        @validatedOnce = false
-        @options = _.merge({}, defaults, options)
-        @isRadioOrCheckbox = false
+        @.id = _.uniqueId("field-")
+        @.element = $(elm)
+        @.validatedOnce = false
+        @.options = _.merge({}, defaults, options)
+        @.isRadioOrCheckbox = false
 
         # Clone messages and validators
-        @validators = validators
+        @.validators = validators
 
-        @resetConstraints()
-        @bindEvents()
-        @bindData()
+        @.resetConstraints()
+        @.bindEvents()
+        @.bindData()
 
     bindData: ->
-        @element.data("checksley-field", @)
+        @.element.data("checksley-field", @)
 
     unbindData: ->
-        @element.data("checksley-field", null)
+        @.element.data("checksley-field", null)
 
     focus: ->
-        @element.focus()
+        @.element.focus()
 
     eventValidate: (event) ->
-        trigger = @element.data("trigger")
-        value = @getValue()
+        trigger = @.element.data("trigger")
+        value = @.getValue()
 
-        if event.type is "keyup" and not /keyup/i.test(trigger) and not @validatedOnce
+        if event.type is "keyup" and not /keyup/i.test(trigger) and not @.validatedOnce
             return true
 
-        if event.type is "change" and not /change/i.test(trigger) and not @validatedOnce
+        if event.type is "change" and not /change/i.test(trigger) and not @.validatedOnce
             return true
 
-        if value.length < @options.validationMinlength and not @validatedOnce
+        if value.length < @.options.validationMinlength and not @.validatedOnce
             return true
 
-        @validate()
+        @.validate()
 
     unbindEvents: ->
-        @element.off(".#{@id}")
+        @.element.off(".#{@.id}")
 
     bindEvents: ->
         @unbindEvents()
-        trigger = @element.data("trigger")
+        trigger = @.element.data("trigger")
 
         if _.isString(trigger)
-            @element.on("#{trigger}.#{@id}", _.bind(@eventValidate, @))
+            @.element.on("#{trigger}.#{@.id}", _.bind(@.eventValidate, @))
 
-        if @element.is("select") and trigger != "change"
-            @element.on("change.#{@id}", _.bind(@eventValidate, @))
+        if @.element.is("select") and trigger != "change"
+            @.element.on("change.#{@.id}", _.bind(@.eventValidate, @))
 
         if trigger != "keyup"
-            @element.on("keyup.#{@id}", _.bind(@eventValidate, @))
+            @.element.on("keyup.#{@.id}", _.bind(@.eventValidate, @))
 
     errorClassTarget: ->
-        return @element
+        return @.element
 
     resetHtml5Constraints: ->
         # Html5 validators compatibility
         if @element.prop("required")
             @required = true
 
-        typeRx = new RegExp(@element.attr('type'), "i")
+        typeRx = new RegExp(@.element.attr('type'), "i")
         if typeRx.test("email url number range")
             type = @element.attr('type')
             switch type
                 when "range"
-                    min = @element.attr('min')
-                    max = @element.attr('max')
+                    min = @.element.attr('min')
+                    max = @.element.attr('max')
 
                     if min and max
-                        @constraints[type] =
+                        @.constraints[type] =
                             valid: true
                             params: [toInt(min), toInt(max)]
-                            fn: @validators[type]
+                            fn: @.validators[type]
 
     resetConstraints: ->
-        @constraints = {}
-        @valid = true
-        @required = false
+        @.constraints = {}
+        @.valid = true
+        @.required = false
 
-        @resetHtml5Constraints()
-        @element.addClass('checksley-validated')
+        @.resetHtml5Constraints()
+        @.element.addClass('checksley-validated')
 
-        for constraint, fn of @validators
-            if @element.data(constraint) is undefined
+        for constraint, fn of @.validators
+            if @.element.data(constraint) is undefined
                 continue
 
-            @constraints[constraint] =
+            @.constraints[constraint] =
                 valid: true
-                params: @element.data(constraint)
+                params: @.element.data(constraint)
                 fn: fn
 
             if constraint == "required"
-                @required = true
+                @.required = true
 
     hasConstraints: ->
-        return not _.isEmpty(@constraints)
+        return not _.isEmpty(@.constraints)
 
     validate: (showErrors) ->
-        @validatedOnce = true
+        @.validatedOnce = true
 
-        if not @hasConstraints()
+        if not @.hasConstraints()
             return null
 
-        if @options.listeners.onFieldValidate(@element, this)
-            @reset()
+        if @.options.listeners.onFieldValidate(@.element, this)
+            @.reset()
             return null
 
-        if not @required and @getValue() == ""
-            @reset()
+        if not @.required and @.getValue() == ""
+            @.reset()
             return null
 
         return @applyValidators(showErrors)
 
     applyValidators: (showErrors) ->
         if showErrors is undefined
-            showErrors = @options.showErrors
+            showErrors = @.options.showErrors
 
-        val = @getValue()
+        val = @.getValue()
         valid = true
 
-        listeners = @options.listeners
+        listeners = @.options.listeners
 
         # If showErrors is true, remove previous errors
         # before put new errors.
         if showErrors
-            @removeErrors()
+            @.removeErrors()
 
         # Apply all declared validators
-        for name, data of @constraints
-            data.valid = data.fn(@getValue(), data.params, @)
+        for name, data of @.constraints
+            data.valid = data.fn(@.getValue(), data.params, @)
 
             if data.valid is false
                 valid = false
-                @manageError(name, data) if showErrors
-                listeners.onFieldError(@element, data, @)
+                @.manageError(name, data) if showErrors
+                listeners.onFieldError(@.element, data, @)
             else
-                listeners.onFieldSuccess(@element, data, @)
+                listeners.onFieldSuccess(@.element, data, @)
 
-        @handleClasses(valid)
+        @.handleClasses(valid)
         return valid
 
     handleClasses: (valid) ->
-        classHandlerElement = @options.errors.classHandler(@element, false)
+        classHandlerElement = @.options.errors.classHandler(@.element, false)
 
-        errorClass = @options.errorClass
-        successClass = @options.successClass
+        errorClass = @.options.errorClass
+        successClass = @.options.successClass
 
         switch valid
             when null
@@ -420,7 +420,7 @@ class Field
         if constraint.params
             message = formatMesssage(message, _.clone(constraint.params, true))
 
-        @addError(@makeErrorElement(name, message))
+        @.addError(@.makeErrorElement(name, message))
 
     makeErrorElement: (constraintName, message) ->
         element = $("<li />", {"class": "checksley-#{constraintName}"})
@@ -429,55 +429,55 @@ class Field
         return element
 
     addError: (errorElement) ->
-        container = @getErrorContainer()
-        if @options.errors.onlyOneErrorElement
+        container = @.getErrorContainer()
+        if @.options.errors.onlyOneErrorElement
             container.empty()
 
         container.append(errorElement)
 
     reset: ->
-        @handleClasses(null)
-        @resetConstraints()
-        @removeErrors()
+        @.handleClasses(null)
+        @.resetConstraints()
+        @.removeErrors()
 
     removeErrors: ->
         # Remove errors container
-        $("##{@errorContainerId()}").remove()
+        $("##{@.errorContainerId()}").remove()
 
     getValue: ->
-        return @element.val()
+        return @.element.val()
 
     errorContainerId: ->
-        return "checksley-error-#{@id}"
+        return "checksley-error-#{@.id}"
 
     errorContainerClass: ->
         return "checksley-error-list"
 
     getErrorContainer: ->
-        errorContainerEl = $("##{@errorContainerId()}")
+        errorContainerEl = $("##{@.errorContainerId()}")
         if errorContainerEl.length == 1
             return errorContainerEl
 
         params =
-            "class": @errorContainerClass()
-            "id": @errorContainerId()
+            "class": @.errorContainerClass()
+            "id": @.errorContainerId()
 
         errorContainerEl = $("<ul />", params)
 
-        definedContainer = @element.data('error-container')
+        definedContainer = @.element.data('error-container')
         if definedContainer is undefined
-            if @isRadioOrCheckbox
-                errorContainerEl.insertAfter(@element.parent())
+            if @.isRadioOrCheckbox
+                errorContainerEl.insertAfter(@.element.parent())
             else
-                errorContainerEl.insertAfter(@element)
+                errorContainerEl.insertAfter(@.element)
             return errorContainerEl
 
-        if @options.errors.containerGlobalSearch
+        if @.options.errors.containerGlobalSearch
             container = $(definedContainer)
         else
-            container = @element.closest(definedContainer)
+            container = @.element.closest(definedContainer)
 
-        preferenceSelector = @options.errors.containerPreferenceSelector
+        preferenceSelector = @.options.errors.containerPreferenceSelector
         if container.find(preferenceSelector).length == 1
             container = container.find(preferenceSelector)
 
@@ -485,102 +485,103 @@ class Field
         return errorContainerEl
 
     destroy: ->
-        @unbindEvents()
-        @removeErrors()
-        @unbindData()
+        @.unbindEvents()
+        @.removeErrors()
+        @.unbindData()
 
     setForm: (form) ->
-        @form = form
+        @.form = form
 
 
 class FieldMultiple extends Field
     constructor: (elm, options) ->
         super(elm, options)
 
-        @isRadioOrCheckbox = true
-        @isRadio = @element.is("input[type=radio]")
-        @isCheckbox = @element.is("input[type=checkbox]")
+        @.isRadioOrCheckbox = true
+        @.isRadio = @.element.is("input[type=radio]")
+        @.isCheckbox = @.element.is("input[type=checkbox]")
 
     getSibligns: ->
-        group = @element.data("group")
+        group = @.element.data("group")
         if group is undefined
-            return "input[name=#{@element.attr('name')}]"
+            return "input[name=#{@.element.attr('name')}]"
         else
             return "[data-group=\"#{group}\"]"
 
     getValue: ->
-        if @isRadio
-            return $("#{@getSibligns()}:checked").val() or ''
+        if @.isRadio
+            return $("#{@.getSibligns()}:checked").val() or ''
 
-        if @isCheckbox
+        if @.isCheckbox
             values = []
 
-            for element in $("#{@getSibligns()}:checked")
+            for element in $("#{@.getSibligns()}:checked")
                 values.push($(element).val())
 
             return values
 
     unbindEvents: ->
-        for element in $(@getSibligns())
+        for element in $(@.getSibligns())
             $(element).off(".#{@id}")
 
     bindEvents: ->
-        @unbindEvents()
-        trigger = @element.data("trigger")
+        @.unbindEvents()
+        trigger = @.element.data("trigger")
 
-        for element in $(@getSibligns())
+        for element in $(@.getSibligns())
             element = $(element)
 
             if _.isString(trigger)
-                element.on("#{trigger}.#{@id}", _.bind(@eventValidate, @))
+                element.on("#{trigger}.#{@.id}", _.bind(@.eventValidate, @))
 
             if trigger != "change"
-                element.on("change.#{@id}", _.bind(@eventValidate, @))
+                element.on("change.#{@.id}", _.bind(@.eventValidate, @))
+
 
 class Form
     constructor: (elm, options={}) ->
-        @id = _.uniqueId("checksleyform-")
-        @element = $(elm)
-        @options = _.extend({}, defaults, options)
+        @.id = _.uniqueId("checksleyform-")
+        @.element = $(elm)
+        @.options = _.extend({}, defaults, options)
 
         # Initialize fields
-        @initializeFields()
-        @bindEvents()
-        @bindData()
+        @.initializeFields()
+        @.bindEvents()
+        @.bindData()
 
     bindData: ->
-        @element.data("checksley", @)
+        @.element.data("checksley", @)
 
     unbindData: ->
-        @element.data("checksley", null)
+        @.element.data("checksley", null)
 
     initializeFields: ->
-        @fields = []
+        @.fields = []
 
-        for fieldElm in @element.find(@options.inputs)
+        for fieldElm in @.element.find(@.options.inputs)
             element = $(fieldElm)
-            if element.is(@options.excluded)
+            if element.is(@.options.excluded)
                 continue
 
             if element.is("input[type=radio], input[type=checkbox]")
-                field = new checksley.FieldMultiple(fieldElm, @options)
+                field = new checksley.FieldMultiple(fieldElm, @.options)
             else
-                field = new checksley.Field(fieldElm, @options)
+                field = new checksley.Field(fieldElm, @.options)
 
             field.setForm(@)
-            @fields.push(field)
+            @.fields.push(field)
 
     validate: ->
         valid = true
         invalidFields = []
 
-        for field in @fields
+        for field in @.fields
             if field.validate() == false
                 valid = false
                 invalidFields.push(field)
 
         if not valid
-            switch @options.focus
+            switch @.options.focus
                 when "first" then invalidFields[0].focus()
                 when "last" then invalidFields[invalidFields.length].focus()
 
@@ -588,8 +589,8 @@ class Form
 
     bindEvents: ->
         self = @
-        @unbindEvents()
-        @element.on "submit.#{@id}", (event) ->
+        @.unbindEvents()
+        @.element.on "submit.#{@.id}", (event) ->
             ok = self.validate()
             self.options.listeners.onFormSubmit(ok, event, self)
 
@@ -597,24 +598,24 @@ class Form
                 event.preventDefault()
 
     unbindEvents: ->
-        @element.off(".#{@id}")
+        @.element.off(".#{@.id}")
 
     removeErrors: ->
-        for field in @fields
+        for field in @.fields
             field.reset()
 
     destroy: ->
-        @unbindEvents()
-        @unbindData()
+        @.unbindEvents()
+        @.unbindData()
 
-        for field in @fields
+        for field in @.fields
             field.destroy()
 
-        @field = []
+        @.field = []
 
 
     reset: ->
-        for field in @fields
+        for field in @.fields
             field.reset()
 
 
