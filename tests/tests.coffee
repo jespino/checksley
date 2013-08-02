@@ -55,7 +55,8 @@ describe "Checksley test suite", ->
         it "check with not form element", ->
             expect($("<div />").checksley).to.throwError()
 
-    describe "Basic parsley compatibility", ->
+
+    describe "Individual form field validation", ->
         element = null
         field = null
 
@@ -83,46 +84,6 @@ describe "Checksley test suite", ->
             element.checksley("destroy")
             expect(element.data("checksley-field")).to.equal(null)
 
-    describe "I18N test", ->
-        it "test basic lang detection", ->
-            $("html").attr("lang", "")
-            c = new checksley.Checksley()
-            expect(c.detectLang()).to.equal("default")
-            expect(c.lang).to.equal("default")
-
-            $("html").attr("lang", "es")
-            c = new checksley.Checksley()
-            expect(c.detectLang()).to.equal("es")
-            expect(c.lang).to.equal("es")
-
-            $("html").attr("lang", "")
-
-        it "test obtain messages", ->
-            c = new checksley.Checksley()
-            c.updateMessages("default", {"foo": "bar", "bar": "foo"})
-            c.updateMessages("en", {"foo": "BAR"})
-
-            expect(c.getMessage("foo")).to.equal("bar")
-            expect(c.getMessage("bar")).to.equal("foo")
-
-            c.setLang("en")
-
-            expect(c.getMessage("foo")).to.equal("BAR")
-            expect(c.getMessage("bar")).to.equal("foo")
-            expect(c.getMessage("unexistent")).to.equal("Invalid")
-
-
-    describe "Individual form field validation", ->
-        element = null
-        field = null
-
-        afterEach ->
-            if field != null
-                field.destroy()
-
-            if element != null
-                element.remove()
-
         it "check error message override", ->
             element = createElement("text", {"data-notblank": "true", "data-error-message": "FOOO"})
             field = new checksley.Field(element)
@@ -131,6 +92,12 @@ describe "Checksley test suite", ->
             expect(field.validate()).to.be(false)
             expect(field.getErrorContainer().find("li").html()).to.be("FOOO")
 
+        it "set custom errors", ->
+            element = createElement("text", {"data-notblank": "true", "data-error-message": "FOOO"})
+            field = new checksley.Field(element)
+            field.setErrors("foBAR")
+
+            expect(field.getErrorContainer().find("li").html()).to.be("foBAR")
 
         it "checkbox minicheck", ->
             element1 = createElement("checkbox", {"data-mincheck": "2", "name": "tt"})
@@ -883,3 +850,32 @@ describe "Checksley test suite", ->
             expect(field.validate()).to.be(false)
             element.val 'NL'
             expect(field.validate()).to.be(false)
+
+    describe "I18N test", ->
+        it "test basic lang detection", ->
+            $("html").attr("lang", "")
+            c = new checksley.Checksley()
+            expect(c.detectLang()).to.equal("default")
+            expect(c.lang).to.equal("default")
+
+            $("html").attr("lang", "es")
+            c = new checksley.Checksley()
+            expect(c.detectLang()).to.equal("es")
+            expect(c.lang).to.equal("es")
+
+            $("html").attr("lang", "")
+
+        it "test obtain messages", ->
+            c = new checksley.Checksley()
+            c.updateMessages("default", {"foo": "bar", "bar": "foo"})
+            c.updateMessages("en", {"foo": "BAR"})
+
+            expect(c.getMessage("foo")).to.equal("bar")
+            expect(c.getMessage("bar")).to.equal("foo")
+
+            c.setLang("en")
+
+            expect(c.getMessage("foo")).to.equal("BAR")
+            expect(c.getMessage("bar")).to.equal("foo")
+            expect(c.getMessage("unexistent")).to.equal("Invalid")
+

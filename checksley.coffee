@@ -422,6 +422,13 @@ class Field
 
         @.addError(@.makeErrorElement(name, message))
 
+    setErrors: (messages) ->
+        if not _.isArray(messages)
+            messages = [messages]
+
+        for message in messages
+            @.addError(@.makeErrorElement("custom", message))
+
     makeErrorElement: (constraintName, message) ->
         element = $("<li />", {"class": "checksley-#{constraintName}"})
         element.html(message)
@@ -557,6 +564,7 @@ class Form
 
     initializeFields: ->
         @.fields = []
+        @.fieldsByName = {}
 
         for fieldElm in @.element.find(@.options.inputs)
             element = $(fieldElm)
@@ -568,8 +576,16 @@ class Form
             else
                 field = new checksley.Field(fieldElm, @.options)
 
+
             field.setForm(@)
             @.fields.push(field)
+            @.fieldsByName[element.attr("name")] = field
+
+    setErrors: (errors) ->
+        for name, error of errors
+            field = @.fieldsByName[name]
+            if field
+                field.setErrors(errors)
 
     validate: ->
         valid = true
