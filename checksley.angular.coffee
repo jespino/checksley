@@ -5,12 +5,12 @@ ChecksleyFormDirective = ($parse, $compile, $window) ->
         element.on "submit", (event) ->
             event.preventDefault()
 
-        form = element.checksley(listeners: {onFormSubmit: onFormSubmit})
-        callback = $parse(attrs.gmChecksleyForm)
-
+        callback = $parse(attrs.checksleyForm)
         onFormSubmit = (ok, event, form) ->
             scope.$apply ->
                 callback(scope) if ok
+
+        form = element.checksley(listeners: {onFormSubmit: onFormSubmit})
 
         attachChecksley = ->
             form.destroy()

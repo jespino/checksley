@@ -587,7 +587,7 @@ class Form
         for name, error of errors
             field = @.fieldsByName[name]
             if field
-                field.setErrors(errors)
+                field.setErrors(error)
 
     validate: ->
         valid = true
