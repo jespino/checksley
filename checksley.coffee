@@ -550,7 +550,9 @@ class Form
         @.id = _.uniqueId("checksleyform-")
         @.element = $(elm)
         @.options = _.extend({}, defaults, options)
+        @.initialize()
 
+    initialize: ->
         # Initialize fields
         @.initializeFields()
         @.bindEvents()
