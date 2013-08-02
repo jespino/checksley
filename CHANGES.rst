@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 0.3
+-----------
+
+- Add angularjs directives module.
+
+
 Version 0.2
 -----------
 
