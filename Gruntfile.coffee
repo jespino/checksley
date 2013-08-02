@@ -15,6 +15,7 @@ module.exports = (grunt) ->
                 files:
                     'dist/checksley.min.js': 'dist/_checksley.js'
                     'dist/checksley.extend.min.js': 'dist/_checksley.extend.js'
+                    'dist/checksley.angular.min.js': 'dist/_checksley.angular.js'
                     'dist/l10n/checksley.es.min.js': 'dist/l10n/_checksley.es.js'
                     'dist/l10n/checksley.us.min.js': 'dist/l10n/_checksley.us.js'
 
@@ -28,6 +29,7 @@ module.exports = (grunt) ->
                 files:
                     "dist/checksley.js": ['dist/_checksley.js']
                     "dist/checksley.extend.js": ["dist/_checksley.extend.js"]
+                    "dist/checksley.angular.js": ["dist/_checksley.angular.js"]
                     "dist/l10n/checksley.es.js": ["dist/l10n/_checksley.es.js"]
                     "dist/l10n/checksley.us.js": ["dist/l10n/_checksley.us.js"]
 
@@ -36,6 +38,7 @@ module.exports = (grunt) ->
                 files:
                     'dist/_checksley.js': 'checksley.coffee',
                     'dist/_checksley.extend.js': 'checksley.extend.coffee'
+                    'dist/_checksley.angular.js': 'checksley.angular.coffee'
                     'dist/l10n/_checksley.es.js': 'l10n/checksley.es.coffee'
                     'dist/l10n/_checksley.us.js': 'l10n/checksley.us.coffee'
 
@@ -65,6 +68,7 @@ module.exports = (grunt) ->
                 files: [
                     'checksley.coffee',
                     'checksley.extend.coffee',
+                    'checksley.angular.coffee',
                     'l10n/*.coffee',
                     'i18n/*.coffee'
                 ]
