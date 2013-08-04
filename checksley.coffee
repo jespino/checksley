@@ -205,8 +205,8 @@ class Checksley
     updateDefaults: (options) ->
         _.merge(defaults, options)
 
-    updateValidators: (options) ->
-        _.extend(validators, options)
+    updateValidators: (validators) ->
+        _.extend(validators, validators)
 
     updateMessages: (lang, messages) ->
         if @.messages[lang] is undefined

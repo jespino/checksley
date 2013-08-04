@@ -93,6 +93,11 @@ module.exports = (grunt) ->
                     reporter: 'Spec'
                     run: true
 
+        connect:
+            server:
+                options:
+                    port: 9000
+
         clean: [
             'dist/*.js'
             'l10n/*.js'
@@ -109,6 +114,7 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-contrib-yuidoc')
     grunt.loadNpmTasks('grunt-contrib-concat')
     grunt.loadNpmTasks('grunt-contrib-clean')
+    grunt.loadNpmTasks('grunt-contrib-connect')
     grunt.loadNpmTasks('grunt-mocha')
     grunt.loadNpmTasks('grunt-coffeelint')
 
