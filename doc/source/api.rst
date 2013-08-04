@@ -53,7 +53,11 @@ API
 
   .. js:function:: bindData()
 
+    Set the data checksley attribute to the form storing the :js:class:`Form` object.
+
   .. js:function:: unbindData()
+
+    Unset the data checksley attribute to the form storing the :js:class:`Form` object.
 
   .. js:function:: initializeFields()
 
@@ -67,23 +71,39 @@ API
 
   .. js:function:: removeErrors()
 
+    Remove error messages.
+
   .. js:function:: destroy()
 
+    Destroy the form.
+
   .. js:function:: reset()
+
+    Reset the status of the form.
 
 .. js:class:: Field(elm, options={})
 
   .. js:function:: bindData()
 
+    Unset the data checksley-field attribute to the form storing the :js:class:`Field` object.
+
   .. js:function:: unbindData()
 
+    Unset the data checksley-field attribute to the form storing the :js:class:`Field` object.
+
   .. js:function:: focus()
+
+    Set the focus in the field.
 
   .. js:function:: eventValidate(event)
 
   .. js:function:: unbindEvents()
 
+    Disconnect valiation of the field events.
+
   .. js:function:: bindEvents()
+
+    Connect valiation to the field events.
 
   .. js:function:: errorClassTarget()
 
@@ -113,6 +133,10 @@ API
 
   .. js:function:: getValue()
 
+    Get the current value of the field.
+
+    :return: string
+
   .. js:function:: errorContainerId()
 
   .. js:function:: errorContainerClass()
@@ -121,7 +145,11 @@ API
 
   .. js:function:: destroy()
 
+    Destroy the field.
+
   .. js:function:: setForm(form)
+
+    Set the form of the field.
 
     :param Form form:
 
@@ -131,8 +159,18 @@ API
 
   .. js:function:: getSibligns()
 
+    Get the other fields in the multifield group.
+
   .. js:function:: getValue()
+
+    Get the value based on the multiple field type (radio or checkbox).
+
+    :return: string
 
   .. js:function:: unbindEvents()
 
+    Disconnect valiation of the field events.
+
   .. js:function:: bindEvents()
+
+    Connect valiation to the field events.

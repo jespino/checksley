@@ -508,7 +508,7 @@ class FieldMultiple extends Field
         @.isRadio = @.element.is("input[type=radio]")
         @.isCheckbox = @.element.is("input[type=checkbox]")
 
-    getSibligns: ->
+    getSiblings: ->
         group = @.element.data("group")
         if group is undefined
             return "input[name=#{@.element.attr('name')}]"
@@ -517,25 +517,25 @@ class FieldMultiple extends Field
 
     getValue: ->
         if @.isRadio
-            return $("#{@.getSibligns()}:checked").val() or ''
+            return $("#{@.getSiblings()}:checked").val() or ''
 
         if @.isCheckbox
             values = []
 
-            for element in $("#{@.getSibligns()}:checked")
+            for element in $("#{@.getSiblings()}:checked")
                 values.push($(element).val())
 
             return values
 
     unbindEvents: ->
-        for element in $(@.getSibligns())
+        for element in $(@.getSiblings())
             $(element).off(".#{@id}")
 
     bindEvents: ->
         @.unbindEvents()
         trigger = @.element.data("trigger")
 
-        for element in $(@.getSibligns())
+        for element in $(@.getSiblings())
             element = $(element)
 
             if _.isString(trigger)
