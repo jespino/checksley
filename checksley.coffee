@@ -171,11 +171,11 @@ _checksley = (options) ->
             _options = options
 
         if element.is("input[type=radio], input[type=checkbox]")
-            instance = new checksley.FieldMultiple(element, options)
+            instance = new FieldMultiple(element, options)
         else if element.is("input, select, textarea")
-            instance = new checksley.Field(element, options)
+            instance = new Field(element, options)
         else
-            instance = new Form(elm, options)
+            instance = new Form(element, options)
 
     # Parsley.js compatibility (incomplete)
     if _.isString(options)
