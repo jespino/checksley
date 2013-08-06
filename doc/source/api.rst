@@ -129,6 +129,8 @@ API
 
   .. js:function:: reset()
 
+    Reset the status of the field.
+
   .. js:function:: removeErrors()
 
   .. js:function:: getValue()
@@ -142,6 +144,8 @@ API
   .. js:function:: errorContainerClass()
 
   .. js:function:: getErrorContainer()
+
+    Return the field error container (create one if not exists).
 
   .. js:function:: destroy()
 
