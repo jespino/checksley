@@ -125,7 +125,17 @@ API
 
   .. js:function:: makeErrorElement(constraintName, message)
 
+    Build a li element with the message as content, and with the classes checksley-<constraintName> and <constraintName>.
+
+    :param string constraintName: The constraint thats generate the error.
+    :param string message: The error mesage.
+    :return: Element
+
   .. js:function:: addError(errorElement)
+
+    :param Element errorElement: The li element with the error to add.
+
+    Add the errorElement to the error container of the field.
 
   .. js:function:: reset()
 
