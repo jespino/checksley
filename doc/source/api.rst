@@ -109,19 +109,48 @@ API
 
   .. js:function:: resetHtml5Constraints()
 
+    Reload the constraints of the field based on his html5 type attribute.
+
   .. js:function:: resetConstraints()
+
+    Reload the constraints of the field based on his data attributes.
 
   .. js:function:: hasConstraints()
 
+    Check if the field has any constraint/validation.
+
+    :return: boolean
+
   .. js:function:: validate(showErrors)
+
+    Apply general validators and call :js:func:`applyValidators`.
+
+    :param boolean showErrors: Enable error showing on this validation.
 
   .. js:function:: applyValidators(showErrors)
 
+    Apply specific field validators.
+
+    :param boolean showErrors: Enable error showing on this validation.
+
   .. js:function:: handleClasses(valid)
+
+    Add/remove classes to the field based on valid param.
+
+    :param boolean valid: validation status
 
   .. js:function:: manageError(name, constraint)
 
+    Obtain and add to the html the error message for a validation and a constraint.
+
+    :param string name: Validator name.
+    :param object constraint: Constraint object.
+
   .. js:function:: setErrors(messages)
+
+    Add to html the errors of this field as custom error messages.
+
+    :param object messages: A string or an array of string with the error messages.
 
   .. js:function:: makeErrorElement(constraintName, message)
 

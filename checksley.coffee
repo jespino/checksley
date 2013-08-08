@@ -298,6 +298,7 @@ class Field
         if trigger != "keyup"
             @.element.on("keyup.#{@.id}", _.bind(@.eventValidate, @))
 
+    # TODO: Review the need of this method, and the behavior
     errorClassTarget: ->
         return @.element
 
