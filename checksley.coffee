@@ -158,8 +158,7 @@ toInt = (num) ->
 
 
 _checksley = (options) ->
-    elm = this
-    element = $(elm)
+    element = $(@)
 
     if not element.is("form, input, select, textarea")
         throw "element is not a valid element for checksley"

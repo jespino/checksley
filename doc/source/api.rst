@@ -51,6 +51,8 @@ API
 
   .. js:function:: initialize()
 
+    Initialize the form initializing the fields, binding the events and bindind the data fields.
+
   .. js:function:: bindData()
 
     Set the data checksley attribute to the form storing the :js:class:`Form` object.
@@ -61,13 +63,27 @@ API
 
   .. js:function:: initializeFields()
 
+    Initialize the Field objects for all the fields of the form.
+
   .. js:function:: setErrors()
+
+    Add to html the errors of this form as custom error messages.
+
+    :param object errors: An object of key/value with field name as key and error message as value.
 
   .. js:function:: validate()
 
+    Validate all the fields of the form.
+
+    :return: boolean
+
   .. js:function:: bindEvents()
 
+    Connect valiation to the form events.
+
   .. js:function:: unbindEvents()
+
+    Disconnect valiation of the form events.
 
   .. js:function:: removeErrors()
 
@@ -97,6 +113,10 @@ API
 
   .. js:function:: eventValidate(event)
 
+    Handle events that trigger the validation.
+
+    :param Event event:
+
   .. js:function:: unbindEvents()
 
     Disconnect valiation of the field events.
@@ -106,6 +126,9 @@ API
     Connect valiation to the field events.
 
   .. js:function:: errorClassTarget()
+
+    # TODO: Review this method
+    Return the target of the error class.
 
   .. js:function:: resetHtml5Constraints()
 
@@ -172,6 +195,8 @@ API
 
   .. js:function:: removeErrors()
 
+    Remove the field errors.
+
   .. js:function:: getValue()
 
     Get the current value of the field.
@@ -180,7 +205,15 @@ API
 
   .. js:function:: errorContainerId()
 
+    Get the error container id.
+
+    :return: string
+
   .. js:function:: errorContainerClass()
+
+    Get the error container class.
+
+    :return: string
 
   .. js:function:: getErrorContainer()
 
