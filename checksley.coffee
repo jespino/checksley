@@ -204,14 +204,17 @@ class Checksley
     updateDefaults: (options) ->
         _.merge(defaults, options)
 
-    updateValidators: (validators) ->
-        _.extend(validators, validators)
+    updateValidators: (_validators) ->
+        _.extend(validators, _validators)
 
-    updateMessages: (lang, messages) ->
+    updateMessages: (lang, messages, overwrite=false) ->
         if @.messages[lang] is undefined
             @.messages[lang] = {}
 
-        _.merge(@.messages[lang], messages)
+        if overwrite
+            @.messages[lang] = messages
+        else
+            _.merge(@.messages[lang], messages)
 
     injectPlugin: ->
         @.jq.fn.checksley = _checksley
