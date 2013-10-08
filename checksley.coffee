@@ -426,6 +426,7 @@ class Field
         @.addError(@.makeErrorElement(name, message))
 
     setErrors: (messages) ->
+        @.removeErrors()
         if not _.isArray(messages)
             messages = [messages]
 
