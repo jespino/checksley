@@ -250,3 +250,29 @@ API
   .. js:function:: bindEvents()
 
     Connect valiation to the field events.
+
+.. js:class:: ComposedField(elm, options)
+
+  Subclass of Field.
+
+  .. js:function:: getComponents()
+
+    Get a list of jQuery objects that compound the composed field based on the
+    data-composed attribute value.
+
+    :return: [element]
+
+  .. js:function:: getValue()
+
+    Get the value based on the composition of the getComposed() returned fields
+    joined with the data-composed-joiner attribute.
+
+    :return: string
+
+  .. js:function:: unbindEvents()
+
+    Disconnect valiation of the field events.
+
+  .. js:function:: bindEvents()
+
+    Connect valiation to the field events.
