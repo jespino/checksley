@@ -10,7 +10,7 @@ Version 0.5
 Version 0.4
 -----------
 
-- SmallFix on errors showing.
+- Smallfix on errors showing.
 
 Version 0.3
 -----------
