@@ -1,6 +1,17 @@
 Changelog
 =========
 
+Version 0.5
+-----------
+
+- Adding ComposedField validation.
+- Adding some extra validators in checksley.extend.coffee.
+
+Version 0.4
+-----------
+
+- SmallFix on errors showing.
+
 Version 0.3
 -----------
 
