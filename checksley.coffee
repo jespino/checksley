@@ -146,7 +146,7 @@ messages =
     equalto:        "This value should be the same."
 
 
-formatMesssage = (message, args) ->
+formatMessage = (message, args) ->
     if not _.isArray(args)
         args = [args]
     return message.replace /%s/g, (match) ->
@@ -421,7 +421,7 @@ class Field
             message = checksley.getMessage("default")
 
         if constraint.params
-            message = formatMesssage(message, _.clone(constraint.params, true))
+            message = formatMessage(message, _.clone(constraint.params, true))
 
         @.addError(@.makeErrorElement(name, message))
 
