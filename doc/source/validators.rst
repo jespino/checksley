@@ -135,6 +135,30 @@ Extend validators
 
   :param list data-rangewords: List of [minwords, maxwords]
 
+.. js:function:: greaterthanvalue
+
+  The field value must be greater than the value of data-greaterthan.
+
+  :param selector data-greaterthan: Min value.
+
+.. js:function:: lessthanvalue
+
+  The field value must be smaller than the value of data-lessthan.
+
+  :param selector data-lessthan: Max value.
+
+.. js:function:: beforedatevalue
+
+  The field value must date be a date before the date in data-beforedate.
+
+  :param selector data-beforedate: Max date.
+
+.. js:function:: afterdatevalue
+
+  The field value must date be a date after the date in data-afterdate.
+
+  :param selector data-afterdate: Min date.
+
 .. js:function:: greaterthan
 
   The field value must be greater than the field selected by data-greaterthan.
