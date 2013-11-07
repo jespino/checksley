@@ -1,5 +1,5 @@
 {
-  "name": "checksley",
+  "name": "checksley-web",
   "version": "0.4.0",
   "dependencies": {
       "jquery": "~1.10.0",
