@@ -1,10 +1,10 @@
 {
   "name": "checksley-web",
-  "version": "0.4",
+  "version": "0.5.0",
   "dependencies": {
       "jquery": "~1.10.0",
       "bootstrap": "~2.3.2",
       "lodash": "~2.2.1",
-      "checksley": "~0.4.0"
+      "checksley": "~0.5.0"
   }
 }
