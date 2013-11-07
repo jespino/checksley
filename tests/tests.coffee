@@ -921,3 +921,26 @@ describe "Checksley test suite", ->
             expect(c.getMessage("bar")).to.equal("foo")
             expect(c.getMessage("unexistent")).to.equal("Invalid")
 
+    describe "Composed Field test", ->
+        it "test basic composed field", ->
+            fieldset = $('<fieldset />')
+            fieldset.data('composed', 'year,month,day')
+            fieldset.data('beforedatevalue', '2013-01-01')
+            fieldset.data('composed-joiner', '-')
+
+            day = createElement("text", {"name": "day"})
+            month = createElement("text", {"name": "month"})
+            year = createElement("text", {"name": "year"})
+            fieldset.append(day)
+            fieldset.append(month)
+            fieldset.append(year)
+            composedField = new checksley.ComposedField(fieldset)
+
+            day.val '10'
+            month.val '10'
+            year.val '2010'
+            expect(composedField.validate()).to.be(true)
+            day.val '10'
+            month.val '10'
+            year.val '2013'
+            expect(composedField.validate()).to.be(false)

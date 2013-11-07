@@ -562,7 +562,7 @@ class ComposedField extends Field
         components = []
         fields = @.element.data("composed").split(',')
         for field in fields
-            components.push $("[name=#{field}]")
+            components.push @.element.find("[name=#{field}]")
         return components
 
     getValue: ->
