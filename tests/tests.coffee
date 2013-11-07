@@ -111,6 +111,10 @@ describe "Checksley test suite", ->
             element2.attr("checked", "true")
             expect(field.validate()).to.be(true)
 
+            element1.remove()
+            element2.remove()
+            element3.remove()
+
         it "not null field", ->
             element = createElement("text", {"data-notnull": "true"})
             field = new checksley.Field(element)
@@ -490,6 +494,9 @@ describe "Checksley test suite", ->
             expect(field.validate()).to.be(true)
             elementModel.val '5'
             expect(field.validate()).to.be(false)
+
+            elementModel.remove()
+            element.remove()
 
         it 'lessThan', ->
             elementModel = createElement("text", {id: "lessThan-model", value: "5"})
