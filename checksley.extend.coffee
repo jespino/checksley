@@ -22,21 +22,21 @@ validators =
 
         return val >= obj[0] and val <= obj[1]
 
-    greaterthan: (val, elem, self) ->
+    greaterthan: (val, min, self) ->
         self.options.validateIfUnchanged = true
 
-        return new Number(val) > new Number($(elem).val())
+        return new Number(val) > new Number(min)
 
-    lessthan: (val, elem, self) ->
+    lessthan: (val, max, self) ->
         self.options.validateIfUnchanged = true
 
-        return new Number(val) < new Number($(elem).val())
+        return new Number(val) < new Number(max)
 
-    beforedate: (val, elem, self) ->
-        return Date.parse(val) < Date.parse($(elem).val())
+    beforedate: (val, date, self) ->
+        return Date.parse(val) < Date.parse(date)
 
-    afterdate: (val, elem, self) ->
-        return Date.parse($(elem).val()) < Date.parse(val)
+    afterdate: (val, date, self) ->
+        return Date.parse(date) < Date.parse(val)
 
     inlist: (val, list, self) ->
         delimiter = self.element.data('inlistDelimiter') or ','
@@ -45,7 +45,7 @@ validators =
 
         return (listItems.indexOf(val.trim()) != -1)
 
-    luhn: (val, elem, self) ->
+    luhn: (val, unused, self) ->
         val = val.replace(/[ -]/g, '')
         sum = 0
         for digit, key in val.split('').reverse()
@@ -60,7 +60,7 @@ validators =
                 sum += digit
         return sum % 10 == 0
 
-    americandate: (val, elem, self) ->
+    americandate: (val, unused, self) ->
         if(!/^([01]?[0-9])[\.\/-]([0-3]?[0-9])[\.\/-]([0-9]{4}|[0-9]{2})$/.test(val))
             return false
         parts = val.split(/[.\/-]+/)

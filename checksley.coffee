@@ -548,6 +548,36 @@ class FieldMultiple extends Field
             if trigger != "change"
                 element.on("change.#{@.id}", _.bind(@.eventValidate, @))
 
+class ComposedField extends Field
+    constructor: (elm, options) ->
+        super(elm, options)
+
+    getComponents: ->
+        components = []
+        fields = @.element.data("composed").split(',')
+        for field in fields
+            components.push $("[name=#{field}]")
+        return components
+
+    getValue: ->
+        value = _.map(@.getComponents(), (x) -> return x.val()).join(@.element.data("composed-joiner"))
+        @.element.val(value)
+        return value
+
+    unbindEvents: ->
+        for component in $(@.getComponents())
+            component.off(".#{@id}")
+
+    bindEvents: ->
+        @.unbindEvents()
+        trigger = @.element.data("trigger")
+
+        for component in $(@.getComponents())
+            if _.isString(trigger)
+                component.on("#{trigger}.#{@.id}", _.bind(@.eventValidate, @))
+
+            if trigger != "change"
+                component.on("change.#{@.id}", _.bind(@.eventValidate, @))
 
 class Form
     constructor: (elm, options={}) ->
@@ -586,6 +616,12 @@ class Form
             field.setForm(@)
             @.fields.push(field)
             @.fieldsByName[element.attr("name")] = field
+
+        for composedField in @.element.find('[data-composed]')
+            field = new checksley.ComposedField(composedField, @.options)
+
+            field.setForm(@)
+            @.fields.push(field)
 
     setErrors: (errors) ->
         for name, error of errors
@@ -651,6 +687,7 @@ checksley.Checksley = Checksley
 checksley.Form = Form
 checksley.Field = Field
 checksley.FieldMultiple = FieldMultiple
+checksley.ComposedField = ComposedField
 
 # Expose global instance to the world
 @checksley = checksley

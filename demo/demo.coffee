@@ -3,7 +3,7 @@
 demo =
     requiredForm: ->
         section = $(".required-section")
-        form = section.find("form").parsley()
+        form = section.find("form").checksley()
 
         section.on "click", ".validate", (event) ->
             event.preventDefault()
@@ -11,7 +11,7 @@ demo =
 
     digitsForm: ->
         section = $(".type-digits-section")
-        form = section.find("form").parsley()
+        form = section.find("form").checksley()
 
         section.on "click", ".validate", (event) ->
             event.preventDefault()
@@ -19,7 +19,15 @@ demo =
 
     rangeForm: ->
         section = $(".type-range-section")
-        form  = section.find("form").parsley()
+        form  = section.find("form").checksley()
+
+        section.on "click", ".validate", (event) ->
+            event.preventDefault()
+            form.validate()
+
+    composedValidationForm: ->
+        section = $(".type-composed-validation")
+        form  = section.find("form").checksley()
 
         section.on "click", ".validate", (event) ->
             event.preventDefault()
@@ -27,7 +35,7 @@ demo =
 
     interceptSubmit: ->
         section = $(".intercept-submit")
-        form = section.find("form").parsley({interceptSubmit:true})
+        form = section.find("form").checksley({interceptSubmit:true})
 
 
 $ ->
