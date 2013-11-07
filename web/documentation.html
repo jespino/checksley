@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Keywords" content="javascript form validation, javascript, form, validation, jquery, plungin, html, UX">
     <meta name="description" content="Checksley is a dead simple javascript form validation, powerful and UX aware">
-    <meta name="author" content="Guillaume Potier">
+    <meta name="author" content="Guillaume Potier & Jesús Espino">
 
     <!-- Le styles -->
     <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet" />
@@ -106,21 +106,15 @@
             <ul class="nav nav-pills pull-right">
               <li><a href="index.html">Home</a></li>
               <li class="active"><a href="documentation.html">Documentation</a></li>
-              <li><a href="doc/api/index.html" target="_blank">API</a></li>
+              <li><a href="http://checksley.readthedocs.org/en/latest/" target="_blank">API</a></li>
             </ul>
             <h3 class="muted">
                 Checksley
 
                 <span class="social-buttons inline-block">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-related="garlicjs: auto persist form values to avoid data loss,jespino" data-url="http://checksley.org" data-lang="en" data-text="Checksley: never write a single javascript line anymore to validate your forms FrontEnd. #ui #ux #javascript"></a>
-                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
                     <iframe src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-
                     <iframe src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
-
                 </span>
-
             </h3>
           </div>
 
@@ -159,7 +153,7 @@
                                 <small>Please, note that this demo form is not a perfect example of UX-awareness. The aim here is to show a quick overview of data-API and Checksley customizable behavior.</small>
                             </td>
                             <td class="not-for-mobile">
-<pre><code>&lt;form id="demo-form" data-validate="checksley">
+<pre><code>&lt;form id="demo-form">
     &lt;label for="fullname">Full Name * :&lt;/label>
     &lt;input type="text" id="fullname" name="fullname" data-required="true" />
 
@@ -233,10 +227,7 @@
               <p>Just include the <a href="https://github.com/jespino/checksley/blob/master/dist/checksley.min.js">checksley</a> file (with <a href="http://jquery.com/">jQuery</a> or <a href="http://zeptojs.com/">Zepto</a> with <strong><a href="https://github.com/madrobby/zepto#building">data and fx_methods modules</a></strong> added) or use <a href="https://github.com/jespino/checksley/blob/master/dist/checksley-standalone.min.js">Checksley standalone</a> (with Zepto bundled inside)</p>
 <pre><code>&lt;script type="text/javascript" src="jquery.js">&lt;/script>
 &lt;script type="text/javascript" src="checksley.js">&lt;/script>
-
-&lt;form data-validate="checksley">
-  [...]
-&lt;/form></code></pre>
+</code></pre>
             </section>
             <a href="#top" class="top pull-right">Top</a>
 
@@ -244,12 +235,7 @@
             <section>
                 <a name="checksleyform"></a>
                 <h3>Checksley Form</h3>
-                <p>This is the main Checksley form validation factory, where you decide if a form is validated, and set some extra options.</p>
-                <pre><code>&lt;form data-validate="checksley">&lt;/form></code></pre>
-                 <div class="alert alert-block alert-info">
-                <span class="label label-important">Heads up!</span> <strong>HTML5</strong>:
-                If you use HTML5 validation feature, add: <code>novalidate</code> attribute to <code>form</code> tag.
-                </div>
+                <p>This is the main Checksley form validation factory, any form finded will be checked.</p>
                 <h4>Properties</h4>
                 <table class="table table-striped table-bordered table-hover">
                 <thead>
@@ -261,12 +247,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code>data-validate</code></td>
-                        <td></td>
-                        <td>Bind Checksley validation to the form and its items with validation constraints</td>
-                        <td  class="not-for-mobile"></td>
-                    </tr>
                     <tr>
                         <td><code>data-show-errors</code></td>
                         <td>true</td>
@@ -287,7 +267,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley" id="focus-form" data-focus="last">
+                                        <form id="focus-form" data-focus="last">
                                             <p><input type="text" data-type="email" data-required="true" placeholder="won't have focus" /><p>
                                             <p><input type="text" data-type="email" data-required="true" placeholder="will have focus" /></p>
                                         </form>
@@ -301,12 +281,6 @@
                             </table>
                         </td>
                     </tr>
-                    <tr>
-                        <td><code>data-bind</code></td>
-                        <td></td>
-                        <td>The attribute data-validate must be used on a form. However, if you want to bind the validation to another DOM element, just add this attribute and set it to <code>true</code></td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
             </section>
@@ -317,7 +291,7 @@
                 <a name="checksleyfield"></a>
                 <h3>Checksley Field</h3>
                 <p>Once your form is validated by Checksley, add validation constraints and various other options.</p>
-<pre><code>&lt;form data-validate="checksley">
+<pre><code>&lt;form>
     &lt;input type="text" name="email" data-type="email" />
 &lt;/form></code></pre>
                 <h4>Properties</h4>
@@ -338,7 +312,7 @@
                         <td>none</td>
                         <td>Specify one or many javascript events that will trigger item validation. eg: <code>data-trigger="change"</code>. To set multiple events, separate them by a space <code>data-trigger="focusin focusout"</code>.<br/><a href="http://api.jquery.com/category/events/">See the various events supported by jQuery.</a></td>
                         <td  class="not-for-mobile">
-                            <form data-validate="checksley">
+                            <form>
                                 <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" placeholder="keyup validation trigger" /><p>
                                 <p><input type="text" data-type="email" data-trigger="change" data-validation-minlength="0" placeholder="change validation trigger" /></p>
                                 <input type="checkbox" name="mincheckdemo[]" data-mincheck="2" value="foo" data-trigger="change" />
@@ -374,7 +348,7 @@
                             eg: <code>data-validation-minlength="4"</code>
                         </td>
                         <td class="not-for-mobile">
-                            <form data-validate="checksley">
+                            <form>
                                 <p><input type="text" data-type="email" data-trigger="keyup" placeholder="default keyup validation" /><p>
                                 <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="8" placeholder="8 chars keyup validation" /></p>
                             </form>
@@ -393,7 +367,7 @@
 data-error-message="You must enter a 10 characters alphanumeric value"</code></pre>
                         </td>
                         <td class="not-for-mobile">
-                            <form data-validate="checksley">
+                            <form>
                                 <p><input type="text" data-type="alphanum" data-rangelength="[10,10]" data-trigger="keyup" data-error-message="You must enter a 10 characters alphanumeric value" placeholder="custom error message" /><p>
                             </form>
                         </td>
@@ -411,7 +385,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <br/>eg: <pre><code>data-error-container="ul#myproperlabel li.someclass"</code></pre>
                         </td>
                         <td class="not-for-mobile">
-                            <form data-validate="checksley">
+                            <form>
                                 <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" data-error-container="#demoerrorcontainer" placeholder="error will pop above text on the left" /><p>
                             </form>
                         </td>
@@ -430,7 +404,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <code>data-type-email-message="Custom email message"</code>
                         </td>
                         <td class="not-for-mobile">
-                            <form data-validate="checksley">
+                            <form>
                                 <p><input type="text" data-type="email" data-minlength="20" data-trigger="keyup" data-type-email-message="Custom email message" data-minlength-message="Custom minlength message" placeholder="custom error messages" /><p>
                             </form>
                         </td>
@@ -477,7 +451,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley" id="form-required">
+                                        <form id="form-required">
                                             <input type="text" id="data-required" data-required="true" placeholder="required field" /><br/><br/>
                                             <select id="select-required" data-required="true">
                                                 <option value="">Please choose</option>
@@ -509,7 +483,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-notblank" data-notblank="true" placeholder="not blank field" />
                                         </form>
                                     </td>
@@ -534,7 +508,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-minlength" data-minlength="6" placeholder="minlength = 6" />
                                         </form>
                                     </td>
@@ -559,7 +533,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-maxlength" data-maxlength="6" placeholder="maxlength = 6" />
                                         </form>
                                     </td>
@@ -584,7 +558,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-rangelength" data-rangelength="[5,10]" placeholder="rangelength = [5,10]" />
                                         </form>
                                     </td>
@@ -610,7 +584,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-minimum" data-min="6" placeholder="min = 6" />
                                         </form>
                                     </td>
@@ -636,7 +610,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-maximum" data-max="100" placeholder="max = 100" />
                                         </form>
                                     </td>
@@ -662,7 +636,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-range" data-range="[6, 100]" placeholder="range = [6,100]" />
                                         </form>
                                     </td>
@@ -688,7 +662,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-regexp" data-regexp="#[A-Fa-f0-9]{6}" placeholder="hexa color code" />
                                         </form>
                                     </td>
@@ -713,7 +687,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="eqalToModel" data-equalTo="#eqalToModel" value="foo" />
                                             <input type="text" id="data-equalto" data-equalTo="#eqalToModel" placeholder="equal to foo" />
                                         </form>
@@ -740,7 +714,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                                 <tr>
                                     <td>
                                         <small>Check at least 2 checkboxes:</small>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="checkbox" id="mincheck" name="mincheck[]" data-mincheck="2" value="foo" />
                                             <input type="checkbox" name="mincheck[]" value="bar" />
                                             <input type="checkbox" name="mincheck[]" value="baz" />
@@ -768,7 +742,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                                 <tr>
                                     <td>
                                         <small>Check 2 checkboxes maximum:</small>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="checkbox" id="maxcheck" name="maxcheck[]" data-maxcheck="2" value="foo" />
                                             <input type="checkbox" name="maxcheck[]" value="bar" />
                                             <input type="checkbox" name="maxcheck[]" value="baz" />
@@ -796,7 +770,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                                 <tr>
                                     <td>
                                         <small>Check b/w 1&amp;2 checkboxes:</small>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <span>
                                                 <input type="checkbox" id="rangecheck" name="rangecheck[]" data-rangecheck="[1,2]" value="foo" />
                                                 <input type="checkbox" name="rangecheck[]" value="bar" />
@@ -847,7 +821,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-email" data-type="email" placeholder="email" />
                                         </form>
                                     </td>
@@ -873,7 +847,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-url" data-type="url" placeholder="url" />
                                         </form>
                                     </td>
@@ -898,7 +872,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-url-strict" data-type="urlstrict" placeholder="urlstrict" />
                                         </form>
                                     </td>
@@ -923,7 +897,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-digits" data-type="digits" placeholder="digits" />
                                         </form>
                                     </td>
@@ -949,7 +923,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-number" data-type="number" placeholder="number" />
                                         </form>
                                     </td>
@@ -974,7 +948,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-alphanum" data-type="alphanum" placeholder="alphanumeric string" />
                                         </form>
                                     </td>
@@ -999,7 +973,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-dateIso" data-type="dateIso" placeholder="YYYY-MM-DD" />
                                         </form>
                                     </td>
@@ -1024,7 +998,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                             <table>
                                 <tr>
                                     <td>
-                                        <form data-validate="checksley">
+                                        <form>
                                             <input type="text" id="data-phone" data-type="phone" placeholder="(XXX) XXXX XXX" />
                                         </form>
                                     </td>
@@ -1044,8 +1018,8 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
             <a name="extra-constraints"></a>
             <h4>Extra Validators</h4>
             <p>
-                There are some extra validators, not shipped along with default Checksley, because they're more specific and less common, and there is no need to add weight to Checksley instead of calling these validators only when needed. Just call <code>checksley.extend.js</code> or <code>dist/checksley.extend.min.js</code> like this:
-<pre><code>&lt;script type="text/javascript" src="checksley.extend.fr.js">&lt;/script>
+                There are some extra validators, not shipped along with default Checksley, because they're more specific and less common, and there is no need to add weight to Checksley instead of calling these validators only when needed. Just call <code>checksley.extend.js</code> or <code>checksley.extend.min.js</code> like this:
+<pre><code>&lt;script type="text/javascript" src="checksley.extend.es.js">&lt;/script>
 &lt;script type="text/javascript" src="checksley.js">&lt;/script></code></pre>
                 Please, feel free to <a href="http://github.com/jespino/checksley">fork and contribute</a> by adding some useful validators!
             </p>
@@ -1129,9 +1103,6 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                 <div class="page-header">
                     <h3>Javascript</h3>
                     <p>Checksleys DOM-API is great. But not so great for complex forms, or dynamically generated forms. Learn how to master Checksley javascript style!</p>
-                    <p class="alert alert-block">
-                      <span class="label">Warning :</span> you must remove <code>data-validate="checksley"</code> auto-binding code in your forms DOM to allow you to override the default processing and use Checksley purely from javascript.
-                    </p>
                 </div>
                 <table class="table table-striped table-bordered table-hover">
                 <thead>
@@ -1405,7 +1376,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                 <h4>Localizations</h4>
                 <p>
                     <a href="https://github.com/jespino/checksley/tree/master/i18n">Here are Checksleys error messages in various supported languages</a>. To use one of these, just call the desired language file. Eg: for French messages:
-<pre><code>&lt;script type="text/javascript" src="/i18n/messages.fr.js">&lt;/script>
+<pre><code>&lt;script type="text/javascript" src="i18n/messages.es.js">&lt;/script>
 &lt;script type="text/javascript" src="checksley.js">&lt;/script></code></pre>
                     Please, feel free to <a href="http://github.com/jespino/checksley">fork and contribute</a> by adding your own translations messages in your language!
                 </p>
@@ -1420,8 +1391,9 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
       </div>
 
     </div> <!-- /container -->
-    <script type="text/javascript" src="components/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="checksley.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script type="text/javascript" src="bower_components/checksley/checksley.js"></script>
     <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
     <script type="text/javascript">
         try {
@@ -1468,15 +1440,6 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
 
-    </script>
-
-    <script>
-        (function(d, t) {
-            var g = d.createElement(t),
-                s = d.getElementsByTagName(t)[0];
-            g.src = '//hnbutton.appspot.com/static/hn.min.js';
-            s.parentNode.insertBefore(g, s);
-        }(document, 'script'));
     </script>
   </body>
 </html>
