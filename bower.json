@@ -12,7 +12,7 @@
       "dist/checksley.angular.min.js",
       "dist/l10n/checksley.es.min.js",
       "dist/l10n/checksley.us.min.js"
-  ]
+  ],
   "dependencies": {
       "jquery": "~1.10.0",
       "lodash": "~2.2.1"
