@@ -44,7 +44,7 @@ module.exports = (grunt) ->
 
             demo:
                 files:
-                    'demo/demo.js': 'demo/demo.coffee'
+                    'web/demo/demo.js': 'web/demo/demo.coffee'
 
             tests:
                 files:

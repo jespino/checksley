@@ -18,6 +18,12 @@
       h3.muted {
           color: #08C;
       }
+      h3>p {
+          font-size: 15px;
+          padding: 0px;
+          margin: 0px;
+          height: 20px;
+      }
       /* Custom container */
       .container-narrow {
         margin: 0 auto;
@@ -88,7 +94,7 @@
         color: #949494;
       }
     </style>
-    <link href="components/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -112,7 +118,7 @@
             Checksley
 
             <span class="social-buttons inline-block">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-related="guillaumepotier,garlicjs: Auto persist form values to avoid data loss" data-url="http://parsleyjs.org" data-lang="en" data-text="Checksley: Javascript forms validation. Powerful, UX aware &amp; Dead simple. #ux #javascript"></a>
+                <a href="https://twitter.com/share" class="twitter-share-button" data-related="guillaumepotier,garlicjs: Auto persist form values to avoid data loss" data-url="http://checksley.org" data-lang="en" data-text="Checksley: Javascript forms validation. Powerful, UX aware &amp; Dead simple. #ux #javascript"></a>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
                 <iframe src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
@@ -120,6 +126,7 @@
                 <iframe src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=fork&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
 
             </span>
+            <p>Based on <a href="http://parsleyjs.org/" target="_blank">Parsley.js</a></p>
 
         </h3>
       </div>
@@ -133,8 +140,7 @@
             <a class="btn btn-large call-to-action" href="documentation.html">See documentation &amp; examples</a>
         </p>
         <ul class="masthead-links">
-            <li><i class="icon-download-alt"></i>&nbsp;<a href="https://github.com/jespino/checksley/archive/1.1.16.zip">Download</a></li>
-            <li>Version 1.1.16</li>
+            <li><i class="icon-download-alt"></i>&nbsp;<a href="https://github.com/jespino/checksley/releases/latest">Download latest version</a></li>
         </ul>
       </div>
 
@@ -148,18 +154,18 @@
 
             <h4><i class="icon-time"></i> Super light</h4>
             <p>Less than <strong>800</strong> lines. Less than <strong>12k</strong> minified.<br/>Works with <strong>jQuery</strong> and <strong>Zepto</strong> (with data and fx_methods added).</p>
-            <p>Get <a href="https://github.com/jespino/Checksley/tree/master/dist">Latest version</a>.</p>
+            <p>Get <a href="https://github.com/jespino/checksley/releases/latest">Latest version</a>.</p>
 
             <h4><i class="icon-gift"></i> Super free</h4>
             <p>Checksley is <strong>open source</strong>, <strong>MIT</strong> licensed, and developed to help everyone. It will <strong>stay that way</strong>.</p>
-            <p>See <a href="https://github.com/jespino/checksley/blob/master/LICENCE.md">License</a>.</p>
+            <p>See <a href="https://github.com/jespino/checksley/blob/master/LICENCE">License</a>.</p>
 
         </div>
 
         <div class="span6">
             <h4><i class="icon-wrench"></i> Super configurable</h4>
             <p>Like no other javascript library, Checksley has a full support for #UX concerns and detailed options. <strong>Override <i>almost</i> every Checksley default behaviors</strong> to fit your <strong>exact needs</strong>.</p>
-            <p>See <a href="documentation.html#parsleyform">documentation</a>.</p>
+            <p>See <a href="documentation.html#checksleyform">documentation</a>.</p>
 
             <h4><i class="icon-play"></i> Super simple</h4>
             <p>Want to validate a form? Just <strong>write it in English</strong> with the awesome Checksley <strong>DOM-API</strong> using jQuery data API.</p>
