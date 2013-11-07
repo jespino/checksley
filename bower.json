@@ -1,18 +1,7 @@
 {
   "name": "checksley",
   "version": "0.5.0",
-  "main": [
-      "dist/checksley.js",
-      "dist/checksley.extend.js",
-      "dist/checksley.angular.js",
-      "dist/l10n/checksley.es.js",
-      "dist/l10n/checksley.us.js",
-      "dist/checksley.min.js",
-      "dist/checksley.extend.min.js",
-      "dist/checksley.angular.min.js",
-      "dist/l10n/checksley.es.min.js",
-      "dist/l10n/checksley.us.min.js"
-  ],
+  "main": "dist",
   "dependencies": {
       "jquery": "~1.10.0",
       "lodash": "~2.2.1"
