@@ -22,20 +22,36 @@ validators =
 
         return val >= obj[0] and val <= obj[1]
 
-    greaterthan: (val, min, self) ->
+    greaterthan: (val, elem, self) ->
+        self.options.validateIfUnchanged = true
+
+        return new Number(val) > new Number($(elem).val())
+
+    lessthan: (val, elem, self) ->
+        self.options.validateIfUnchanged = true
+
+        return new Number(val) < new Number($(elem).val())
+
+    beforedate: (val, elem, self) ->
+        return Date.parse(val) < Date.parse($(elem).val())
+
+    afterdate: (val, elem, self) ->
+        return Date.parse($(elem).val()) < Date.parse(val)
+
+    greaterthanvalue: (val, min, self) ->
         self.options.validateIfUnchanged = true
 
         return new Number(val) > new Number(min)
 
-    lessthan: (val, max, self) ->
+    lessthanvalue: (val, max, self) ->
         self.options.validateIfUnchanged = true
 
         return new Number(val) < new Number(max)
 
-    beforedate: (val, date, self) ->
+    beforedatevalue: (val, date, self) ->
         return Date.parse(val) < Date.parse(date)
 
-    afterdate: (val, date, self) ->
+    afterdatevalue: (val, date, self) ->
         return Date.parse(date) < Date.parse(val)
 
     inlist: (val, list, self) ->
@@ -76,16 +92,20 @@ validators =
 
 
 messages =
-    minwords:       "This value should have %s words at least."
-    maxwords:       "This value should have %s words maximum."
-    rangewords:     "This value should have between %s and %s words."
-    greaterthan:    "This value should be greater than %s."
-    lessthan:       "This value should be less than %s."
-    beforedate:     "This date should be before %s."
-    afterdate:      "This date should be after %s."
-    inlist:         "This value should be in the list %s."
-    luhn:           "This value should pass the luhn test."
-    americandate:   "This value should be a valid date (MM/DD/YYYY)."
+    minwords:         "This value should have %s words at least."
+    maxwords:         "This value should have %s words maximum."
+    rangewords:       "This value should have between %s and %s words."
+    greaterthan:      "This value should be greater than %e."
+    lessthan:         "This value should be less than %e."
+    beforedate:       "This date should be before %e."
+    afterdate:        "This date should be after %e."
+    greaterthanvalue: "This value should be greater than %s."
+    lessthanvalue:    "This value should be less than %s."
+    beforedatevalue:  "This date should be before %s."
+    afterdatevalue:   "This date should be after %s."
+    inlist:           "This value should be in the list %s."
+    luhn:             "This value should pass the luhn test."
+    americandate:     "This value should be a valid date (MM/DD/YYYY)."
 
 
 @checksley.updateValidators(validators)

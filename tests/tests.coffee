@@ -437,6 +437,48 @@ describe "Checksley test suite", ->
             expect(field.validate()).to.be(true)
             element.remove()
 
+        it 'greaterThanValue', ->
+            element = createElement("text", {"data-greaterthanvalue": "1"})
+            field = new checksley.Field(element)
+
+            element.val '1'
+            expect(field.validate()).to.be(false)
+            element.val '2'
+            expect(field.validate()).to.be(true)
+
+        it 'lessThanValue', ->
+            element = createElement("text", {"data-lessthanvalue": "5"})
+            field = new checksley.Field(element)
+
+            element.val '6'
+            expect(field.validate()).to.be(false)
+            element.val '2'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it 'beforeDateValue', ->
+            element = createElement("text", {"data-beforedatevalue": "1/1/2014"})
+            field = new checksley.Field(element)
+
+            element.val '04/15/2015'
+            expect(field.validate()).to.be(false)
+            element.val '4/15/1990'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
+        it  'afterDateValue', ->
+            element = createElement("text", {"data-afterdatevalue": "1/1/2014"})
+            field = new checksley.Field(element)
+
+            element.val '4/15/1990'
+            expect(field.validate()).to.be(false)
+            element.val '04/15/2015'
+            expect(field.validate()).to.be(true)
+
+            element.remove()
+
         it 'greaterThan', ->
             elementModel = createElement("text", {id: "greaterThan-model", value: "1"})
             element = createElement("text", {"data-greaterthan": "#greaterThan-model"})

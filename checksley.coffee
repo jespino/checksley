@@ -149,8 +149,14 @@ messages =
 formatMessage = (message, args) ->
     if not _.isArray(args)
         args = [args]
-    return message.replace /%s/g, (match) ->
-        return String(args.shift())
+    if message.indexOf('%s') >= 0
+        return message.replace /%s/g, (match) ->
+            return String(args.shift())
+    else if message.indexOf('%e') >= 0
+        return message.replace /%e/g, (match) ->
+            return String($(args.shift()).val())
+    else
+        return message
 
 
 toInt = (num) ->
