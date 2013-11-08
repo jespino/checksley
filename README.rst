@@ -2,20 +2,19 @@ checksley
 =========
 
 Coffeescript form validation, without actually writing a
-single line of coffeescript!
+single line of coffeescript/javascript!
 
 
 Curent Stable Version
 ---------------------
 
-TODO
+0.5.0
 
 Browser compatibility
 ---------------------
 
-TODO
-
 * Chrome
+* Firefox
 
 Requirements
 ------------
@@ -26,10 +25,9 @@ jQuery 1.9+
 Run tests
 ---------
 
-* In your browser: go to `tests.index`
+.. code-block::
 
-TODO
-
+  grunt test
 
 Contribute!
 ===========
@@ -44,7 +42,14 @@ No validators will be allowed directly into checksley.
 Localization
 ------------
 
-If file does not exist, create it into `ì18n/` directory with same syntax as others.
+If you want to create you country specific validators, you can create it into
+`l10n/` directory.
+
+
+I18N
+----
+
+If file does not exist, create it into `i18n/` directory with same syntax as others.
 Reference file is _messages.en.fr
 
 
@@ -52,7 +57,7 @@ Global
 ------
 
 * fork repository
-* add your changes to checksley.coffee
+* add your changes to checksley
 * add / update tests to test suite (tests.html / tests.coffee)
 * run tests (see above)
 * make a Pull Request!
