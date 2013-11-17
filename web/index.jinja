@@ -1,0 +1,87 @@
+{% extends "base.jinja" %}
+
+{% block bodyid %}index{% endblock %}
+{% block indexactive %}class="active"{% endblock %}
+
+{% block content %}
+  <div class="jumbotron">
+    <h1>Javascript forms validation.<br/><strong>Powerful, UX aware &amp; Dead simple.</strong></h1>
+    <p class="lead">
+        Never write a single javascript line anymore to validate your forms
+        FrontEnd. Checksley will do that for you &ndash; and do it right
+        &ndash;, thanks to its powerful DOM-API !
+    </p>
+    <p>
+        <a class="btn btn-large call-to-action" href="documentation.html">See documentation &amp; examples</a>
+    </p>
+    <ul class="masthead-links">
+        <li>
+            <i class="icon-download-alt"></i>&nbsp;
+            <a href="https://github.com/jespino/checksley/releases/latest">Download latest version</a>
+        </li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <div class="row-fluid marketing">
+    <div class="span6">
+        <h4><i class="icon-heart"></i> Super #UX focused</h4>
+        <p>
+            User Experience matters. <strong>A lot</strong>. Checksley is
+            totally aware of that, and is designed to help your users and
+            <strong>not bother or frustrate them</strong>.
+        </p>
+        <p>See <a href="documentation.html">demonstration</a>.</p>
+
+        <h4><i class="icon-time"></i> Super light</h4>
+        <p>
+            Less than <strong>800</strong> lines. Less than
+            <strong>12k</strong> minified.<br/>Works with
+            <strong>jQuery</strong> and <strong>Zepto</strong> (with data and
+            fx_methods added).
+        </p>
+        <p>Get <a href="https://github.com/jespino/checksley/releases/latest">Latest version</a>.</p>
+
+        <h4><i class="icon-gift"></i> Super free</h4>
+        <p>
+            Checksley is <strong>open source</strong>, <strong>MIT</strong>
+            licensed, and developed to help everyone. It will <strong>stay that
+            way</strong>.
+        </p>
+        <p>See <a href="https://github.com/jespino/checksley/blob/master/LICENCE">License</a>.</p>
+
+    </div>
+
+    <div class="span6">
+        <h4><i class="icon-wrench"></i> Super configurable</h4>
+        <p>
+            Like no other javascript library, Checksley has a full support
+            for #UX concerns and detailed options. <strong>Override
+            <i>almost</i> every Checksley default behaviors</strong> to fit
+            your <strong>exact needs</strong>.
+        </p>
+        <p>See <a href="documentation.html#checksleyform">documentation</a>.</p>
+
+        <h4><i class="icon-play"></i> Super simple</h4>
+        <p>
+            Want to validate a form? Just <strong>write it in
+            English</strong> with the awesome Checksley
+            <strong>DOM-API</strong> using jQuery data API.
+        </p>
+        <p>See <a href="documentation.html">documentation</a>.</p>
+
+        <h4><i class="icon-check"></i> Super reliable</h4>
+        <p>
+            Form validation is important, #UX is critical. Checksley is
+            shipped <strong><i>almost</i> bug free</strong> to help you
+            with that.
+        </p>
+        <p>
+            <a href="https://travis-ci.org/jespino/checksley">
+                <img src="https://travis-ci.org/jespino/checksley.png?branch=master" />
+            </a>
+        </p>
+    </div>
+  </div>
+{% endblock %}

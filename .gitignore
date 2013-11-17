@@ -6,4 +6,7 @@ l10n/*.js
 parsley.js
 parsley.extend.js
 node_modules
+web/*.html
+doc/build
+web/bower_components
 *.js

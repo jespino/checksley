@@ -1,138 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Checksley Documentation & API</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Keywords" content="javascript form validation, javascript, form, validation, jquery, plungin, html, UX">
-    <meta name="description" content="Checksley is a dead simple javascript form validation, powerful and UX aware">
-    <meta name="author" content="Guillaume Potier & Jesús Espino">
+{% extends "base.jinja" %}
 
-    <!-- Le styles -->
-    <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet" />
-    <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 40px;
-      }
-      h3.muted {
-          color: #08C;
-      }
-      /* Custom container */
-      .container-narrow {
-        margin: 0 auto;
-        max-width: 940px;
-      }
-      .container-narrow > hr {
-        margin: 30px 0;
-      }
+{% block bodyid %}index{% endblock %}
+{% block documentationactive %}class="active"{% endblock %}
 
-      /* Main marketing message and sign up button */
-      .jumbotron {
-        margin: 60px 0;
-        text-align: center;
-      }
-      .jumbotron h1 {
-        font-size: 72px;
-        line-height: 1;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
-      }
-      section {
-          margin-bottom: 45px;
-      }
-      form {
-          margin: 0;
-      }
-      input.checksley-success, textarea.checksley-success {
-        color: #468847 !important;
-        background-color: #DFF0D8 !important;
-        border: 1px solid #D6E9C6 !important;
-      }
-      input.checksley-error, textarea.checksley-error {
-        color: #B94A48 !important;
-        background-color: #F2DEDE !important;
-        border: 1px solid #EED3D7 !important;
-      }
-      input {
-          width: 150px;
-          margin: 0 2px !important;
-      }
-      ul.checksley-error-list {
-          font-size: 11px;
-          margin: 2px;
-          list-style-type:none;
-      }
-      ul.checksley-error-list li {
-          line-height: 11px;
-      }
-      .social-buttons {
-          padding: 5px 20px;
-      }
-      h3 {
-          color: #FB4006;
-      }
-
-      .container-narrow > hr {
-        margin:15px 0 0 0;
-      }
-
-      @media only screen
-      and (min-device-width : 320px)
-      and (max-device-width : 480px) {
-          .not-for-mobile {
-              display: none;
-          }
-      }
-    </style>
-    <link href="bower_components/bootstrap/docs/assets/css/bootstrap-responsive.css" rel="stylesheet">
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-
-  <body>
-
-      <a href="https://github.com/jespino/checksley"><img style="position: fixed; top: 0; right: 0; border: 0; z-index:9999" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-
-      <div class="container-narrow">
-
-          <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-              <li><a href="index.html">Home</a></li>
-              <li class="active"><a href="documentation.html">Documentation</a></li>
-              <li><a href="http://checksley.readthedocs.org/en/latest/" target="_blank">API</a></li>
-            </ul>
-            <h3 class="muted">
-                <a href="index.html">Checksley</a>
-
-                <span class="social-buttons inline-block">
-                    <iframe
-                        src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=watch&count=true"
-                        allowtransparency="true"
-                        frameborder="0"
-                        scrolling="0"
-                        width="110"
-                        height="20"></iframe>
-
-                    <iframe
-                        src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=fork&count=true"
-                        allowtransparency="true"
-                        frameborder="0"
-                        scrolling="0"
-                        width="110"
-                        height="20"></iframe>
-                </span>
-            </h3>
-          </div>
-
-        <hr>
-
+{% block content %}
         <div class="row-fluid marketing">
             <h2>Warning: This documentation is based on Parsley.js documentation, need to be reviewed.</h2>
             <h2>Demonstration</h2>
@@ -167,19 +38,19 @@
                                 <small>Please, note that this demo form is not a perfect example of UX-awareness. The aim here is to show a quick overview of data-API and Checksley customizable behavior.</small>
                             </td>
                             <td class="not-for-mobile">
-<pre><code>&lt;form id="demo-form">
-    &lt;label for="fullname">Full Name * :&lt;/label>
-    &lt;input type="text" id="fullname" name="fullname" data-required="true" />
+<pre><code>{% filter e %}<form id="demo-form">
+    <label for="fullname">Full Name * :</label>
+    <input type="text" id="fullname" name="fullname" data-required="true" />
 
-    &lt;label for="email">Email * :&lt;/label>
-    &lt;input type="text" id="email" name="email" data-trigger="change" data-required="true" data-type="email" />
+    <label for="email">Email * :</label>
+    <input type="text" id="email" name="email" data-trigger="change" data-required="true" data-type="email" />
 
-    &lt;label for="website">Website :&lt;/label>
-    &lt;input type="text" id="website" name="website" data-trigger="change" data-type="url" />
+    <label for="website">Website :</label>
+    <input type="text" id="website" name="website" data-trigger="change" data-type="url" />
 
-    &lt;label for="message">Message (20 chars min, 200 max) :&lt;/label>
-    &lt;textarea id="message" name="message" data-trigger="keyup" data-rangelength="[20,200]">&lt;/textarea>
-&lt;/form></code></pre>
+    <label for="message">Message (20 chars min, 200 max) :</label>
+    <textarea id="message" name="message" data-trigger="keyup" data-rangelength="[20,200]"></textarea>
+</form>{% endfilter %}</code></pre>
                             </td>
                         </tr>
                 </table>
@@ -239,8 +110,8 @@
               <a name="installation"></a>
               <h3>Checksley Installation</h3>
               <p>Just include the <a href="https://github.com/jespino/checksley/blob/master/dist/checksley.min.js">checksley</a> file (with <a href="http://jquery.com/">jQuery</a> or <a href="http://zeptojs.com/">Zepto</a> with <strong><a href="https://github.com/madrobby/zepto#building">data and fx_methods modules</a></strong> added) or use <a href="https://github.com/jespino/checksley/blob/master/dist/checksley-standalone.min.js">Checksley standalone</a> (with Zepto bundled inside)</p>
-<pre><code>&lt;script type="text/javascript" src="jquery.js">&lt;/script>
-&lt;script type="text/javascript" src="checksley.js">&lt;/script>
+<pre><code>{% filter e %}<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="checksley.js"></script>{% endfilter %}
 </code></pre>
             </section>
             <a href="#top" class="top pull-right">Top</a>
@@ -305,9 +176,9 @@
                 <a name="checksleyfield"></a>
                 <h3>Checksley Field</h3>
                 <p>Once your form is validated by Checksley, add validation constraints and various other options.</p>
-<pre><code>&lt;form>
-    &lt;input type="text" name="email" data-type="email" />
-&lt;/form></code></pre>
+<pre><code>{% filter e %}<form>
+    <input type="text" name="email" data-type="email" />
+</form>{% endfilter %}</code></pre>
                 <h4>Properties</h4>
                 <table class="table table-striped table-bordered table-hover">
                 <thead>
@@ -668,7 +539,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                     <tr>
                         <td>RegExp</td>
                         <td>
-                            <code>data-regexp="&lt;regexp>"</code><br/><br/>
+                            <code>{% filter e %}data-regexp="<regexp>"{% endfilter %}</code><br/><br/>
                             <span class="label label-info">HTML5</span><code>pattern="regexp"</code>
                         </td>
                         <td>Validates that a value matches a specific regular expression. eg: validate a color hexadecimal code: <code>data-regexp="#[A-Fa-f0-9]{6}"</code>.<br/><br/>Add a flag to <code>Regexp()</code> function: <code>data-regexp-flag="i"</code> for example to make regexp case unsensitive</td>
@@ -1033,8 +904,8 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
             <h4>Extra Validators</h4>
             <p>
                 There are some extra validators, not shipped along with default Checksley, because they're more specific and less common, and there is no need to add weight to Checksley instead of calling these validators only when needed. Just call <code>checksley.extend.js</code> or <code>checksley.extend.min.js</code> like this:
-<pre><code>&lt;script type="text/javascript" src="checksley.extend.es.js">&lt;/script>
-&lt;script type="text/javascript" src="checksley.js">&lt;/script></code></pre>
+<pre><code>{% filter e %}<script type="text/javascript" src="checksley.extend.es.js"></script>
+<script type="text/javascript" src="checksley.js"></script>{% endfilter %}</code></pre>
                 Please, feel free to <a href="http://github.com/jespino/checksley">fork and contribute</a> by adding some useful validators!
             </p>
             <br/>
@@ -1136,7 +1007,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                         <td>Override default plugin configs</td>
                         <td></td>
                         <td>Checksley uses a set of default configs that you can override by passing an object as a parameter when calling Checksley on a form or a field.<br/>Default is:
-<pre><code>{
+<pre><code>{% filter e %}{
   // basic data-api overridable properties here..
   inputs: 'input, textarea, select'
   , excluded: 'input[type=hidden]'
@@ -1154,8 +1025,8 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
   , errors: {                     // specify where checksley error-success classes are set
     classHandler: function ( elem, isRadioOrCheckbox ) {}
   , container: function ( elem, isRadioOrCheckbox ) {}
-  , errorsWrapper: '&lt;ul>&lt;/ul>'
-  , errorElem: '&lt;li>&lt;/li>'
+  , errorsWrapper: '<ul></ul>'
+  , errorElem: '<li></li>'
   }
   , listeners: {
       onFieldValidate: function ( elem, ChecksleyField ) { return false; }
@@ -1163,10 +1034,10 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
     , onFieldError: function ( elem, constraints, ChecksleyField ) {}
     , onFieldSuccess: function ( elem, constraints, ChecksleyField ) {}
   }
-}</code></pre>
+}{% endfilter %}</code></pre>
                         </td>
                         <td  class="not-for-mobile"><p>Add a custom validator that checks if number is a multiple of another:</p>
-<pre><code>$( '#form' ).checksley( {
+<pre><code>{% filter e %}$( '#form' ).checksley( {
     validators: {
       multiple: function ( val, multiple ) {
         return val % multiple === 0;
@@ -1176,7 +1047,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
       multiple: "This value should be a multiple of %s"
     }
 } );
-&lt;input type="text" data-multiple="3" /></code></pre>
+<input type="text" data-multiple="3" />{% endfilter %}</code></pre>
                             <form id="checksley-multiple">
                                 <input type="text" id="data-multiple" data-validation-minlength="0" data-trigger="keyup" data-multiple="3" placeholder="multiple of 3" />
                             </form>
@@ -1334,7 +1205,7 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                     </tr>
                     <tr>
                         <td><code>ul.checksley-error-list</code></td>
-                        <td>Auto added after each form item that did not pass Checksley validation. Container for errors <code>&lt;li></code>.</td>
+                        <td>Auto added after each form item that did not pass Checksley validation. Container for errors <code>{% filter e %}<li>{% endfilter %}</code>.</td>
                     </tr>
                     <tr>
                         <td><code>li.checksley-error</code></td>
@@ -1360,17 +1231,17 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                     </tr>
                     <tr>
                       <td>Change error container</td>
-                      <td><p>Override the container that the <code>errorWrapper</code> (ie. by default the <code>&lt;ul&gt;&lt;/ul&gt;</code> containing the errors) is inserted into.</p>
+                      <td><p>Override the container that the <code>errorWrapper</code> (ie. by default the <code>{% filter e %}<ul></ul>{% endfilter %}</code> containing the errors) is inserted into.</p>
                       <p>By default this function does not return anything and so the <code>errorWrapper</code> is added to the DOM directly after the element containing the error, however if you override this function in your options you can return an alternative container where the <code>errorWrapper</code> will be appended</p>
-                      <p>For example, to have the error messages appear before the field with the error in a <code>div</code> with the class <code>.checksley-container</code>:<pre><code>errors: {
+                      <p>For example, to have the error messages appear before the field with the error in a <code>div</code> with the class <code>.checksley-container</code>:<pre><code>{% filter e %}errors: {
     container: function (element, isRadioOrCheckbox) {
         var $container = element.parent().find(".checksley-container");
         if ($container.length === 0) {
-            $container = $("&lt;div class='checksley-container'&gt;&lt;/div&gt;").insertBefore(element);
+            $container = $("<div class='checksley-container'></div>").insertBefore(element);
         }
         return $container;
     }
-}</code></pre></p></td></tr>
+}{% endfilter %}</code></pre></p></td></tr>
                     <tr>
                         <td>Advanced changes</td>
                         <td>See <code>errorsWrapper</code>, <code>errorElem</code> errors properties in Checksley default options.</td>
@@ -1390,8 +1261,8 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
                 <h4>Localizations</h4>
                 <p>
                     <a href="https://github.com/jespino/checksley/tree/master/i18n">Here are Checksleys error messages in various supported languages</a>. To use one of these, just call the desired language file. Eg: for French messages:
-<pre><code>&lt;script type="text/javascript" src="i18n/messages.es.js">&lt;/script>
-&lt;script type="text/javascript" src="checksley.js">&lt;/script></code></pre>
+<pre><code>{% filter e %}<script type="text/javascript" src="i18n/messages.es.js"></script>
+<script type="text/javascript" src="checksley.js"></script>{% endfilter %}</code></pre>
                     Please, feel free to <a href="http://github.com/jespino/checksley">fork and contribute</a> by adding your own translations messages in your language!
                 </p>
                 <br/>
@@ -1399,47 +1270,40 @@ data-error-message="You must enter a 10 characters alphanumeric value"</code></p
             <a href="#top" class="top pull-right">Top</a>
       <hr>
 
-      <div class="footer">
-        <p>&copy; <a href="http://twitter.com/jespinog">@jespinog</a> @<a href="http://wisembly.com/en/">Wisembly</a> 2012 - <small><a href="http://garlicjs.org">Ever heard of #Garlic.js, Checksley little sister?</a></small>
-        </p>
-      </div>
+      <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+      <script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
+      <script type="text/javascript" src="bower_components/checksley/checksley.js"></script>
+      <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+      <script type="text/javascript">
+          try {
+              hljs.initHighlightingOnLoad();
+          } catch ( err ) {}
 
-    </div> <!-- /container -->
-    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
-    <script type="text/javascript" src="bower_components/checksley/checksley.js"></script>
-    <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-    <script type="text/javascript">
-        try {
-            hljs.initHighlightingOnLoad();
-        } catch ( err ) {}
+          $( '#demo-form' ).checksley( { listeners: {
+              onFormSubmit: function ( isFormValid, event ) {
+                  if ( isFormValid && !$( '#good-to-go').length ) {
+                      $( '#demo-form-valid' ).after( '<span id="good-to-go" style="display:block;margin-top:5px;" class="alert alert-success">Yay, good to go!</span>' );
+                      $( '#demo-form-valid' ).hide();
+                      $( '#not-good-to-go' ).hide();
+                  } else if ( !isFormValid && !$( '#not-good-to-go').length ) {
+                      $( '#demo-form-valid' ).after( '<span id="not-good-to-go" style="display:block;margin-top:5px;" class="alert alert-error">Oops! Seems there are some errors..</span>' );
+                  }
+              },
+              onFieldError: function ( field, constraint ) {
+                  $( '#demo-form-valid' ).show();
+                  $( '#good-to-go' ).remove();
+              }
+          } } );
 
-        $( '#demo-form' ).checksley( { listeners: {
-            onFormSubmit: function ( isFormValid, event ) {
-                if ( isFormValid && !$( '#good-to-go').length ) {
-                    $( '#demo-form-valid' ).after( '<span id="good-to-go" style="display:block;margin-top:5px;" class="alert alert-success">Yay, good to go!</span>' );
-                    $( '#demo-form-valid' ).hide();
-                    $( '#not-good-to-go' ).hide();
-                } else if ( !isFormValid && !$( '#not-good-to-go').length ) {
-                    $( '#demo-form-valid' ).after( '<span id="not-good-to-go" style="display:block;margin-top:5px;" class="alert alert-error">Oops! Seems there are some errors..</span>' );
-                }
-            },
-            onFieldError: function ( field, constraint ) {
-                $( '#demo-form-valid' ).show();
-                $( '#good-to-go' ).remove();
+          $( '#checksley-multiple' ).checksley( {
+            validators: {
+              multiple: function ( val, multiple ) {
+                return val % multiple === 0;
+              }
             }
-        } } );
-
-        $( '#checksley-multiple' ).checksley( {
-          validators: {
-            multiple: function ( val, multiple ) {
-              return val % multiple === 0;
-            }
-          }
-          , messages: {
-              multiple: "This value should be a multiple of %s"
-            }
-        } );
-    </script>
-  </body>
-</html>
+            , messages: {
+                multiple: "This value should be a multiple of %s"
+              }
+          } );
+      </script>
+{% endblock %}

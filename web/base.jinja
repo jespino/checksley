@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Checksley</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Keywords" content="javascript form validation, javascript, form, validation, jquery, plungin, html, UX">
+    <meta name="description" content="Checksley is a dead simple javascript form validation, powerful and UX aware">
+    <meta name="author" content="Guillaume Potier & Jesús Espino">
+
+    <!-- Le styles -->
+    <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+      h3.muted {
+          color: #08C;
+      }
+      h3>p {
+          font-size: 15px;
+          padding: 0px;
+          margin: 0px;
+          height: 20px;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+      .social-buttons {
+          padding: 5px 20px;
+      }
+      /* Custom container */
+      #index .container-narrow {
+        margin: 0 auto;
+        max-width: 770px;
+      }
+      #index .container-narrow > hr {
+        margin: 15px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      #index .jumbotron {
+        margin: 20px 0;
+        text-align: center;
+      }
+      #index .jumbotron h1 {
+        text-shadow: #A8A8A8 1px 2px 2px;
+        font-size: 4em;
+        line-height: 1;
+      }
+      #index .jumbotron h1 strong {
+        color:  #FB4006;
+      }
+
+      /* Supporting marketing content */
+      #index .marketing {
+        margin: 20px 0;
+      }
+      #index .marketing p + h4 {
+        margin-top: 28px;
+      }
+      #index h4, h4 i {
+        color: #FB4006;
+      }
+      #index .call-to-action, .call-to-action:hover {
+          color: white;
+          font-weight: bold;
+          text-shadow: #0088cc 1px 2px 2px;
+          background: #08C;
+          background-color: #08C;
+      }
+      #index .call-to-action:hover {
+          background: #FB4006;
+          text-shadow: #FB4006 1px 2px 2px;
+      }
+
+      /* Link styles (used on .masthead-links as well) */
+      #index .jumbotron a {
+        -webkit-transition: all .2s ease-in-out;
+           -moz-transition: all .2s ease-in-out;
+                transition: all .2s ease-in-out;
+      }
+
+      /* Textual links in masthead */
+      #index .masthead-links {
+        margin: 0;
+        list-style: none;
+      }
+      #index .masthead-links li {
+        display: inline;
+        padding: 0 10px;
+        color: #949494;
+      }
+      /* Custom container */
+      #documentation .container-narrow {
+        margin: 0 auto;
+        max-width: 940px;
+      }
+      #documentation .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      #documentation .jumbotron {
+        margin: 60px 0;
+        text-align: center;
+      }
+      #documentation .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      #documentation section {
+          margin-bottom: 45px;
+      }
+      #documentation form {
+          margin: 0;
+      }
+      #documentation input.checksley-success, textarea.checksley-success {
+        color: #468847 !important;
+        background-color: #DFF0D8 !important;
+        border: 1px solid #D6E9C6 !important;
+      }
+      #documentation input.checksley-error, textarea.checksley-error {
+        color: #B94A48 !important;
+        background-color: #F2DEDE !important;
+        border: 1px solid #EED3D7 !important;
+      }
+      #documentation input {
+          width: 150px;
+          margin: 0 2px !important;
+      }
+      #documentation ul.checksley-error-list {
+          font-size: 11px;
+          margin: 2px;
+          list-style-type:none;
+      }
+      #documentation ul.checksley-error-list li {
+          line-height: 11px;
+      }
+      #documentation h3 {
+          color: #FB4006;
+      }
+
+      #documentation .container-narrow > hr {
+        margin:15px 0 0 0;
+      }
+
+      @media only screen
+      and (min-device-width : 320px)
+      and (max-device-width : 480px) {
+          #documentation .not-for-mobile {
+              display: none;
+          }
+      }
+    </style>
+    <link href="bower_components/bootstrap/docs/assets/css/bootstrap.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body id="{% block bodyid %}{% endblock %}">
+    <a href="https://github.com/jespino/checksley">
+        <img
+          style="position: fixed; top: 0; right: 0; border: 0; z-index:9999"
+          src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"
+          alt="Fork me on GitHub" />
+    </a>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li {% block indexactive %}{% endblock %}><a href="index.html">Home</a></li>
+          <li {% block documentationactive %}{% endblock %}><a href="documentation.html">Documentation</a></li>
+          <li><a href="http://checksley.readthedocs.org/en/latest/" target="_blank">API</a></li>
+        </ul>
+        <h3 class="muted">
+            <a href="index.html">Checksley</a>
+
+            <span class="social-buttons inline-block">
+                <iframe
+                    src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=watch&count=true"
+                    allowtransparency="true"
+                    frameborder="0"
+                    scrolling="0"
+                    width="110"
+                    height="20"></iframe>
+
+                <iframe
+                    src="http://ghbtns.com/github-btn.html?user=jespino&repo=checksley&type=fork&count=true"
+                    allowtransparency="true"
+                    frameborder="0"
+                    scrolling="0"
+                    width="110"
+                    height="20"></iframe>
+            </span>
+            <p>Based on <a href="http://parsleyjs.org/" target="_blank">Parsley.js</a></p>
+
+        </h3>
+      </div>
+
+      <hr>
+
+      {% block content %}
+      {% endblock %}
+
+      <hr>
+
+      <div class="footer">
+        <p>&copy; <a href="http://twitter.com/jespinog">@jespinog</a> @<a href="http://kaleidos.net/">Kaleidos</a> 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+  </body>
+</html>
