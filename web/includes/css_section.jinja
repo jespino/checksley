@@ -1,0 +1,76 @@
+<section>
+  <a name="checksleyclasses"></a>
+  <div class="page-header">
+      <h3>Checksley CSS</h3>
+      <p>A good #UX goes with a good #UI. Checksley has some base classes you can use to customize things a bit ;) (and of course, rename in the configuration object)</p>
+  </div>
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">Default classes &amp; templates</td>
+        </tr>
+        <tr>
+            <td><code>.checksley-validated</code></td>
+            <td>Auto added on each form item that has Checksley validation.</td>
+        </tr>
+        <tr>
+            <td><code>.checksley-success</code></td>
+            <td>Auto added on each form item that has successfully passed validation.</td>
+        </tr>
+        <tr>
+            <td><code>.checksley-error</code></td>
+            <td>Auto added on each form item that did not pass Checksley validation.</td>
+        </tr>
+        <tr>
+            <td><code>ul.checksley-error-list</code></td>
+            <td>Auto added after each form item that did not pass Checksley validation. Container for errors <code>{% filter e %}<li>{% endfilter %}</code>.</td>
+        </tr>
+        <tr>
+            <td><code>li.checksley-error</code></td>
+            <td>Message displayed if constraint failed validation.</td>
+        </tr>
+        <tr>
+            <td colspan="2">Override them!</td>
+        </tr>
+        <tr>
+            <td>Change class names</td>
+            <td><pre><code>$('#form').checksley({ successClass: 'my-class-name', errorClass: 'still-my-class-name' });</code></pre></td>
+        </tr>
+        <tr>
+            <td>Change class handler</td>
+            <td>Add checksley-success and checksley-error to direct parent:
+<pre><code>$('#form').checksley( {
+errors: {
+classHandler: function ( elem, isRadioOrCheckbox ) {
+return $( elem ).parent();
+}
+}
+} );</code></pre></td>
+        </tr>
+        <tr>
+          <td>Change error container</td>
+          <td><p>Override the container that the <code>errorWrapper</code> (ie. by default the <code>{% filter e %}<ul></ul>{% endfilter %}</code> containing the errors) is inserted into.</p>
+          <p>By default this function does not return anything and so the <code>errorWrapper</code> is added to the DOM directly after the element containing the error, however if you override this function in your options you can return an alternative container where the <code>errorWrapper</code> will be appended</p>
+          <p>For example, to have the error messages appear before the field with the error in a <code>div</code> with the class <code>.checksley-container</code>:<pre><code>{% filter e %}errors: {
+container: function (element, isRadioOrCheckbox) {
+var $container = element.parent().find(".checksley-container");
+if ($container.length === 0) {
+$container = $("<div class='checksley-container'></div>").insertBefore(element);
+}
+return $container;
+}
+}{% endfilter %}</code></pre></p></td></tr>
+        <tr>
+            <td>Advanced changes</td>
+            <td>See <code>errorsWrapper</code>, <code>errorElem</code> errors properties in Checksley default options.</td>
+        </tr>
+    </tbody>
+  </table>
+</section>
+<a href="#top" class="top pull-right">Top</a>

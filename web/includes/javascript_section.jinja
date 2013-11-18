@@ -1,0 +1,191 @@
+<section>
+    <a name="javascript"></a>
+    <div class="page-header">
+        <h3>Javascript</h3>
+        <p>Checksleys DOM-API is great. But not so great for complex forms, or dynamically generated forms. Learn how to master Checksley javascript style!</p>
+    </div>
+    <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Method</th>
+            <th>Returns</th>
+            <th width="40%">Description</th>
+            <th width="40%" class="not-for-mobile">Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <a name="javascript-general"></a>
+            <td colspan="4"><h4>General</h4></td>
+        </tr>
+        <tr>
+            <td>Override default plugin configs</td>
+            <td></td>
+            <td>Checksley uses a set of default configs that you can override by passing an object as a parameter when calling Checksley on a form or a field.<br/>Default is:
+<pre><code>{% filter e %}{
+// basic data-api overridable properties here..
+inputs: 'input, textarea, select'
+, excluded: 'input[type=hidden]'
+, trigger: false
+, focus: 'first'
+, validationMinlength: 3
+, successClass: 'checksley-success'
+, errorClass: 'checksley-error'
+, validators: {}
+, showErrors: true
+, messages: {}
+
+//some quite advanced configuration here..
+, validateIfUnchanged: false
+, errors: {                     // specify where checksley error-success classes are set
+classHandler: function ( elem, isRadioOrCheckbox ) {}
+, container: function ( elem, isRadioOrCheckbox ) {}
+, errorsWrapper: '<ul></ul>'
+, errorElem: '<li></li>'
+}
+, listeners: {
+onFieldValidate: function ( elem, ChecksleyField ) { return false; }
+, onFormSubmit: function ( isFormValid, event, ChecksleyForm ) {}
+, onFieldError: function ( elem, constraints, ChecksleyField ) {}
+, onFieldSuccess: function ( elem, constraints, ChecksleyField ) {}
+}
+}{% endfilter %}</code></pre>
+            </td>
+            <td  class="not-for-mobile"><p>Add a custom validator that checks if number is a multiple of another:</p>
+<pre><code>{% filter e %}$( '#form' ).checksley( {
+validators: {
+multiple: function ( val, multiple ) {
+return val % multiple === 0;
+}
+}
+, messages: {
+multiple: "This value should be a multiple of %s"
+}
+} );
+<input type="text" data-multiple="3" />{% endfilter %}</code></pre>
+                <form id="checksley-multiple">
+                    <input type="text" id="data-multiple" data-validation-minlength="0" data-trigger="keyup" data-multiple="3" placeholder="multiple of 3" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>Add a listener</td>
+            <td></td>
+            <td>Allows you, even after Checksleys initial form binding, to add a custom listener. Available listeners currently are: <code>onFieldValidate</code>, <code>onFieldError</code>, <code>onFieldSuccess</code> and <code>onFormSubmit</code>. Their passed arguments are listed above in Default Plugin config.</td>
+            <td class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'addListener', {
+onFieldValidate: function ( elem ) {
+
+// if field is not visible, do not apply Checksley validation!
+if ( !$( elem ).is( ':visible' ) ) {
+return true;
+}
+
+return false;
+}
+} );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <a name="javascript-form"></a>
+                <h4>Form</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bind Checksley to a form</td>
+            <td></td>
+            <td>Useful if your form is dynamically rendered.</td>
+            <td class="not-for-mobile">
+<pre><code>$( '#form' ).checksley();</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Validate a form</td>
+            <td>Boolean</td>
+            <td>Useful if you want to integrate the form validation process inside custom functions.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'validate' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Test if form valid</td>
+            <td>Boolean</td>
+            <td>Useful if you want to integrate the form validation process inside custom functions, without triggering error messages.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'isValid' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Destroy Checksley</td>
+            <td></td>
+            <td>Reset error messages, error classes, stop prevent form submission and validation triggered events.</td>
+            <td class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'destroy' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Dynamically add an Item to Form</td>
+            <td></td>
+            <td>If an item is dynamically created, it won't be naturally validated with Checksley. Use this to attach it to existing Checksley validated form.</td>
+            <td class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'addItem', '#itemid' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Dynamically remove an Item to Form</td>
+            <td></td>
+            <td>If an item is dynamically deleted / removed from form, it will be unfortunately still present in Checksley validation process. Use this to remove it in Checksley form validation process. <span class="label label-important">This field <strong>must</strong> have an id to be properly destroyed</span></td>
+            <td class="not-for-mobile">
+<pre><code>$( '#form' ).checksley( 'removeItem', '#itemid' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <a name="javascript-fields"></a>
+                <h4>Field</h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Validate a field</td>
+            <td>Boolean</td>
+            <td>Useful if your want to integrate the field validation process inside custom functions.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#field' ).checksley( 'validate' );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Add new constraint</td>
+            <td></td>
+            <td>Useful if your want to add a constraint to an existing Checksley validated field.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#field' ).checksley( 'addConstraint', { minlength: 2 } );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Update constraint</td>
+            <td></td>
+            <td>Useful if your want to update an existing constraint for a field.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#field' ).checksley( 'updateConstraint', { minlength: 6 } );</code></pre>
+            </td>
+        </tr>
+        <tr>
+            <td>Remove constraint</td>
+            <td></td>
+            <td>Useful if your want to remove an existing constraint to an existing Checksley validated field.</td>
+            <td  class="not-for-mobile">
+<pre><code>$( '#field' ).checksley( 'removeConstraint', 'minlength' );</code></pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>
+  More generally, in the Checksley API: All ChecksleyForm and ChecksleyItem functions can be publicly called using the following syntax:
+  <pre><code>$( '#checksleyFormOrFieldId' ).checksley( 'functionName', parameter );</code></pre>
+  So help yourself, read the code and play with Checksley! ;)
+</p>
+</section>
+</div>
+<a href="#top" class="top pull-right">Top</a>
+

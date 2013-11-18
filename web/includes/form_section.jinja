@@ -1,0 +1,54 @@
+<section>
+    <a name="checksleyform"></a>
+    <h3>Checksley Form</h3>
+    <p>This is the main Checksley form validation factory, any form finded will be checked.</p>
+    <h4>Properties</h4>
+    <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th class="not-for-mobile">Demonstration</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>data-show-errors</code></td>
+            <td>true</td>
+            <td>Choose to show or not Checksley error messages & success / errors classes</td>
+            <td  class="not-for-mobile"></td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-focus</code>
+            </td>
+            <td>
+                first
+            </td>
+            <td>
+                Specify which field will be focused first on form validation errors. <code>first</code>, <code>last</code> and <code>none</code> allowed
+            </td>
+            <td class="not-for-mobile">
+                <table>
+                    <tr>
+                        <td>
+                            <form id="focus-form" data-focus="last">
+                                <p><input type="text" data-type="email" data-required="true" placeholder="won't have focus" /><p>
+                                <p><input type="text" data-type="email" data-required="true" placeholder="will have focus" /></p>
+                            </form>
+                        </td>
+                        <td>
+                            <span class="btn btn-small" onclick="javascript:$('#focus-form').checksley('validate');">
+                                <i class="icon-ok"></i>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</section>
+<a href="#top" class="top pull-right">Top</a>
+

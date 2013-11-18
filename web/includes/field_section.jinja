@@ -1,0 +1,127 @@
+<section>
+    <a name="checksleyfield"></a>
+    <h3>Checksley Field</h3>
+    <p>Once your form is validated by Checksley, add validation constraints and various other options.</p>
+<pre><code>{% filter e %}<form>
+<input type="text" name="email" data-type="email" />
+</form>{% endfilter %}</code></pre>
+    <h4>Properties</h4>
+    <table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Property</th>
+            <th>Default</th>
+            <th>Description</th>
+            <th class="not-for-mobile">Demonstration</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <code>data-trigger</code>
+            </td>
+            <td>none</td>
+            <td>Specify one or many javascript events that will trigger item validation. eg: <code>data-trigger="change"</code>. To set multiple events, separate them by a space <code>data-trigger="focusin focusout"</code>.<br/><a href="http://api.jquery.com/category/events/">See the various events supported by jQuery.</a></td>
+            <td  class="not-for-mobile">
+                <form>
+                    <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" placeholder="keyup validation trigger" /><p>
+                    <p><input type="text" data-type="email" data-trigger="change" data-validation-minlength="0" placeholder="change validation trigger" /></p>
+                    <input type="checkbox" name="mincheckdemo[]" data-mincheck="2" value="foo" data-trigger="change" />
+                    <input type="checkbox" name="mincheckdemo[]" value="bar" />
+                    <input type="checkbox" name="mincheckdemo[]" value="baz" />
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-value</code>
+            </td>
+            <td>
+
+            </td>
+            <td>
+                Override the value attribute of a form field. Useful for file inputs, where you're not allowed to
+                set a value. <br/>
+                eg: <code>data-value="uploadedfile.png"</code>
+            </td>
+            <td class="not-for-mobile">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-validation-minlength</code>
+            </td>
+            <td>
+                3
+            </td>
+            <td>
+                Specify how many characters need to be input before the the validation process fires.<br/>
+                eg: <code>data-validation-minlength="4"</code>
+            </td>
+            <td class="not-for-mobile">
+                <form>
+                    <p><input type="text" data-type="email" data-trigger="keyup" placeholder="default keyup validation" /><p>
+                    <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="8" placeholder="8 chars keyup validation" /></p>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-error-message</code>
+            </td>
+            <td>
+
+            </td>
+            <td>
+                Customize a unique global message for this field. Shown if one constraint fails.
+                <br/>eg: <pre><code>data-type="alphanum" data-rangelength="[10,10]"
+data-error-message="You must enter a 10 characters alphanumeric value"</code></pre>
+            </td>
+            <td class="not-for-mobile">
+                <form>
+                    <p><input type="text" data-type="alphanum" data-rangelength="[10,10]" data-trigger="keyup" data-error-message="You must enter a 10 characters alphanumeric value" placeholder="custom error message" /><p>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-error-container</code>
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <span style="color:red; !important" id="demoerrorcontainer"></span>
+                Specify here the container where Checksley should set the errors.
+                <br/>eg: <pre><code>data-error-container="ul#myproperlabel li.someclass"</code></pre>
+            </td>
+            <td class="not-for-mobile">
+                <form>
+                    <p><input type="text" data-type="email" data-trigger="keyup" data-validation-minlength="0" data-error-container="#demoerrorcontainer" placeholder="error will pop above text on the left" /><p>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <code>data-`constraintName`-message</code><br/><br/>
+                <code>data-type-`type`-message</code>
+            </td>
+            <td>
+
+            </td>
+            <td>
+                Customize the error message for the field constraint.<br/>
+                eg: <code>data-minlength-message="Custom minlength message"</code><br/><br/>
+                <code>data-type-email-message="Custom email message"</code>
+            </td>
+            <td class="not-for-mobile">
+                <form>
+                    <p><input type="text" data-type="email" data-minlength="20" data-trigger="keyup" data-type-email-message="Custom email message" data-minlength-message="Custom minlength message" placeholder="custom error messages" /><p>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</section>
+<a href="#top" class="top pull-right">Top</a>
+
