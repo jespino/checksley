@@ -92,6 +92,26 @@ describe "Checksley test suite", ->
             expect(field.validate()).to.be(false)
             expect(field.getErrorContainer().find("li").html()).to.be("FOOO")
 
+        it "multiple constraints ", ->
+            element = createElement("text", {"data-type": "digits", "data-minlength":"4"})
+
+            field = new checksley.Field(element)
+
+            element.val("aaa")
+
+            field.validate()
+            expect(field.getErrorContainer().find("li")).to.have.length(2)
+
+        it "only the first error with multiple constraints ", ->
+            element = createElement("text", {"data-type": "digits", "data-minlength":"4"})
+
+            field = new checksley.Field(element, {onlyOneErrorElement: true})
+
+            element.val("aaa")
+            field.validate()
+
+            expect(field.getErrorContainer().find("li")).to.have.length(1)
+
         it "set custom errors", ->
             element = createElement("text", {"data-notblank": "true", "data-error-message": "FOOO"})
             field = new checksley.Field(element)
