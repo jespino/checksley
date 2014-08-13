@@ -8,7 +8,7 @@ single line of coffeescript/javascript!
 Curent Stable Version
 ---------------------
 
-0.5.0
+0.6.0
 
 Browser compatibility
 ---------------------
