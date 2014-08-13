@@ -26,6 +26,7 @@ defaults =
     containerClass: "checksley-error-list"
     containerGlobalSearch: false
     containerPreferenceSelector: ".errors-box"
+    containerErrorsSelector: "li"
 
     errors:
         classHandler: (element, isRadioOrCheckbox) ->
@@ -447,10 +448,10 @@ class Field
 
     addError: (errorElement) ->
         container = @.getErrorContainer()
-        if @.options.errors.onlyOneErrorElement
-            container.empty()
+        selector = @.options.containerErrorsSelector
 
-        container.append(errorElement)
+        if !@.options.onlyOneErrorElement || !container.find(selector).length
+            container.append(errorElement)
 
     reset: ->
         @.handleClasses(null)
