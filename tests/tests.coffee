@@ -593,6 +593,23 @@ describe "Checksley test suite", ->
 
             element.remove()
 
+        it 'custom validator', ->
+            element = createElement("text", {"data-multiple": "20"})
+            field = new checksley.Field(element, {
+                validators: {
+                    multiple: (val, multiple) ->
+                        return val % multiple == 0
+                }, messages: {
+                    multiple: "This value should be a multiple of %s"
+                }
+            })
+
+            element.val '21'
+            expect(field.validate()).to.be(false)
+            element.val '40'
+            expect(field.validate()).to.be(true)
+
+
     describe "Spanish form field validation", ->
         it "es_ssn field", ->
             element = createElement("text", {"data-es_ssn":"true"})

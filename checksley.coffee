@@ -261,7 +261,7 @@ class Field
         @.isRadioOrCheckbox = false
 
         # Clone messages and validators
-        @.validators = validators
+        @.validators = _.merge(validators, options.validators)
 
         @.resetConstraints()
         @.bindEvents()
@@ -419,6 +419,8 @@ class Field
 
         if data["errorMessage"] != undefined
             message = data["errorMessage"]
+        else if @.options.messages[name]
+          message = @.options.messages[name]
         else if name == "type"
             message = checksley.getMessage("type")[constraint.params]
         else
